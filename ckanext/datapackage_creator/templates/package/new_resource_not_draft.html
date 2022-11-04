@@ -1,0 +1,47 @@
+{% ckan_extends %}
+
+{% block form %}
+<div id="vue-app">
+    <form action="{% url_for 'datapackage_creator.inference' %}" method="post" id="form-upload" enctype="multipart/form-data">
+        <div class="form-group control-full control-large">
+            <label class="form-label" for="field-title">Recurso</label>
+            <div class="controls ">
+                <input ref="file" id="field-file" type="file" name="file" value="" class="form-control" @change="uploadFile" />
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="metadata" id="id_metadata" v-model="metadata" cols="30" rows="10"></textarea>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+var app = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#vue-app',
+    data: {
+        file: null,
+        metadata: 'teste',
+    },
+    methods: {
+        uploadFile() {
+            this.file = this.$refs.file.files[0]
+            this.submitFile()
+        },
+        submitFile() {
+            const formData = new FormData()
+            formData.append('file', this.file)
+            const headers = { 'Content-Type': 'multipart/form-data' }
+            axios.post("{% url_for 'datapackage_creator.inference' %}", formData, { headers }).then((res) => {
+                this.metadata = JSON.stringify(res.data)
+            })
+        }
+    }
+});
+</script>
+{% endblock %}
