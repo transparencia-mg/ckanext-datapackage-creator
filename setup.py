@@ -7,7 +7,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='''ckanext-datapackage-creator''',
-    version='0.0.2',
+    version='0.0.1',
     description='''Data Package Creator.''',
     author='''Transparência Mineas Gerais''',
     license='AGPL',
