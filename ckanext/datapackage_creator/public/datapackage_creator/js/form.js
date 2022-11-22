@@ -9,7 +9,7 @@ var app = new Vue({
         description: '',
         format: '',
         show_fields: true,
-        inference: '',
+        inference: null,
         resource: null,
         current_field: [],
         has_error: false,
@@ -67,6 +67,7 @@ var app = new Vue({
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers }).then((res) => {
                 this.inference = JSON.stringify(res.data)
+                console.log(this.inference)
                 try {
                     this.fields = res.data.metadata.schema.fields
                 } catch (error) {
@@ -98,12 +99,7 @@ var app = new Vue({
             formData.append('format', this.format)
             formData.append('metadata', JSON.stringify(this.fields))
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
-                this.inference = JSON.stringify(res.data)
-                try {
-                    this.fields = res.data.metadata.schema.fields
-                } catch (error) {
-                    this.fields = []
-                }
+                this.has_error = res.data.has_error
             })
         },
         deleteResource(field) {
