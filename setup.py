@@ -22,6 +22,7 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     namespace_packages=['ckanext'],
     install_requires=[
+        'frictionless==4.40.8',
     ],
     include_package_data=True,
     package_data={
