@@ -4,9 +4,8 @@ from frictionless import describe_resource, extract_resource
 
 
 def inference_data(filepath):
-    result = {}
+    result = describe_resource(filepath)
     try:
-        result = describe_resource(filepath)
         rows = extract_resource(filepath)
         for field in result['schema']['fields']:
             field['rows'] = [row[field['name']] for row in rows]
@@ -14,7 +13,7 @@ def inference_data(filepath):
             field['description'] = ''
             field['format'] = 'default'
             field['unique'] = False
-    except Exception as ex:
+    except TypeError:
         pass
     data = {
         'metadata': result,

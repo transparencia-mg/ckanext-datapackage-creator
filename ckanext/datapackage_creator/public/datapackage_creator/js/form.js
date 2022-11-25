@@ -53,6 +53,16 @@ var app = new Vue({
             }
         ]
     },
+    computed: {
+        isDataResource() {
+            try {
+                console.log(this.inference != null)
+                console.log(this.inference.metadata.profile === 'data-resource')
+            } catch(ex){
+            }
+            return this.inference != null && this.inference.metadata.profile === 'data-resource'
+        }
+    },
     mounted () {
         this.package_id = this.$refs.packageName.value
     },
@@ -66,8 +76,7 @@ var app = new Vue({
             formData.append('file', this.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers }).then((res) => {
-                this.inference = JSON.stringify(res.data)
-                console.log(this.inference)
+                this.inference = res.data
                 try {
                     this.fields = res.data.metadata.schema.fields
                 } catch (error) {

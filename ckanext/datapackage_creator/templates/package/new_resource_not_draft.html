@@ -15,26 +15,18 @@
         </button>
     </p>
     <div class="form-group control-full control-large">
-        <label class="form-label" for="field-title">Name</label>
-        <div class="controls ">
-            <div class="form-group">
-                <input type="text" v-model="name" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="form-group control-full control-large">
         <label class="form-label" for="field-title">File</label>
         <div class="controls ">
             <input ref="file" id="field-file" type="file" name="file" value="" class="form-control" @change="uploadFile" />
         </div>
     </div>
     <div class="row" v-if="show_fields">
-        <div class="col-md-4" v-if="inference && inference.metadata && inference.metadata.profile == 'data-resource'">
-            <a href="" class="thumbnail">
-                <span>[[ inference.metadata.format ]]</span>
-            </a>
+        <div class="col-md-4" v-if="isDataResource">
+            <div class="card">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">[[ inference.metadata.format ]]</text></svg>
+            </div>
         </div>
-        <div class="col-md-4" v-for="field in fields">
+        <div class="col-md-4" v-for="field in fields" v-else>
             <div class="panel panel-default" style="padding: 15px;">
                 <div class="panel-heading">
                     <div class="form-group" style="margin-bottom: 0px;">
@@ -121,6 +113,14 @@
             </button>
         </p>
     </fieldset>
+    <div class="form-group control-full control-large">
+        <label class="form-label" for="field-title">Name</label>
+        <div class="controls ">
+            <div class="form-group">
+                <input type="text" v-model="name" class="form-control">
+            </div>
+        </div>
+    </div>
     <div class="form-group control-full control-large">
         <label class="form-label" for="field-title">Description</label>
         <div class="controls ">
