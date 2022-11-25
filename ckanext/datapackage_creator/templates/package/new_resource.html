@@ -1,1 +1,148 @@
 {% ckan_extends %}
+
+{% block form %}
+<div id="vue-app">
+    <p class="alert alert-danger" v-if="has_error">
+        [[ error_summary ]]
+    </p>
+    <input type="hidden" ref="packageName" value="{{ pkg_name }}">
+    <p style="text-align: right;">
+        <button v-on:click="saveResource" class="btn btn-primary">
+            <i class="fa fa-save"></i>
+        </button>
+        <button v-on:click="deleteResource" class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+        </button>
+    </p>
+    <div class="form-group control-full control-large">
+        <label class="form-label" for="field-title">File</label>
+        <div class="controls ">
+            <input ref="file" id="field-file" type="file" name="file" value="" class="form-control" @change="uploadFile" />
+        </div>
+    </div>
+    <div class="row" v-if="show_fields">
+        <div class="col-md-4" v-if="isDataResource">
+            <div class="card">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">[[ inference.metadata.format ]]</text></svg>
+            </div>
+        </div>
+        <div class="col-md-4" v-for="field in fields" v-else>
+            <div class="panel panel-default" style="padding: 15px;">
+                <div class="panel-heading">
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <input type="text" v-model="field.name" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li v-for="row in field.rows.slice(0, 5)" class="list-group-item">[[ row ]]</li>
+                    </li>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <input placeholder="Title" type="text" v-model="field.title" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button v-on:click="editMetadata(field)" class="btn btn-primary">Edit Metadata</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <fieldset v-else>
+        <legend>Metadata</legend>
+        <div class="row">
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Title</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" v-model="current_field.title">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Required</label>
+                    <div class="form-group">
+                        <select v-model="current_field.required" class="form-control" id="">
+                            <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Description</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" v-model="current_field.description">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Unique</label>
+                    <div class="form-group">
+                        <select v-model="current_field.unique" class="form-control" id="">
+                            <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Type</label>
+                    <div class="form-group">
+                        <select v-model="current_field.type" class="form-control" id="">
+                            <option v-for="type in typeOptions" :value="type">[[ type ]]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px;">
+                <div class="controls">
+                    <label class="form-label" for="field-title">Format</label>
+                    <div class="form-group">
+                        <select v-model="current_field.format" class="form-control" id="">
+                            <option v-for="format in getFormatOptions(current_field.type)" :value="format">[[ format ]]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p style="text-align: right;">
+            <button v-on:click="saveMetadata" class="btn btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+        </p>
+    </fieldset>
+    <div class="form-group control-full control-large">
+        <label class="form-label" for="field-title">Name</label>
+        <div class="controls ">
+            <div class="form-group">
+                <input type="text" v-model="name" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group control-full control-large">
+        <label class="form-label" for="field-title">Description</label>
+        <div class="controls ">
+            <div class="form-group">
+                <textarea v-model="description" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-group control-full control-large">
+        <label class="form-label" for="field-title">Format</label>
+        <div class="controls ">
+            <div class="form-group">
+                <input v-model="format" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/datapackage_creator/js/form.js"></script>
+{% endblock %}
