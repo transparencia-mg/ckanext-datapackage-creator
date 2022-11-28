@@ -8,6 +8,8 @@ var app = new Vue({
         name: '',
         description: '',
         format: '',
+        type: '',
+        encoding: '',
         show_fields: true,
         inference: null,
         resource: null,
@@ -51,16 +53,25 @@ var app = new Vue({
                 'text': 'SIM',
                 'value': true
             }
+        ],
+        typeOptions: [
+            {
+                text: 'Select type',
+                value: ''
+            },
+            {
+                text: 'Tabular Data Resource',
+                value: 'tabular-data-resource'
+            },
+            {
+                text: 'Data Resource',
+                value: 'data-resource'
+            }
         ]
     },
     computed: {
         isDataResource() {
-            try {
-                console.log(this.inference != null)
-                console.log(this.inference.metadata.profile === 'data-resource')
-            } catch(ex){
-            }
-            return this.inference != null && this.inference.metadata.profile === 'data-resource'
+            return this.type === 'data-resource'
         }
     },
     mounted () {
@@ -77,6 +88,9 @@ var app = new Vue({
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers }).then((res) => {
                 this.inference = res.data
+                this.encoding = this.inference.metadata.encoding
+                this.format = this.inference.metadata.format
+                this.type = this.inference.metadata.profile
                 try {
                     this.fields = res.data.metadata.schema.fields
                 } catch (error) {
@@ -106,6 +120,8 @@ var app = new Vue({
             formData.append('package_id', this.package_id)
             formData.append('description', this.description)
             formData.append('format', this.format)
+            formData.append('encoding', this.encoding)
+            formData.append('type', this.type)
             formData.append('metadata', JSON.stringify(this.fields))
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
                 this.has_error = res.data.has_error
