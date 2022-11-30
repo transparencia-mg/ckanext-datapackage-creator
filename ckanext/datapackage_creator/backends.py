@@ -1,7 +1,4 @@
-import pydoc
 import frictionless
-
-from ckanext.datapackage_creator.settings import settings
 
 
 class BaseBackend(object):
@@ -25,7 +22,4 @@ class FritionlesseBackend(BaseBackend):
         raise NotImplementedError()
 
 
-BackendClass = pydoc.locate(
-    settings.get('backend', 'ckanext.datapackage_creator.backends.FritionlesseBackend')
-)
-default = BackendClass()
+default = FritionlesseBackend()

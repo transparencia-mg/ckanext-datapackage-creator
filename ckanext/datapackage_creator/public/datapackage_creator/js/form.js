@@ -2,21 +2,28 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#vue-app',
     data: {
-        file: null,
         package_id: '',
-        fields: [],
-        name: '',
-        description: '',
-        format: '',
-        type: '',
-        encoding: '',
-        show_fields: true,
-        inference: null,
-        resource: null,
-        current_field: [],
-        has_error: false,
-        error_summary: '',
-        errors: {},
+        resource_index: 1,
+        resources: [
+            {
+                index: 1,
+                file: null,
+                show: true,
+                fields: [],
+                name: '',
+                description: '',
+                format: '',
+                type: '',
+                encoding: '',
+                show_fields: true,
+                inference: null,
+                resource: null,
+                current_field: [],
+                has_error: false,
+                error_summary: '',
+                errors: {}
+            }
+        ],
         typeOptions: [
             'integer',
             'string',
@@ -69,38 +76,36 @@ var app = new Vue({
             }
         ]
     },
-    computed: {
-        isDataResource() {
-            return this.type === 'data-resource'
-        }
-    },
     mounted () {
         this.package_id = this.$refs.packageName.value
     },
     methods: {
-        uploadFile() {
-            this.file = this.$refs.file.files[0]
-            this.submitFile()
+        isDataResource(resource) {
+            return resource.type === 'data-resource'
         },
-        submitFile() {
+        uploadFile(resource) {
+            resource.file = this.$refs[`file_${resource.index}`][0].files[0]
+            this.submitFile(resource)
+        },
+        submitFile(resource) {
             const formData = new FormData()
-            formData.append('file', this.file)
+            formData.append('file', resource.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers }).then((res) => {
-                this.inference = res.data
-                this.encoding = this.inference.metadata.encoding
-                this.format = this.inference.metadata.format
-                this.type = this.inference.metadata.profile
+                resource.inference = res.data
+                resource.encoding = resource.inference.metadata.encoding
+                resource.format = resource.inference.metadata.format
+                resource.type = resource.inference.metadata.profile
                 try {
-                    this.fields = res.data.metadata.schema.fields
+                    resource.fields = res.data.metadata.schema.fields
                 } catch (error) {
-                    this.fields = []
+                    resource.fields = []
                 }
             })
         },
-        editMetadata(field) {
-            this.current_field = field
-            this.show_fields = false
+        editMetadata(resource, field) {
+            resource.current_field = field
+            resource.show_fields = false
         },
         getFormatOptions(type) {
             if(type === 'string') {
@@ -109,26 +114,54 @@ var app = new Vue({
                 return this.defaultFormatOptions
             }
         },
-        saveMetadata(field) {
-            this.current_field = null
-            this.show_fields = true
+        saveMetadata(resource, field) {
+            resource.current_field = null
+            resource.show_fields = true
         },
-        saveResource() {
+        saveResource(resource) {
             const formData = new FormData()
-            formData.append('upload', this.file)
+            formData.append('upload', resource.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
             formData.append('package_id', this.package_id)
-            formData.append('description', this.description)
-            formData.append('format', this.format)
-            formData.append('encoding', this.encoding)
-            formData.append('type', this.type)
-            formData.append('metadata', JSON.stringify(this.fields))
+            formData.append('description', resource.description)
+            formData.append('format', resource.format)
+            formData.append('encoding', resource.encoding)
+            formData.append('type', resource.type)
+            formData.append('metadata', JSON.stringify(resource.fields))
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
-                this.has_error = res.data.has_error
+                resource.has_error = res.data.has_error
             })
         },
-        deleteResource(field) {
-
+        deleteResource(resource_index) {
+            this.resources = this.resources.filter(function(value, index, arr){
+                return value.index != resource_index
+            })
+        },
+        addResource() {
+            this.resource_index += 1
+            this.resources.push(
+                {
+                    index: this.resource_index,
+                    show: true,
+                    file: null,
+                    fields: [],
+                    name: '',
+                    description: '',
+                    format: '',
+                    type: '',
+                    encoding: '',
+                    show_fields: true,
+                    inference: null,
+                    resource: null,
+                    current_field: [],
+                    has_error: false,
+                    error_summary: '',
+                    errors: {}
+                }
+            )
+        },
+        toggleResource(resource) {
+            resource.show = !resource.show
         }
     }
 })

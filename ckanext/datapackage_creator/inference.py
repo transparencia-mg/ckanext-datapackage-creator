@@ -1,13 +1,13 @@
 import mimetypes
 import frictionless
 
-# from ckanext.datapackage_creator.backends import default as inference_backend
+from ckanext.datapackage_creator.backends import default as inference_backend
 
 
 def inference_data(filepath):
-    result = frictionless.describe_resource(filepath)
+    result = inference_backend.describe_resource(filepath)
     try:
-        rows = frictionless.extract_resource(filepath)
+        rows = inference_backend.extract_resource(filepath)
         for field in result['schema']['fields']:
             field['rows'] = [row[field['name']] for row in rows]
             field['required'] = False
