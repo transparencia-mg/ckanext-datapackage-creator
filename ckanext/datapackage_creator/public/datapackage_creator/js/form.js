@@ -24,7 +24,7 @@ var app = new Vue({
                 errors: {}
             }
         ],
-        typeOptions: [
+        typeFieldOptions: [
             'integer',
             'string',
             'number',
@@ -53,11 +53,11 @@ var app = new Vue({
         ],
         booleanOptions: [
             {
-                'text': 'NÃO',
+                'text': 'NO',
                 'value': false
             },
             {
-                'text': 'SIM',
+                'text': 'YES',
                 'value': true
             }
         ],
@@ -132,9 +132,9 @@ var app = new Vue({
                 resource.has_error = res.data.has_error
             })
         },
-        deleteResource(resource_index) {
+        deleteResource(resource) {
             this.resources = this.resources.filter(function(value, index, arr){
-                return value.index != resource_index
+                return value.index != resource.index
             })
         },
         addResource() {
