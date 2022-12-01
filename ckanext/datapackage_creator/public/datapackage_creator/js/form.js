@@ -101,7 +101,9 @@ var app = new Vue({
                 } catch (error) {
                     resource.fields = []
                 }
-            })
+            }).catch(err => {
+                resource.error_summary = 'Unable to upload the file'
+             })
         },
         editMetadata(resource, field) {
             resource.current_field = field
