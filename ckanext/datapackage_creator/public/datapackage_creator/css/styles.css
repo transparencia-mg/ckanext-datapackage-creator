@@ -1,0 +1,44 @@
+.nav-color{
+    background-color: #EEEEEE;
+}
+
+.nav-margin{
+    margin-left: -60px;
+    margin-right: -60px;
+}
+
+#collapseForm{
+    background-color: #EEEEEE; 
+    margin-left: -36px; 
+    margin-right: -36px;
+}
+
+label::after{
+    content: "" !important;
+}
+
+.pontilhado-azul{
+    border-style: dashed;
+    border-color: #0A5190;
+    background-color: rgb(183, 234, 238);
+    padding: 16px;
+    padding-left: 60px;
+    padding-right: 60px;
+    color: #0A5190;
+}
+
+.pontilhado{
+    border-style: dashed;
+}
+
+.add-meta{
+    padding: 10px;
+}
+
+input::placeholder{
+    color:#9ea2b0;
+}
+
+#btn-coluna{
+    padding: 0%!important;
+}

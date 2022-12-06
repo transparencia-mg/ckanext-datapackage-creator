@@ -21,7 +21,8 @@ var app = new Vue({
                 current_field: [],
                 has_error: false,
                 error_summary: '',
-                errors: {}
+                errors: {},
+                extras: []
             }
         ],
         typeFieldOptions: [
@@ -74,6 +75,24 @@ var app = new Vue({
                 text: 'Data Resource',
                 value: 'data-resource'
             }
+        ],
+        metadataTypeOptions: [
+            {
+                value: '',
+                name: 'Select'
+            },
+            {
+                value: 'max_min',
+                name: 'Max / Min'
+            },
+            {
+                value: 'list',
+                name: 'List'
+            },
+            {
+                value: 'enum',
+                name: 'Enum'
+            }
         ]
     },
     mounted () {
@@ -91,19 +110,22 @@ var app = new Vue({
             const formData = new FormData()
             formData.append('file', resource.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
-            axios.post("/datapackage-creator/inference", formData, { headers }).then((res) => {
-                resource.inference = res.data
-                resource.encoding = resource.inference.metadata.encoding
-                resource.format = resource.inference.metadata.format
-                resource.type = resource.inference.metadata.profile
-                try {
-                    resource.fields = res.data.metadata.schema.fields
-                } catch (error) {
-                    resource.fields = []
-                }
-            }).catch(err => {
-                resource.error_summary = 'Unable to upload the file'
-             })
+            axios.post("/datapackage-creator/inference", formData, { headers })
+                .then((res) => {
+                    resource.inference = res.data
+                    resource.encoding = resource.inference.metadata.encoding
+                    resource.format = resource.inference.metadata.format
+                    resource.type = resource.inference.metadata.profile
+                    try {
+                        resource.fields = res.data.metadata.schema.fields
+                    } catch (error) {
+                        resource.fields = []
+                    }
+                })
+                .catch(() => {
+                    console.log('teste')
+                    resource.error_summary = 'Unable to upload the file'
+                })
         },
         editMetadata(resource, field) {
             resource.current_field = field
@@ -164,6 +186,15 @@ var app = new Vue({
         },
         toggleResource(resource) {
             resource.show = !resource.show
+        },
+        addMetadaData(resource) {
+            resource.extras.push({
+                type: '',
+                max: 0,
+                min: 0,
+                title: '',
+                value: ''
+            })
         }
     }
 })

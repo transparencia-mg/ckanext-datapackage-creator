@@ -175,6 +175,63 @@
                     </div>
                 </div>
             </div>
+            <div class="row" v-for="extra in resource.extras">
+                <div class="col-md-4">
+                    <div class="form-group control-full control-large">
+                        <label class="form-label" for="field-title">Title</label>
+                        <div class="controls ">
+                            <div class="form-group">
+                                <input v-model="extra.title" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group control-full control-large">
+                        <label class="form-label" for="field-title">Type</label>
+                        <div class="controls ">
+                            <div class="form-group">
+                                <select v-model="extra.type" class="form-control" id="">
+                                    <option v-for="metadata_type in metadataTypeOptions" :value="metadata_type.value">[[ metadata_type.name ]]</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" v-if="extra.type == 'max_min'">
+                    <div class="form-group control-full control-large">
+                        <label class="form-label" for="field-title">Min</label>
+                        <div class="controls ">
+                            <div class="form-group">
+                                <input v-model="extra.min" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" v-if="extra.type == 'max_min'">
+                    <div class="form-group control-full control-large">
+                        <label class="form-label" for="field-title">Max</label>
+                        <div class="controls ">
+                            <div class="form-group">
+                                <input v-model="extra.max" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" v-if="extra.type != 'max_min'">
+                    <div class="form-group control-full control-large">
+                        <label class="form-label" for="field-title">Value</label>
+                        <div class="controls ">
+                            <div class="form-group">
+                                <input v-model="extra.value" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: right;">
+                <button class="btn btn-primary" @click="addMetadaData(resource)">Add Metadata</button>
+            </p>
         </div>
     </div>
     <p style="text-align: right;">
