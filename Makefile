@@ -1,4 +1,4 @@
-.PHONY: coverage
+.PHONY: help update-package clean-build build publish-build
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -12,9 +12,8 @@ clean-build: ## Clean folders and files needed to build and publish package (bui
 	@rm --force --recursive *.egg-info
 	@rm --force --recursive LICENCE.txt
 
-build: package_information.py ## Build folders and files needed to build and publish package
+build: ## Build folders and files needed to build and publish package
 	@echo "Building package"
-	@python package_information.py
 	@python setup.py sdist bdist_wheel
 
 publish-build: ## Publish packate on Pypi
