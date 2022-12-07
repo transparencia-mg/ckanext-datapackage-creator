@@ -31,6 +31,8 @@ def inference():
     file.save(tmp)
     tmp.close()
     result = inference_data(tmp.name)
+    _, name = os.path.split(file.filename)
+    result['metadata']['name'] = name
     response.data = json.dumps(result)
     return response
 

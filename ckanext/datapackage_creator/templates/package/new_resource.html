@@ -1,5 +1,10 @@
 {% ckan_extends %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/datapackage_creator/css/styles.css">
+{% endblock %}
+
 {% block form %}
 {% include "datapackage_creator/form.html" %}
 {% endblock %}

@@ -113,6 +113,7 @@ var app = new Vue({
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
                     resource.inference = res.data
+                    resource.name = resource.inference.metadata.name
                     resource.encoding = resource.inference.metadata.encoding
                     resource.format = resource.inference.metadata.format
                     resource.type = resource.inference.metadata.profile
@@ -130,6 +131,9 @@ var app = new Vue({
         editMetadata(resource, field) {
             resource.current_field = field
             resource.show_fields = false
+            // let resourceModal = this.$refs[`modal_${resource.index}`]
+            // let modalInstance = new bootstrap.Modal(resourceModal)
+            // modalInstance.show()
         },
         getFormatOptions(type) {
             if(type === 'string') {
