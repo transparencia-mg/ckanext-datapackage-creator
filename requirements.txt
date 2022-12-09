@@ -1,3 +1,5 @@
 -e git+https://github.com/ckan/ckan.git@231686c2641b91694fa47e9d9322c4af3a7a8ee2#egg=ckan
 frictionless==4.40.8
 pandas==1.5.1
+wheel==0.38.4
+twine==4.0.2
