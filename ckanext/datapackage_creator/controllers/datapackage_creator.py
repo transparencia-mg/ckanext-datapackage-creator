@@ -9,7 +9,7 @@ import ckan.plugins.toolkit as toolkit
 
 from ckan.logic import get_action, ValidationError
 
-from ckanext.datapackage_creator.inference import inference_data
+from ckanext.datapackage_creator.logic import inference_data
 
 
 def inference():
