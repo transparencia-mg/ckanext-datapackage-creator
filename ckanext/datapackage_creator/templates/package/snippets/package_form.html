@@ -1,15 +1,13 @@
 {% import 'macros/form.html' as form %}
 {% set action = g.form_action or '' %}
+{% set organizations = h.organizations_available('create_dataset') %}
 
 {# This provides a full page that renders a form for adding a dataset. It can
 then itself be extended to add/remove blocks of functionality. #}
 {% block stages %}
   {{ h.snippet('package/snippets/stages.html', stages=stage) }}
 {% endblock %}
-
-<input type="hidden" name="_ckan_phase" value="dataset_new_1" />
-{# pkg_name used in 3 stage edit #}
-<input type="hidden" name="pkg_name" value="{{ data.id }}" />
+<input type="hidden" ref="pkgName" value="{{ data.id }}" />
 {% block errors %}{{ form.errors(error_summary) }}{% endblock %}
 
 {% block basic_fields %}
@@ -43,9 +41,19 @@ then itself be extended to add/remove blocks of functionality. #}
         <label class="form-label" for="field-title">Organization</label>
         <div class="controls ">
             <div class="form-group">
+              {% if organizations|length > 1 %}
                 <select class="form-select"  v-model="form.organization" id="">
-                  <option v-for="organization in organizationOptions" :value="organization.id">[[ organization.name ]]</option>
+                  <option value="">Select the Organization</option>
+                  {% for organization in organizations %}
+                  <option value="{{ organization.id }}">{{ organization.title }}</option>
+                  {% endfor %}
                 </select>
+                <input ref="organizationId" value="" type="hidden">
+              {% else %}
+                <input value="{{ organizations[0].title }}" type="text" class="form-control" disabled>
+                <input ref="organizationId" value="{{ organizations[0].id }}" type="hidden">
+                <input v-model="form.organization" type="hidden">
+              {% endif %}
             </div>
         </div>
       </div>

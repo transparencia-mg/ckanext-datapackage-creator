@@ -8,7 +8,7 @@ var app = new Vue({
         form: {
             title: '',
             notes: '',
-            organization: 1,
+            organization: '',
             visibility: 'Private',
             license: '',
             type: 'Tabular',
@@ -101,16 +101,6 @@ var app = new Vue({
                 value: "other-nc", text: "Outra (Não-Comercial)"
             }
         ],
-        organizationOptions: [
-            {
-                id: 1,
-                name: 'Stefanini'
-            },
-            {
-                id: 2,
-                name: 'Organização 2'
-            }
-        ],
         typeOptions: [
             'Tabular',
             'Not Tabular'
@@ -157,10 +147,9 @@ var app = new Vue({
     mounted () {
         let userName = this.$refs.userName.value
         let userEmail = this.$refs.userEmail.value
-        console.log(userName)
-        console.log(userEmail)
         this.form.contributors[0].name = userName
         this.form.contributors[0].email = userEmail
+        this.form.organization = this.$refs.organizationId.value
     },
     methods: {
         addContributor() {
