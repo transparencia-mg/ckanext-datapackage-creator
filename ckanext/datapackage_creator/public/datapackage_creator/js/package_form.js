@@ -2,6 +2,7 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#vue-app',
     data: {
+        error_summary: '',
         contributor_index: 2,
         extra_index: 0,
         form: {

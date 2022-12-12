@@ -8,8 +8,8 @@
 }
 
 #collapseForm{
-    background-color: #EEEEEE; 
-    margin-left: -36px; 
+    background-color: #EEEEEE;
+    margin-left: -36px;
     margin-right: -36px;
 }
 
@@ -17,7 +17,7 @@ label::after{
     content: "" !important;
 }
 
-.pontilhado-azul{
+.pontilhado-meta{
     border-style: dashed;
     border-color: #0A5190;
     background-color: rgb(183, 234, 238);
@@ -27,8 +27,11 @@ label::after{
     color: #0A5190;
 }
 
-.pontilhado{
+.pontilhado-recursos{
     border-style: dashed;
+    border-color: #0A5190;
+    background-color: rgb(183, 234, 238);
+    color: #0A5190;
 }
 
 .add-meta{

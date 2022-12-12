@@ -1,9 +1,11 @@
 <div id="vue-app">
     <input type="hidden" ref="packageName" value="{{ pkg_name }}">
     <div v-for="resource in resources">
-        <p class="alert alert-danger" v-if="resource.has_error">
-            [[ resource.error_summary ]]
-        </p>
+        <div v-if="resource.has_error">
+            <p class="alert alert-danger">
+                [[ resource.error_summary ]]
+            </p>
+        </div>
         <section class="container">
             <nav class="navbar navbar-expand-lg navbar-light nav-color nav-margin border-top border-bottom">
                 <div class="container-fluid">
