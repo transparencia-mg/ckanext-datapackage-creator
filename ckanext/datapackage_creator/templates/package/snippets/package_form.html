@@ -42,7 +42,7 @@ then itself be extended to add/remove blocks of functionality. #}
         <div class="controls ">
             <div class="form-group">
               {% if organizations|length > 1 %}
-                <select class="form-select"  v-model="form.organization" id="">
+                <select class="form-select"  v-model="form.organization" id="" data-module="autocomplete">
                   <option value="">Select the Organization</option>
                   {% for organization in organizations %}
                   <option value="{{ organization.id }}">{{ organization.title }}</option>
@@ -63,7 +63,7 @@ then itself be extended to add/remove blocks of functionality. #}
         <label class="form-label" for="field-title">Visibility</label>
         <div class="controls ">
             <div class="form-group">
-                <select class="form-select"  v-model="form.visibility" id="">
+                <select class="form-select"  v-model="form.visibility" id="" data-module="autocomplete">
                   <option v-for="visibility in visibilityOptions" :value="visibility">[[ visibility ]]</option>
                 </select>
             </div>
@@ -75,7 +75,7 @@ then itself be extended to add/remove blocks of functionality. #}
         <label class="form-label" for="field-title">Type</label>
         <div class="controls ">
             <div class="form-group">
-                <select class="form-select"  v-model="form.type" id="">
+                <select class="form-select"  v-model="form.type" id="" data-module="autocomplete">
                   <option v-for="type in typeOptions" :value="type">[[ type ]]</option>
                 </select>
             </div>
@@ -87,7 +87,7 @@ then itself be extended to add/remove blocks of functionality. #}
         <label class="form-label" for="field-title">License</label>
         <div class="controls ">
             <div class="form-group">
-                <select class="form-select"  v-model="form.license" id="">
+                <select class="form-select"  v-model="form.license" id="" data-module="autocomplete">
                   <option v-for="license in licenseOptions" :value="license.value">[[ license.text ]]</option>
                 </select>
             </div>
@@ -143,7 +143,7 @@ then itself be extended to add/remove blocks of functionality. #}
           <div class="col-md-4">
             <div class="form-group">
               <label for="fonte">{{ _('Select the contributor type') }}</label>
-              <select class="form-select"  v-model="contributor.type" id="">
+              <select class="form-select"  v-model="contributor.type" id="" data-module="autocomplete">
                 <option v-for="contributor_type in contributorTypeOptions" :value="contributor_type">[[ contributor_type ]]</option>
               </select>
             </div>
@@ -184,7 +184,7 @@ then itself be extended to add/remove blocks of functionality. #}
   <div class="row">
     <div class="col-md-4">
         <label class="form-label" for="field-title">Frequency</label>
-        <select class="form-select"  v-model="form.frequency" id="">
+        <select class="form-select"  v-model="form.frequency" id="" data-module="autocomplete">
           <option v-for="frequency in frequencyOptions" :value="frequency.value">[[ frequency.name ]]</option>
         </select>
     </div>
