@@ -69,3 +69,20 @@ def save_resource():
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
     return response
+
+
+def save_package():
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+        'for_edit': True,
+    }
+    try:
+        toolkit.check_access('package_create', context)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+    data = request.form.copy()
+    data['_ckan_phase'] = 'dataset_new_1'

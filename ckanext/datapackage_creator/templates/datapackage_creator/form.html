@@ -149,7 +149,7 @@
                                 <h4 style="color: rgb(186, 186, 186);">{{ _('Extras') }}</h4>
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-6 col-xs-12">
-                                        <button type="button" class="pontilhado-azul rounded"><i class="fa-solid fa-plus"></i><br> {{ _('Add Metadata') }}</button>
+                                        <button style="width: 100%;" type="button" class="pontilhado-recursos rounded"><i class="fa-solid fa-plus"></i><br> {{ _('Add Metadata') }}</button>
                                     </div>
                                 </div>
                               </div>
@@ -199,8 +199,8 @@
                 <br>
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <button @click="addMetadaData(resource)" type="button" class="pontilhado-azul rounded"><i class="fa-solid fa-plus"></i><br> {{ _('Add Metadata') }}</button>
+                        <div class="col-12">
+                            <button style="width: 100%;" @click="addMetadaData(resource)" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}</p></button>
                         </div>
                     </div>
                     <br>
@@ -210,13 +210,8 @@
     </div>
     <br>
     <div class="row">
-        <button @click="addResource" type="button" class="pontilhado"><p class="text-start" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Resource') }}</p></button>
-    </div>
-        <br>
-    <div class="row justify-content-end">
-        <div class="col-auto aling-self-end">
-            <button type="button" class="btn btn-secondary">Validar Dados</button>
-            <button type="submit" class="btn btn-primary">Publicar Conjunto</button>
+        <div class="col-12">
+            <button style="width: 100%;" @click="addResource" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Resource') }}</p></button>
         </div>
     </div>
 </div>

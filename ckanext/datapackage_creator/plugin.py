@@ -22,6 +22,10 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             "/save-resource", view_func=datapackage_creator.save_resource,
             endpoint='save_resource', methods=['POST']
         )
+        blueprint.add_url_rule(
+            "/save-package", view_func=datapackage_creator.save_package,
+            endpoint='save_package', methods=['POST']
+        )
         return blueprint
 
     def update_config(self, config):

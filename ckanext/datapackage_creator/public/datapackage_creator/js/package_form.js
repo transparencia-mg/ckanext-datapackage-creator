@@ -7,9 +7,11 @@ var app = new Vue({
         extra_index: 0,
         form: {
             title: '',
+            pkg_name: '',
+            name: '',
             notes: '',
             organization: '',
-            visibility: 'Private',
+            visibility: true,
             license: '',
             type: 'Tabular',
             source: '',
@@ -45,8 +47,14 @@ var app = new Vue({
             'Data Wrangler'
         ],
         visibilityOptions: [
-            'Private',
-            'Public'
+            {
+                text: 'Private',
+                value: true
+            },
+            {
+                text: 'Public',
+                value: false
+            }
         ],
         licenseOptions: [
             {
@@ -150,8 +158,20 @@ var app = new Vue({
         this.form.contributors[0].name = userName
         this.form.contributors[0].email = userEmail
         this.form.organization = this.$refs.organizationId.value
+        // this.form.pkg_name = this.$refs.pkgName.value
     },
     methods: {
+        slugifyTitle() {
+            const slug = this.form.title.toString()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w-]+/g, '')
+                .replace(/--+/g, '-')
+            this.form.name = slug
+        },
         addContributor() {
             this.contributor_index += 1
             this.form.contributors.push({
@@ -182,7 +202,30 @@ var app = new Vue({
             })
         },
         submit() {
+            const formData = new FormData()
+            const headers = { 'Content-Type': 'multipart/form-data' }
+            formData.append('title', this.form.title)
+            formData.append('name', this.form.name)
+            formData.append('notes', this.form.notes)
+            formData.append('license_id', this.form.license)
+            formData.append('tag_string', this.form.tags)
+            formData.append('owner_org', this.form.organization)
+            formData.append('private', this.form.organization)
+            formData.append('url', this.form.name)
+            formData.append('version', this.form.version)
+            formData.append('author', this.form.contributors[0].name)
+            formData.append('author_email', this.form.contributors[0].email)
+            formData.append('maintainer', this.form.contributors[1].name)
+            formData.append('maintainer_email', this.form.contributors[1].email)
+            formData.append('metadata', JSON.stringify(this.form))
+            axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
+                this.error_summary = res.data.error_summary
+                if(this.error_summary) {
 
+                } else {
+                    window.location = `/dataset/${this.form.name}/resource/new`
+                }
+            })
         }
     }
 })
