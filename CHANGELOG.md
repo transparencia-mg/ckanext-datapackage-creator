@@ -22,3 +22,8 @@ Updated the resource and package interface
 ## [0.0.4] - 2022-12-13
 
 Updated installation instructions, improved the interface, and fixed bugs for resource and package update
+
+
+## [0.0.5] - 2022-12-13
+
+Publish adjustments and update README.md file

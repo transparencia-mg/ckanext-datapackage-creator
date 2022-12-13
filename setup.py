@@ -14,7 +14,7 @@ except (IOError, ImportError):
 
 setup(
     name='''ckanext-datapackage-creator''',
-    version='0.0.4',
+    version='0.0.5',
     description='''Data Package Creator.''',
     long_description=readme,
     author='''Transparência Minas Gerais''',

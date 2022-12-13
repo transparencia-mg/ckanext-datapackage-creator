@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "datapackage_creator"
-version = "0.0.4"
+name = "ckanext-datapackage-creator"
+version = "0.0.5"
 authors = [
   { name="Transparência Minas Gerais" }
 ]
@@ -18,13 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9"
 ]
-keywords="CKAN"
-packages=find_packages(exclude=["contrib", "docs", "tests*"])
-namespace_packages=["ckanext"]
-install_requires=[
-    "frictionless==4.40.8"
-]
-include_package_data=True
+keywords=["CKAN"]
 
 [project.urls]
 "Homepage" = "https://github.com/transparencia-mg/ckanext-datapackage-creator"
