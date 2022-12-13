@@ -23,12 +23,15 @@ CKAN extension to use the fritioncless library
 
 ## Instalation
 
-
-    pip install ckanext-datapackage-creator
+```
+pip install ckanext-datapackage-creator
+```
 
 
 ## Configuration
 
 Once installed, add the `datapackage_creator` plugin to the `ckan.plugins` configuration option in your INI file.
 
-    ckan.plugins = ... datapackage_creator
+```
+ckan.plugins = ... datapackage_creator
+```

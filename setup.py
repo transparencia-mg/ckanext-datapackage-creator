@@ -5,11 +5,19 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 
+try:
+    import pypandoc
+    readme = pypandoc.convert_file('README.md', 'rst')
+except (IOError, ImportError):
+    readme = ''
+
+
 setup(
     name='''ckanext-datapackage-creator''',
     version='0.0.4',
     description='''Data Package Creator.''',
-    author='''Transparência Mineas Gerais''',
+    long_description=readme,
+    author='''Transparência Minas Gerais''',
     license='AGPL',
     classifiers=[
         'Development Status :: 3 - Alpha',
