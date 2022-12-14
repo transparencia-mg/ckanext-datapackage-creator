@@ -86,3 +86,21 @@ def save_package():
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = request.form.copy()
     data['_ckan_phase'] = 'dataset_new_1'
+    data['state'] = 'active'
+    package_creator_action = get_action('package_create')
+    data_response = {
+        'has_error': False,
+        'package': None
+    }
+    try:
+        package = package_creator_action(context, data)
+    except ValidationError as e:
+        data_response['errors'] = e.error_dict
+        data_response['error_summary'] = e.error_summary
+        data_response['has_error'] = True
+    else:
+        data_response['package'] = package
+    response = make_response()
+    response.content_type = 'application/json'
+    response.data = json.dumps(data_response)
+    return response

@@ -2,6 +2,7 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#vue-app',
     data: {
+        has_error: false,
         error_summary: '',
         contributor_index: 2,
         extra_index: 0,
@@ -210,8 +211,8 @@ var app = new Vue({
             formData.append('license_id', this.form.license)
             formData.append('tag_string', this.form.tags)
             formData.append('owner_org', this.form.organization)
-            formData.append('private', this.form.organization)
-            formData.append('url', this.form.name)
+            formData.append('private', this.form.visibility)
+            formData.append('url', this.form.source)
             formData.append('version', this.form.version)
             formData.append('author', this.form.contributors[0].name)
             formData.append('author_email', this.form.contributors[0].email)
@@ -220,9 +221,7 @@ var app = new Vue({
             formData.append('metadata', JSON.stringify(this.form))
             axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
                 this.error_summary = res.data.error_summary
-                if(this.error_summary) {
-
-                } else {
+                if(!this.has_error) {
                     window.location = `/dataset/${this.form.name}/resource/new`
                 }
             })
