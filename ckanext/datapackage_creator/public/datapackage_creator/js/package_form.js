@@ -25,7 +25,8 @@ var app = new Vue({
                     type: 'Publisher',
                     name: '',
                     email: '',
-                    url: ''
+                    url: '',
+                    editable: false,
                 },
                 {
                     index: 2,
@@ -33,7 +34,8 @@ var app = new Vue({
                     type: 'Author',
                     name: '',
                     email: '',
-                    url: ''
+                    url: '',
+                    editable: true
                 }
             ],
             frequency: '',
@@ -181,7 +183,8 @@ var app = new Vue({
                 name: '',
                 type: '',
                 email: '',
-                url: ''
+                url: '',
+                editable: true
             })
         },
         deleteContributor(contributor) {

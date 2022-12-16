@@ -133,12 +133,12 @@ then itself be extended to add/remove blocks of functionality. #}
       <div class="row" v-if="!contributor.canDelete">
         <div class="col-md-4">
           <label class="form-label" for="fonte">[[ contributor.type ]]</label>
-          <input type="text" class="form-control" v-model="contributor.name">
+          <input type="text" class="form-control" v-model="contributor.name" :readonly="!contributor.editable">
         </div>
 
         <div class="col-md-4">
           <label class="form-label" for="fonte">{{ _('E-mail') }}</label>
-          <input type="email" class="form-control" v-model="contributor.email">
+          <input type="email" class="form-control" v-model="contributor.email" :readonly="!contributor.editable">
         </div>
 
         <div class="col-md-4">
