@@ -168,17 +168,19 @@ then itself be extended to add/remove blocks of functionality. #}
             <label class="form-label" for="fonte">{{ _('E-mail') }}</label>
             <input type="email" class="form-control" v-model="contributor.email">
           </div>
+
           <div class="col-md-4">
+            <label class="form-label" for="fonte">URL</label>
             <div class="row">
-              <div class="col-9">
-                <label class="form-label" for="fonte">URL</label>
-                <input type="text" class="form-control" v-model="contributor.url">
-              </div>
-              <div class="col-3">
-                <button style="margin-top: 24px;" @click="deleteContributor(contributor)" class="btn" type="button"><i class="fa-solid fa-trash"></i></button>
-              </div>
+              <input type="text" class="form-control col-6" v-model="contributor.url" style="width: 10rem; margin-left: 14px;">
+              <button @click="deleteContributor(contributor)" class="btn col-2" type="button"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
+
+
+
+
+
         </div>
       </div>
   </nav>

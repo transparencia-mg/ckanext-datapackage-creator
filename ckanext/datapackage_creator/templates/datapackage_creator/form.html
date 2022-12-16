@@ -51,12 +51,15 @@
                     <div class="col-lg-3 col-sm-6 col-xs-12" v-for="field in resource.fields" v-else>
                         <div class="card" style="width: 13rem;">
                             <div class="card-header" style="background-color: #4F5E71;">
-                            <input type="text" class="input-group-addon rounded text-center" style="width: 8.2rem; padding-top: 4%; background-color: #6d7278; color: white;" v-model="field.name">
-                            <button type="button" class="btn" style="color: white;"><i class="fa-solid fa-trash"></i></button>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="text" class="form-control rounded text-center input-style col-10" v-model="field.name">
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="accordion" id="colunaItem">
-                                    <div class="accordion-item">
+                                    <div class="accordion-item margin-preview">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button id="btn-coluna" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         {{ _('Preview item') }}
@@ -149,7 +152,7 @@
                                 <h4 style="color: rgb(186, 186, 186);">{{ _('Extras') }}</h4>
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-6 col-xs-12">
-                                        <button style="width: 100%;" type="button" class="pontilhado-recursos rounded"><i class="fa-solid fa-plus"></i><br> {{ _('Add Metadata') }}</button>
+                                        <button style="width: 100%;" type="button" class="pontilhado-recursos rounded"><i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}</button>
                                     </div>
                                 </div>
                               </div>
@@ -171,7 +174,7 @@
                 <div class="container">
                   <div class="mb-3">
                     <label for="titulo" class="form-label">{{ _('Title') }}</label>
-                    <input type="text" class="form-control" id="titulo" v-model="resource.name" placeholder="{{ _('Enter a title for the resource') }}">
+                    <input type="text" class="form-control" id="titulo" v-model="resource.title" placeholder="{{ _('Enter a title for the resource') }}">
                   </div>
                   <div class="mb-3">
                     <label for="descricao" class="form-label">{{ _('Description') }}</label>
@@ -180,19 +183,20 @@
                   <div class="row">
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <label for="formatoRecurso">{{ _('Format') }}</label>
-                        <input v-model="resource.format" type="text" class="form-control">
+                        <input v-model="resource.format" type="text" class="form-control" :readonly="isDataResource(resource)">
                     </div>
 
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <label for="tipoRecurso">{{ _('Type') }}</label>
-                        <select v-model="resource.type" class="form-select" id="">
+                        <input v-model="resource.type" type="text" class="form-control" readonly="true" v-if="isDataResource(resource)">
+                        <select v-model="resource.type" class="form-select" id="" v-else>
                             <option v-for="type in typeOptions" :value="type.value">[[ type.text ]]</option>
                         </select>
                     </div>
 
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <label for="codificacaoRecurso">{{ _('Encoding') }}</label>
-                        <input v-model="resource.encoding" type="text" class="form-control">
+                        <input v-model="resource.encoding" type="text" class="form-control" :readonly="isDataResource(resource)">
                     </div>
                   </div>
                 </div>
@@ -200,7 +204,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <button style="width: 100%;" @click="addMetadaData(resource)" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}</p></button>
+                            <button style="width: 100%;" @click="addMetadaData(resource)" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;">
+                                <i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}
+                            </button>
                         </div>
                     </div>
                     <br>
