@@ -1,5 +1,10 @@
 <div id="vue-app">
     <input type="hidden" ref="packageName" value="{{ pkg_name }}">
+    <div v-if="success_message">
+        <p class="alert alert-success">
+            [[ success_message ]]
+        </p>
+    </div>
     <div v-for="resource in resources">
         <div v-if="resource.has_error">
             <p class="alert alert-danger">
@@ -302,6 +307,6 @@
     </div>
     <p style="text-align: right;margin-top: 20px;">
         <button type="button" class="btn btn-danger">{{ _('Validate') }}</button>
-        <button type="button" class="btn btn-primary">{{ _('Publish') }}</button>
+        <button @click="publishPackage" type="button" class="btn btn-primary">{{ _('Publish') }}</button>
     </p>
 </div>

@@ -63,7 +63,8 @@ def save_resource():
         if resource_id:
             action = get_action('resource_update')
         else:
-            get_action('resource_create')
+            action = get_action('resource_update')
+            action = get_action('resource_create')
         resource = action(context, data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
