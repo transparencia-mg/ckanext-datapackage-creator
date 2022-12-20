@@ -13,6 +13,7 @@ def inference_data(filepath):
             field['description'] = ''
             field['format'] = 'default'
             field['unique'] = False
+            field['extras'] = []
     except TypeError:
         pass
     data = {

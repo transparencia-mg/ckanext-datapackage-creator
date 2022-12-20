@@ -93,6 +93,32 @@ var app = new Vue({
                 value: 'enum',
                 name: 'Enum'
             }
+        ],
+        metadataResourceOptions: [
+            {
+                value: '',
+                name: 'Select'
+            },
+            {
+                value: 'mediatype',
+                name: 'Media Type'
+            },
+            {
+                value: 'bytes',
+                name: 'Bytes'
+            },
+            {
+                value: 'hash',
+                name: 'Hash'
+            },
+            {
+                value: 'sources',
+                name: 'Sources'
+            },
+            {
+                value: 'licenses',
+                name: 'Licenses'
+            }
         ]
     },
     mounted () {
@@ -124,7 +150,6 @@ var app = new Vue({
                     }
                 })
                 .catch(() => {
-                    console.log('teste')
                     resource.error_summary = 'Unable to upload the file'
                 })
         },
@@ -191,11 +216,17 @@ var app = new Vue({
         toggleResource(resource) {
             resource.show = !resource.show
         },
-        addMetadaData(resource) {
-            resource.extras.push({
+        addMetadaData(field) {
+            field.extras.push({
                 type: '',
                 max: 0,
                 min: 0,
+                title: '',
+                value: ''
+            })
+        },
+        addResourceMetadadata(resource) {
+            resource.extras.push({
                 title: '',
                 value: ''
             })

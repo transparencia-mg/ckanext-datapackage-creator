@@ -5,11 +5,11 @@ CKAN extension to use the fritioncless library
 
 ## Table of Contents
 
-  * [Publish/Update Package to Pypi](#publish/update package to pypi)
+  * [Publish or Update Package to Pypi](#publish-or-update-package-to-pypi)
   * [Installation](#installation)
   * [Configuration](#configuration)
 
-## Publish/Update Package to Pypi
+## Publish or Update Package to Pypi
 
 - Check the last version published on [Pypi](https://pypi.org/project/ckanext-datapackage-creator/).
 - Update `CHANGELOG.md` file with a short review of what had been done.
