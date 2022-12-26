@@ -27,3 +27,8 @@ Updated installation instructions, improved the interface, and fixed bugs for re
 ## [0.0.5] - 2022-12-14
 
 Publish adjustments, update README.md file and bugx fixed in package creation
+
+
+## [0.0.6] - 2022-12-26
+
+Datapackage and DatapackageResource models created

@@ -9,8 +9,6 @@ import ckan.plugins.toolkit as toolkit
 
 from ckan.logic import get_action, ValidationError
 
-from ckanext.datapackage_creator.logic import inference_data
-
 
 def inference():
     context = {
@@ -30,7 +28,11 @@ def inference():
     tmp = tempfile.NamedTemporaryFile(suffix=extension, delete=False)
     file.save(tmp)
     tmp.close()
-    result = inference_data(tmp.name)
+    action = get_action('inference_data')
+    data = {
+        'filepath': tmp.name
+    }
+    result = action(context, data)
     _, name = os.path.split(file.filename)
     result['metadata']['name'] = name
     response.data = json.dumps(result)
@@ -72,23 +74,13 @@ def save_resource():
         data_response['has_error'] = True
     else:
         data_response['resource'] = resource
-        extras_data = {
-            'extras': [
-                {
-                    'key': 'datapackage_creator',
-                    'value': json.dumps({
-                        resource['id']: metadata
-                    })
-                }
-            ],
-            'id': package_id
+        save_datapackage_resource = get_action('save_datapackage_resource')
+        data_package_resource = {
+            'metadata': metadata,
+            'resource_id': resource['id'],
+            'errors': {}
         }
-        try:
-            action = get_action('package_update')
-            action(context, extras_data)
-        except ValidationError as e:
-            print(e.error_dict)
-            print(e.error_summary)
+        save_datapackage_resource(context, data_package_resource)
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
@@ -141,6 +133,8 @@ def save_package():
     data = request.form.copy()
     data['_ckan_phase'] = 'dataset_new_1'
     data['state'] = 'draft'
+    metadata = data['metadata']
+    del data['metadata']
     package_creator_action = get_action('package_create')
     data_response = {
         'has_error': False,
@@ -154,6 +148,12 @@ def save_package():
         data_response['has_error'] = True
     else:
         data_response['package'] = package
+        save_datapackage = get_action('save_datapackage')
+        data_datapackage = {
+            'package_id': package['id'],
+            'metadata': metadata
+        }
+        save_datapackage(context, data_datapackage)
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
@@ -190,3 +190,25 @@ def publish_package():
     response.data = json.dumps(data_response)
     return response
 
+
+def generate_datapackage_json(package_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+        'for_edit': True,
+    }
+    try:
+        toolkit.check_access('package_show', context)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+    data = {
+        'id': package_id
+    }
+    frictionless_package = get_action('generate_datapackage_json')(context, data)
+    response = make_response()
+    response.content_type = 'application/json'
+    response.data = json.dumps(frictionless_package.to_dict())
+    return response

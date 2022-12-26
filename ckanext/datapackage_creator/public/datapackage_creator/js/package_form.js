@@ -224,6 +224,7 @@ var app = new Vue({
             formData.append('metadata', JSON.stringify(this.form))
             axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
                 this.error_summary = res.data.error_summary
+                this.has_error = res.data.has_error
                 if(!this.has_error) {
                     window.location = `/dataset/${this.form.name}/resource/new`
                 }

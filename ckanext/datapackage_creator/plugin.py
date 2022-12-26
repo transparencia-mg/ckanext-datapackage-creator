@@ -4,6 +4,9 @@ import ckan.plugins.toolkit as toolkit
 from flask import Blueprint
 
 from ckanext.datapackage_creator.controllers import datapackage_creator
+from ckanext.datapackage_creator.logic import (
+    save_datapackage, inference_data, save_datapackage_resource
+)
 
 
 class DatapackageCreatorPlugin(plugins.SingletonPlugin):
@@ -41,4 +44,8 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         plugins.toolkit.add_template_directory(config, 'templates')
 
     def get_actions(self):
-        return {}
+        return {
+            'save_datapackage': save_datapackage,
+            'save_datapackage_resource': save_datapackage_resource,
+            'inference_data': inference_data,
+        }
