@@ -1,240 +1,312 @@
 <div id="vue-app">
     <input type="hidden" ref="packageName" value="{{ pkg_name }}">
+    <div v-if="success_message">
+        <p class="alert alert-success">
+            [[ success_message ]]
+        </p>
+    </div>
     <div v-for="resource in resources">
-        <p class="alert alert-danger" v-if="resource.has_error">
-            [[ resource.error_summary ]]
-        </p>
-        <p style="text-align: right;">
-            <button @click="saveResource(resource)" class="btn btn-primary">
-                <i class="fa fa-save"></i>
-            </button>
-            <button @click="deleteResource(resource)" class="btn btn-danger">
-                <i class="fa fa-trash"></i>
-            </button>
-            <button @click="toggleResource(resource)" class="btn btn-secondary">
-                <i class="fa fa-arrow-down" v-if="resource.show"></i>
-                <i class="fa fa-arrow-up" v-else></i>
-            </button>
-        </p>
-        <div v-if="resource.show">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">File</label>
-                        <div class="controls ">
-                            <input :ref="'file_' + resource.index" id="field-file" type="file" name="file" value="" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="d-grid gap-2">
-                        <button style="margin-top: 28px;" @click="uploadFile(resource)" class="btn btn-success">Load</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row" v-if="resource.show_fields">
-                <div class="col-md-4" v-if="isDataResource(resource)">
-                    <div class="card">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">[[ resource.inference.metadata.format ]]</text></svg>
-                    </div>
-                </div>
-                <div class="col-md-4" v-for="field in resource.fields" v-else>
-                    <div class="panel panel-default" style="padding: 15px;">
-                        <div class="panel-heading">
-                            <div class="form-group" style="margin-bottom: 0px;">
-                                <input type="text" v-model="field.name" readonly class="form-control">
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li v-for="row in field.rows.slice(0, 5)" class="list-group-item">[[ row ]]</li>
-                            </li>
-                            <div class="form-group" style="margin-bottom: 0px;">
-                                <input placeholder="Title" type="text" v-model="field.title" readonly class="form-control">
-                            </div>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <button v-on:click="editMetadata(resource, field)" class="btn btn-primary">Edit Metadata</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <fieldset v-else>
-                <legend>Metadata</legend>
-                <div class="row">
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Title</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="resource.current_field.title">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Required</label>
-                            <div class="form-group">
-                                <select v-model="resource.current_field.required" class="form-control" id="">
-                                    <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Description</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="resource.current_field.description">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Unique</label>
-                            <div class="form-group">
-                                <select v-model="resource.current_field.unique" class="form-control" id="">
-                                    <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Type</label>
-                            <div class="form-group">
-                                <select v-model="resource.current_field.type" class="form-control" id="">
-                                    <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0px 10px;">
-                        <div class="controls">
-                            <label class="form-label" for="field-title">Format</label>
-                            <div class="form-group">
-                                <select v-model="resource.current_field.format" class="form-control" id="">
-                                    <option v-for="format in getFormatOptions(resource.current_field.type)" :value="format">[[ format ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <p style="text-align: right;">
-                    <button v-on:click="saveMetadata(resource)" class="btn btn-primary">
-                        <i class="fa fa-save"></i> Save
-                    </button>
-                </p>
-            </fieldset>
-            <div class="form-group control-full control-large">
-                <label class="form-label" for="field-title">Name</label>
-                <div class="controls ">
-                    <div class="form-group">
-                        <input type="text" v-model="resource.name" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group control-full control-large">
-                <label class="form-label" for="field-title">Description</label>
-                <div class="controls ">
-                    <div class="form-group">
-                        <textarea v-model="resource.description" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Format</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="resource.format" type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Type</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <select v-model="resource.type" class="form-control" id="">
-                                    <option v-for="type in typeOptions" :value="type.value">[[ type.text ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Encoding</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="resource.encoding" type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" v-for="extra in resource.extras">
-                <div class="col-md-4">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Title</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="extra.title" type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Type</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <select v-model="extra.type" class="form-control" id="">
-                                    <option v-for="metadata_type in metadataTypeOptions" :value="metadata_type.value">[[ metadata_type.name ]]</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" v-if="extra.type == 'max_min'">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Min</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="extra.min" type="number" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" v-if="extra.type == 'max_min'">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Max</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="extra.max" type="number" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" v-if="extra.type != 'max_min'">
-                    <div class="form-group control-full control-large">
-                        <label class="form-label" for="field-title">Value</label>
-                        <div class="controls ">
-                            <div class="form-group">
-                                <input v-model="extra.value" type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p style="text-align: right;">
-                <button class="btn btn-primary" @click="addMetadaData(resource)">Add Metadata</button>
+        <div v-if="resource.has_error">
+            <p class="alert alert-danger">
+                [[ resource.error_summary ]]
             </p>
         </div>
+        <section class="container">
+            <nav class="navbar navbar-expand-lg navbar-light nav-color nav-margin border-top border-bottom">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="nomeRecurso">{{ _('Name') }}</label>
+                            <div class="input-group">
+                              <div class="input-group-text">{{ _('Name') }}</div>
+                              <input type="text" class="form-control" id="nomeRecurso" placeholder="{{ _('Typing resource name') }}" v-model="resource.name">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <input :ref="'file_' + resource.index" type="file" class="form-control" id="arquivoRecurso">
+                        </div>
+                        <div class="col-auto">
+                            <button @click="uploadFile(resource)" type="button" class="btn btn-primary" role="button" title="carregar">
+                                <!-- Input File do campo Arquivo -->
+                                <label for="upFile">{{ _('Load') }}</label>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button @click="deleteResource(resource)" type="button" role="button" class="btn"><i class="fa-solid fa-trash"></i></button>
+                            <button @click="saveResource(resource)" type="button" role="button" class="btn"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <button type="button" role="button" class="btn" aria-controls="collapseForm" @click="toggleResource(resource)">
+                                <i class="fa fa-arrow-down" v-if="resource.show"></i>
+                                <i class="fa fa-arrow-up" v-else></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </section>
+        <div id="collapseForm" class="module module-narrow module-shallow" v-if="resource.show">
+            <br>
+            <div class="container">
+                <!-- COMPONENTE DA COLUNA -->
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12" v-if="isDataResource(resource)">
+                        <div class="card">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">[[ resource.inference.metadata.format ]]</text></svg>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 20px;" class="col-lg-3 col-sm-6 col-xs-12" v-for="field in resource.fields" v-else>
+                        <div class="card" style="width: 13rem;">
+                            <div class="card-header" style="background-color: #4F5E71;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="text" class="form-control rounded text-center input-style col-10" v-model="field.name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="accordion" id="colunaItem">
+                                    <div class="accordion-item margin-preview">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button id="btn-coluna" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        {{ _('Preview item') }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#colunaItem">
+                                        <div class="accordion-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">[[ field.name ]]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="row in field.rows.slice(0, 5)">
+                                                        <td>[[ row ]]</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="mb-3">
+                                    <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
+                                    <input type="text" class="form-control" id="tituloModal" placeholder="{{ _('Enter the column title') }}" v-model="field.title">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#modal_' + resource.index + field.name">
+                                    <i class="fa-solid fa-pencil"></i>&nbsp;&nbsp;&nbsp;
+                                    {{ _('Edit Metadata') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal fade" :id="'modal_' + resource.index + field.name" tabindex="-1"  aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-3" id="editarMetaLabel">{{ _('Edit Metadata') }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+
+                              <div class="modal-body">
+                                    <h4 style="color: rgb(186, 186, 186);">{{ _('General') }}</h4>
+                                    <div class="row">
+                                    <div class="col-8">
+                                        <div class="mb-3">
+                                        <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
+                                        <input v-model="field.title" type="text" class="form-control" id="tituloModal" placeholder="{{ _('Enter the title') }}">
+                                        </div>
+                                        <div class="mb-3">
+                                        <label for="descricaoModal" class="form-label">{{ _('Description') }}</label>
+                                        <textarea v-model="field.description" class="form-control" id="descricaoModal" rows="8"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                    <div>
+                                            <label for="tipoDado">{{ _('Type') }}</label>
+                                            <select v-model="field.type" class="form-control" id="">
+                                                <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
+                                            </select>
+                                    </div>
+                                        <br>
+                                    <div>
+                                            <label for="formatoDado">{{ _('Format') }}</label>
+                                            <select v-model="field.format" class="form-control" id="">
+                                                <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
+                                            </select>
+                                    </div>
+                                        <br>
+                                    <div>
+                                            <label for="obrigatorio">{{ _('Required') }}</label>
+                                            <select v-model="field.required" class="form-select" id="">
+                                                <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                            </select>
+                                    </div>
+                                        <br>
+                                    <div>
+                                            <label for="unico">{{ _('Unique') }}</label>
+                                            <select v-model="field.unique" class="form-select" id="">
+                                                <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                            </select>
+                                    </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <h4 style="color: rgb(186, 186, 186);">{{ _('Extras') }}</h4>
+                                <div class="row" v-for="extra in field.extras">
+                                    <div class="col-md-4">
+                                        <div class="form-group control-full control-large">
+                                            <label class="form-label" for="field-title">{{ _('Title') }}</label>
+                                            <div class="controls ">
+                                                <div class="form-group">
+                                                    <input v-model="extra.title" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group control-full control-large">
+                                            <label class="form-label" for="field-title">{{ _('Type') }}</label>
+                                            <div class="controls ">
+                                                <div class="form-group">
+                                                    <select v-model="extra.type" class="form-control" id="">
+                                                        <option v-for="metadata_type in metadataTypeOptions" :value="metadata_type.value">[[ metadata_type.name ]]</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" v-if="extra.type == 'max_min'">
+                                        <div class="form-group control-full control-large">
+                                            <label class="form-label" for="field-title">{{ _('Min') }}</label>
+                                            <div class="controls ">
+                                                <div class="form-group">
+                                                    <input v-model="extra.min" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" v-if="extra.type == 'max_min'">
+                                        <div class="form-group control-full control-large">
+                                            <label class="form-label" for="field-title">{{ _('Max') }}</label>
+                                            <div class="controls ">
+                                                <div class="form-group">
+                                                    <input v-model="extra.max" type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" v-if="extra.type != 'max_min'">
+                                        <div class="form-group control-full control-large">
+                                            <label class="form-label" for="field-title">{{ _('Value') }}</label>
+                                            <div class="controls ">
+                                                <div class="form-group">
+                                                    <input v-model="extra.value" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <button @click="addMetadaData(field)" style="width: 100%;" type="button" class="pontilhado-recursos rounded"><i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}</button>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button data-bs-dismiss="modal" type="button" class="btn btn-primary">{{ _('Save') }} <i class="fa-solid fa-circle-check"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  <!-- MODAL -->
+                  <!-- FIM DO MODAL -->
+                </div>
+              </div>
+              <br>
+              <h4 class="container">{{ _('Resource Data') }}</h4>
+              <br>
+              <div class="module module-narrow module-shallow">
+                <div class="container">
+                  <div class="mb-3">
+                    <label for="titulo" class="form-label">{{ _('Title') }}</label>
+                    <input type="text" class="form-control" id="titulo" v-model="resource.title" placeholder="{{ _('Enter a title for the resource') }}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="descricao" class="form-label">{{ _('Description') }}</label>
+                    <textarea v-model="resource.description" class="form-control" id="descricao" rows="4"></textarea>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <label for="formatoRecurso">{{ _('Format') }}</label>
+                        <input v-model="resource.format" type="text" class="form-control" :readonly="isDataResource(resource)">
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <label for="tipoRecurso">{{ _('Type') }}</label>
+                        <input v-model="resource.type" type="text" class="form-control" readonly="true" v-if="isDataResource(resource)">
+                        <select v-model="resource.type" class="form-select" id="" v-else>
+                            <option v-for="type in typeOptions" :value="type.value">[[ type.text ]]</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <label for="codificacaoRecurso">{{ _('Encoding') }}</label>
+                        <input v-model="resource.encoding" type="text" class="form-control" :readonly="isDataResource(resource)">
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12" v-for="extra in resource.extras">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group control-full control-large">
+                                        <label class="form-label" for="field-title">{{ _('Select the Metadata') }}</label>
+                                        <div class="controls ">
+                                            <div class="form-group">
+                                                <select v-model="extra.title" class="form-control" id="">
+                                                    <option v-for="metadataResource in metadataResourceOptions" :value="metadataResource.value">[[ metadataResource.name ]]</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group control-full control-large">
+                                        <label class="form-label" for="field-title">{{ _('Value') }}</label>
+                                        <div class="controls ">
+                                            <div class="form-group">
+                                                <input v-model="extra.value" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-12">
+                            <button style="width: 100%;" @click="addResourceMetadadata(resource)" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;">
+                                <i class="fa-solid fa-plus"></i>{{ _('Add Metadata') }}
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
     </div>
-    <p style="text-align: right;">
-        <button @click="addResource" class="btn btn-primary">Adicionar Recurso</button>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <button style="width: 100%;" @click="addResource" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Resource') }}</p></button>
+        </div>
+    </div>
+    <p style="text-align: right;margin-top: 20px;">
+        <button type="button" class="btn btn-danger">{{ _('Validate') }}</button>
+        <button @click="publishPackage" type="button" class="btn btn-primary">{{ _('Publish') }}</button>
     </p>
 </div>

@@ -4,8 +4,10 @@ var app = new Vue({
     data: {
         package_id: '',
         resource_index: 1,
+        success_message: '',
         resources: [
             {
+                id: '',
                 index: 1,
                 file: null,
                 show: true,
@@ -93,6 +95,32 @@ var app = new Vue({
                 value: 'enum',
                 name: 'Enum'
             }
+        ],
+        metadataResourceOptions: [
+            {
+                value: '',
+                name: 'Select'
+            },
+            {
+                value: 'mediatype',
+                name: 'Media Type'
+            },
+            {
+                value: 'bytes',
+                name: 'Bytes'
+            },
+            {
+                value: 'hash',
+                name: 'Hash'
+            },
+            {
+                value: 'sources',
+                name: 'Sources'
+            },
+            {
+                value: 'licenses',
+                name: 'Licenses'
+            }
         ]
     },
     mounted () {
@@ -113,6 +141,7 @@ var app = new Vue({
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
                     resource.inference = res.data
+                    resource.name = resource.inference.metadata.name
                     resource.encoding = resource.inference.metadata.encoding
                     resource.format = resource.inference.metadata.format
                     resource.type = resource.inference.metadata.profile
@@ -123,13 +152,15 @@ var app = new Vue({
                     }
                 })
                 .catch(() => {
-                    console.log('teste')
                     resource.error_summary = 'Unable to upload the file'
                 })
         },
         editMetadata(resource, field) {
             resource.current_field = field
             resource.show_fields = false
+            // let resourceModal = this.$refs[`modal_${resource.index}`]
+            // let modalInstance = new bootstrap.Modal(resourceModal)
+            // modalInstance.show()
         },
         getFormatOptions(type) {
             if(type === 'string') {
@@ -151,9 +182,19 @@ var app = new Vue({
             formData.append('format', resource.format)
             formData.append('encoding', resource.encoding)
             formData.append('type', resource.type)
+            formData.append('id', resource.id)
             formData.append('metadata', JSON.stringify(resource.fields))
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
                 resource.has_error = res.data.has_error
+                resource.errors = res.data.errors
+                resource.error_summary = res.data.error_summary
+                resource.id = res.data.resource.id
+                if(!resource.has_error) {
+                    this.success_message = 'Successfully saved resource!'
+                    setTimeout(() => {
+                        this.success_message = ''
+                    }, 5000)
+                }
             })
         },
         deleteResource(resource) {
@@ -165,6 +206,7 @@ var app = new Vue({
             this.resource_index += 1
             this.resources.push(
                 {
+                    id: '',
                     index: this.resource_index,
                     show: true,
                     file: null,
@@ -187,13 +229,30 @@ var app = new Vue({
         toggleResource(resource) {
             resource.show = !resource.show
         },
-        addMetadaData(resource) {
-            resource.extras.push({
+        addMetadaData(field) {
+            field.extras.push({
                 type: '',
                 max: 0,
                 min: 0,
                 title: '',
                 value: ''
+            })
+        },
+        addResourceMetadadata(resource) {
+            resource.extras.push({
+                title: '',
+                value: ''
+            })
+        },
+        publishPackage() {
+            const formData = new FormData()
+            const headers = { 'Content-Type': 'multipart/form-data' }
+            formData.append('id', this.package_id)
+            axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
+                this.success_message = 'Successfully published Package!'
+                setTimeout(() => {
+                    this.success_message = ''
+                }, 5000)
             })
         }
     }

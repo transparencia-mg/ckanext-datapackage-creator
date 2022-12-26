@@ -4,6 +4,9 @@ import ckan.plugins.toolkit as toolkit
 from flask import Blueprint
 
 from ckanext.datapackage_creator.controllers import datapackage_creator
+from ckanext.datapackage_creator.logic import (
+    save_datapackage, inference_data, save_datapackage_resource
+)
 
 
 class DatapackageCreatorPlugin(plugins.SingletonPlugin):
@@ -22,6 +25,18 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             "/save-resource", view_func=datapackage_creator.save_resource,
             endpoint='save_resource', methods=['POST']
         )
+        blueprint.add_url_rule(
+            "/delete-resource", view_func=datapackage_creator.delete_resource,
+            endpoint='delete_resource', methods=['DELETE']
+        )
+        blueprint.add_url_rule(
+            "/save-package", view_func=datapackage_creator.save_package,
+            endpoint='save_package', methods=['POST']
+        )
+        blueprint.add_url_rule(
+            "/publish-package", view_func=datapackage_creator.publish_package,
+            endpoint='publish_package', methods=['POST']
+        )
         return blueprint
 
     def update_config(self, config):
@@ -29,4 +44,8 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         plugins.toolkit.add_template_directory(config, 'templates')
 
     def get_actions(self):
-        return {}
+        return {
+            'save_datapackage': save_datapackage,
+            'save_datapackage_resource': save_datapackage_resource,
+            'inference_data': inference_data,
+        }
