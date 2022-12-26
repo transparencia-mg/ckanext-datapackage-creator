@@ -32,3 +32,8 @@ Publish adjustments, update README.md file and bugx fixed in package creation
 ## [0.0.6] - 2022-12-26
 
 Datapackage and DatapackageResource models created
+
+
+## [0.0.7] - 2022-12-26
+
+Fixing jsonschema in setup.py
