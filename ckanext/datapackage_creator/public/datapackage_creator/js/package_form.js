@@ -3,7 +3,7 @@ var app = new Vue({
     el: '#vue-app',
     data: {
         has_error: false,
-        error_summary: '',
+        error_summary: [],
         contributor_index: 2,
         extra_index: 0,
         form: {
@@ -223,7 +223,12 @@ var app = new Vue({
             formData.append('maintainer_email', this.form.contributors[1].email)
             formData.append('metadata', JSON.stringify(this.form))
             axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
-                this.error_summary = res.data.error_summary
+                this.error_summary = []
+                if (res.data.error_summary) {
+                    for(const property in res.data.error_summary) {
+                        this.error_summary.push(`${property}: ${res.data.error_summary[property]}`)
+                    }
+                }
                 this.has_error = res.data.has_error
                 if(!this.has_error) {
                     window.location = `/dataset/${this.form.name}/resource/new`

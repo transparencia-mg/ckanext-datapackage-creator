@@ -22,7 +22,7 @@ var app = new Vue({
                 resource: null,
                 current_field: [],
                 has_error: false,
-                error_summary: '',
+                error_summary: [],
                 errors: {},
                 extras: []
             }
@@ -140,6 +140,7 @@ var app = new Vue({
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
+                    resource.error_summary = []
                     resource.inference = res.data
                     resource.name = resource.inference.metadata.name
                     resource.encoding = resource.inference.metadata.encoding
@@ -152,7 +153,7 @@ var app = new Vue({
                     }
                 })
                 .catch(() => {
-                    resource.error_summary = 'Unable to upload the file'
+                    resource.error_summary = ['Unable to upload the file']
                 })
         },
         editMetadata(resource, field) {
@@ -187,7 +188,12 @@ var app = new Vue({
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
                 resource.has_error = res.data.has_error
                 resource.errors = res.data.errors
-                resource.error_summary = res.data.error_summary
+                resource.error_summary = []
+                if (res.data.error_summary) {
+                    for(const property in res.data.error_summary) {
+                        resource.error_summary.push(`${property}: ${res.data.error_summary[property]}`)
+                    }
+                }
                 resource.id = res.data.resource.id
                 if(!resource.has_error) {
                     this.success_message = 'Successfully saved resource!'
@@ -221,7 +227,7 @@ var app = new Vue({
                     resource: null,
                     current_field: [],
                     has_error: false,
-                    error_summary: '',
+                    error_summary: [],
                     errors: {}
                 }
             )

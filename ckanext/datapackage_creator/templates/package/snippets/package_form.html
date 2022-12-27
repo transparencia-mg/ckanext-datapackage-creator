@@ -14,10 +14,14 @@ then itself be extended to add/remove blocks of functionality. #}
 <div id="vue-app">
   <input type="hidden" ref="userName" value="{{ c.userobj.name }}">
   <input type="hidden" ref="userEmail" value="{{ c.userobj.email }}">
-  <div v-if="error_summary">
-    <p class="alert alert-danger">
-        [[ error_summary ]]
-    </p>
+  <div v-if="has_error">
+    <div class="alert alert-danger">
+        <ul>
+          <li v-for="error in error_summary">
+            [[ error ]]
+          </li>
+        </ul>
+      </div>
   </div>
   <div class="form-group control-full control-large">
     <label class="form-label" for="field-title">Title</label>

@@ -7,9 +7,13 @@
     </div>
     <div v-for="resource in resources">
         <div v-if="resource.has_error">
-            <p class="alert alert-danger">
-                [[ resource.error_summary ]]
-            </p>
+            <div class="alert alert-danger">
+                <ul>
+                  <li v-for="error in resource.error_summary">
+                    [[ error ]]
+                  </li>
+                </ul>
+            </div>
         </div>
         <section class="container">
             <nav class="navbar navbar-expand-lg navbar-light nav-color nav-margin border-top border-bottom">
