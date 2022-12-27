@@ -1,0 +1,14 @@
+{#
+    Render a list of tags linking to the dataset search page
+
+    tags - list of tag dicts
+
+    Example:
+
+      {% snippet 'snippets/tag_list.html', tags=tags, _class='tag-list' %}
+
+  #}
+  {% set _class = _class or 'tag-list' %}
+  {% block tag_list %}
+    conteudo tags
+  {% endblock %}
