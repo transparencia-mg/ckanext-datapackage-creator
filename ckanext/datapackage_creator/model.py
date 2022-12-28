@@ -38,3 +38,8 @@ class DatapackageResource(Base):
     created = Column(DateTime, default=dt.datetime.utcnow)
     data = Column(JSON)
     errors = Column(JSON)
+
+
+def create_tables():
+    Datapackage.__table__.create()
+    DatapackageResource.__table__.create()

@@ -1,10 +1,3 @@
-"""create tables
-
-Revision ID: 932d2ef4d60b
-Revises:
-Create Date: 2022-12-28 08:26:18.535734
-
-"""
 import uuid
 import datetime as dt
 import sqlalchemy as sa
@@ -15,7 +8,7 @@ from sqlalchemy.dialects.postgresql import JSON
 
 
 # revision identifiers, used by Alembic.
-revision = '932d2ef4d60b'
+revision = 'daa77d8d1893'
 down_revision = None
 branch_labels = None
 depends_on = None
