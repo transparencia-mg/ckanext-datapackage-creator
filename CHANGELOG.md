@@ -47,3 +47,8 @@ Updating migration structure
 ## [0.0.9] - 2022-12-28
 
 Bugs fixed in migration structure
+
+
+## [0.0.10] - 2022-12-28
+
+Create table command added
