@@ -1,24 +1,24 @@
-"""datapackage table
+"""create tables
 
-Revision ID: 2b63a2696de2
+Revision ID: 932d2ef4d60b
 Revises:
-Create Date: 2022-12-20 09:15:30.561665
+Create Date: 2022-12-28 08:26:18.535734
 
 """
 import uuid
-import sqlalchemy as sa
 import datetime as dt
+import sqlalchemy as sa
 
 from alembic import op
+
 from sqlalchemy.dialects.postgresql import JSON
 
 
 # revision identifiers, used by Alembic.
-revision = '2b63a2696de2'
+revision = '932d2ef4d60b'
 down_revision = None
 branch_labels = None
 depends_on = None
-
 
 def make_uuid():
     return str(uuid.uuid4())
