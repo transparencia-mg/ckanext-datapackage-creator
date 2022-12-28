@@ -37,3 +37,8 @@ Datapackage and DatapackageResource models created
 ## [0.0.7] - 2022-12-26
 
 Fixing jsonschema in setup.py
+
+
+## [0.0.8] - 2022-12-28
+
+Updating migration structure
