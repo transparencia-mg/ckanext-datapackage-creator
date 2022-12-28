@@ -6,6 +6,9 @@ class BaseBackend(object):
     def describe_resource(self, resource, *args, **kwargs):
         raise NotImplementedError()
 
+    def extract_resource(self, resource, *args, **kwargs):
+        raise NotImplementedError()
+
     def validate_resource(self, resource, *args, **kwargs):
         raise NotImplementedError()
 
