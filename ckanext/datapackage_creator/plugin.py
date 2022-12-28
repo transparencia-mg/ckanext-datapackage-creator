@@ -7,6 +7,7 @@ from ckanext.datapackage_creator.controllers import datapackage_creator
 from ckanext.datapackage_creator.logic import (
     save_datapackage, inference_data, save_datapackage_resource
 )
+from ckanext.datapackage_creator.cli import get_commands
 
 
 class DatapackageCreatorPlugin(plugins.SingletonPlugin):
@@ -14,6 +15,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IClick)
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
@@ -49,3 +51,6 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             'save_datapackage_resource': save_datapackage_resource,
             'inference_data': inference_data,
         }
+
+    def get_commands(self):
+        return get_commands()
