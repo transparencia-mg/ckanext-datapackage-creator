@@ -42,3 +42,8 @@ Fixing jsonschema in setup.py
 ## [0.0.8] - 2022-12-28
 
 Updating migration structure
+
+
+## [0.0.9] - 2022-12-28
+
+Bugs fixed in migration structure
