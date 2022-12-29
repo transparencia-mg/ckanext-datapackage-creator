@@ -9,6 +9,9 @@ import ckan.plugins.toolkit as toolkit
 
 from ckan.logic import get_action, ValidationError
 
+from ckanext.datapackage_creator.utils import row_to_dict
+from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
+
 
 def inference():
     context = {
@@ -65,7 +68,6 @@ def save_resource():
         if resource_id:
             action = get_action('resource_update')
         else:
-            action = get_action('resource_update')
             action = get_action('resource_create')
         resource = action(context, data)
     except ValidationError as e:
@@ -132,16 +134,19 @@ def save_package():
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = request.form.copy()
     data['_ckan_phase'] = 'dataset_new_1'
-    data['state'] = 'draft'
-    metadata = data['metadata']
-    del data['metadata']
-    package_creator_action = get_action('package_create')
+    package_id = data.get('id')
+    if not package_id:
+        data['state'] = 'draft'
+        package_action = get_action('package_create')
+    else:
+        package_action = get_action('package_update')
+    metadata = data.pop('metadata')
     data_response = {
         'has_error': False,
         'package': None
     }
     try:
-        package = package_creator_action(context, data)
+        package = package_action(context, data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary
@@ -187,6 +192,74 @@ def publish_package():
         data_response['has_error'] = True
     response = make_response()
     response.content_type = 'application/json'
+    response.data = json.dumps(data_response)
+    return response
+
+
+def datapackage_show(package_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+        'for_edit': True,
+    }
+    try:
+        toolkit.check_access('package_show', context)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+    response = make_response()
+    response.content_type = 'application/json'
+    data = {
+        'package_id': package_id
+    }
+    try:
+        datapackage = get_action('datapackage_show')(context, data)
+    except:
+        datapackage = Datapackage()
+    data = {
+        'id': package_id
+    }
+    package = get_action('package_show')(context, data)
+    data_response = {
+        'datapackage': row_to_dict(datapackage),
+        'package': package,
+    }
+    response.data = json.dumps(data_response)
+    return response
+
+
+def datapackage_resource_show(resource_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+        'for_edit': True,
+    }
+    try:
+        toolkit.check_access('package_show', context)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+    response = make_response()
+    response.content_type = 'application/json'
+    data = {
+        'resource_id': resource_id
+    }
+    try:
+        datapackage_resource = get_action('datapackage_resource_show')(context, data)
+    except:
+        datapackage_resource = DatapackageResource()
+    data = {
+        'id': resource_id
+    }
+    resource = get_action('resource_show')(context, data)
+    data_response = {
+        'datapackage_resource': row_to_dict(datapackage_resource),
+        'resource': resource,
+    }
     response.data = json.dumps(data_response)
     return response
 

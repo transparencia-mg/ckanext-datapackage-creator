@@ -56,6 +56,24 @@ def save_datapackage_resource(context, data):
     return datapackage_resource
 
 
+def datapackage_show(context, data):
+    package_id = data['package_id']
+    Session = context['model'].Session
+    datapackage = Session.query(Datapackage).filter(
+        Datapackage.package_id==package_id
+    ).order_by(Datapackage.created.desc()).one()
+    return datapackage
+
+
+def datapackage_resource_show(context, data):
+    resource_id = data['resource_id']
+    Session = context['model'].Session
+    datapackage_resource = Session.query(DatapackageResource).filter(
+        DatapackageResource.resource_id==resource_id
+    ).order_by(DatapackageResource.created.desc()).one()
+    return datapackage_resource
+
+
 def generate_datapackage_json(context, data):
     Session = context['model'].Session
     package_id = data['id']

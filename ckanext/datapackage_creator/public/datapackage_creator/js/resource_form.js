@@ -5,6 +5,7 @@ var app = new Vue({
         package_id: '',
         resource_index: 1,
         success_message: '',
+        allowed_add_resource: true,
         resources: [
             {
                 id: '',
@@ -125,8 +126,24 @@ var app = new Vue({
     },
     mounted () {
         this.package_id = this.$refs.packageName.value
+        let resourceId = this.$refs.resourceId.value
+        if(resourceId) {
+            this.allowed_add_resource = false
+            this.resources[0].id = resourceId
+            this.getResource()
+        }
     },
     methods: {
+        getResource() {
+            const url = `/datapackage-creator/show-datapackage-resource/${this.resources[0].id}`
+            axios.get(url).then(res => {
+                this.package_id = res.data.resource.package_id
+                this.resources[0].description = res.data.resource.description
+                this.resources[0].format = res.data.resource.format
+                this.resources[0].encoding = res.data.resource.encoding
+                this.resources[0].type = res.data.resource.type
+            })
+        },
         isDataResource(resource) {
             return resource.type === 'data-resource'
         },

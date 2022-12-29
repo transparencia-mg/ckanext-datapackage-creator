@@ -1,5 +1,6 @@
 <div id="vue-app">
     <input type="hidden" ref="packageName" value="{{ pkg_name }}">
+    <input type="hidden" ref="resourceId" value="{{ data.id }}">
     <div v-if="success_message">
         <p class="alert alert-success">
             [[ success_message ]]
@@ -304,7 +305,7 @@
         </div>
     </div>
     <br>
-    <div class="row">
+    <div class="row" v-if="allowed_add_resource">
         <div class="col-12">
             <button style="width: 100%;" @click="addResource" type="button" class="pontilhado-recursos rounded"><p class="text-center" style="margin-top: 15px;"><i class="fa-solid fa-plus"></i>{{ _('Add Resource') }}</p></button>
         </div>

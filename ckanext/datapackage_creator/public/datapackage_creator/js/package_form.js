@@ -8,7 +8,7 @@ var app = new Vue({
         extra_index: 0,
         form: {
             title: '',
-            pkg_name: '',
+            id: '',
             name: '',
             notes: '',
             organization: '',
@@ -161,9 +161,31 @@ var app = new Vue({
         this.form.contributors[0].name = userName
         this.form.contributors[0].email = userEmail
         this.form.organization = this.$refs.organizationId.value
-        // this.form.pkg_name = this.$refs.pkgName.value
+        this.form.id = this.$refs.packageId.value
+        if(this.form.id !== '') {
+            this.getPackage()
+        }
     },
     methods: {
+        getPackage() {
+            const url = `/datapackage-creator/show-datapackage/${this.form.id}`
+            axios.get(url).then(res => {
+                this.form.title = res.data.package.title
+                this.form.name = res.data.package.name
+                this.form.notes = res.data.package.notes
+                this.form.license = res.data.package.license_id
+                this.form.tags = res.data.package.tag_string
+                this.form.organization = res.data.package.owner_org
+                this.form.visibility = res.data.package.private
+                this.form.source = res.data.package.url
+                this.form.version = res.data.package.version
+                this.form.contributors[0].name = res.data.package.author
+                this.form.contributors[0].email = res.data.package.author_email
+                this.form.contributors[1].name = res.data.package.maintainer
+                this.form.contributors[1].email = res.data.package.maintainer_email
+                this.form.tags = res.data.package.tags
+            })
+        },
         slugifyTitle() {
             const slug = this.form.title.toString()
                 .normalize('NFD')

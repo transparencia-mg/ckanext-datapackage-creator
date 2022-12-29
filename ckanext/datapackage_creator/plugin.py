@@ -5,7 +5,8 @@ from flask import Blueprint
 
 from ckanext.datapackage_creator.controllers import datapackage_creator
 from ckanext.datapackage_creator.logic import (
-    save_datapackage, inference_data, save_datapackage_resource
+    save_datapackage, inference_data, save_datapackage_resource, datapackage_show,
+    datapackage_resource_show, generate_datapackage_json
 )
 from ckanext.datapackage_creator.cli import get_commands
 
@@ -39,6 +40,14 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             "/publish-package", view_func=datapackage_creator.publish_package,
             endpoint='publish_package', methods=['POST']
         )
+        blueprint.add_url_rule(
+            "/show-datapackage/<package_id>", view_func=datapackage_creator.datapackage_show,
+            endpoint='datapackage_show', methods=['GET']
+        )
+        blueprint.add_url_rule(
+            "/show-datapackage-resource/<resource_id>", view_func=datapackage_creator.datapackage_resource_show,
+            endpoint='datapackage_resource_show', methods=['GET']
+        )
         return blueprint
 
     def update_config(self, config):
@@ -50,6 +59,9 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             'save_datapackage': save_datapackage,
             'save_datapackage_resource': save_datapackage_resource,
             'inference_data': inference_data,
+            'datapackage_show': datapackage_show,
+            'datapackage_resource_show': datapackage_resource_show,
+            'generate_datapackage_json': generate_datapackage_json,
         }
 
     def get_commands(self):
