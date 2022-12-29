@@ -158,6 +158,7 @@ var app = new Vue({
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
                     resource.error_summary = []
+                    resource.has_error = false
                     resource.inference = res.data
                     resource.name = resource.inference.metadata.name
                     resource.encoding = resource.inference.metadata.encoding
@@ -170,6 +171,7 @@ var app = new Vue({
                     }
                 })
                 .catch(() => {
+                    resource.has_error = true
                     resource.error_summary = ['Unable to upload the file']
                 })
         },
