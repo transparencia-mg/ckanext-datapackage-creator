@@ -52,3 +52,8 @@ Bugs fixed in migration structure
 ## [0.0.10] - 2022-12-28
 
 Create table command added
+
+
+## [0.0.11] - 2022-12-29
+
+adjusting editing of packages and resources
