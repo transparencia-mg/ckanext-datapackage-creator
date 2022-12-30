@@ -229,6 +229,9 @@ var app = new Vue({
         },
         addResource() {
             this.resource_index += 1
+            this.resources.forEach(resource => {
+                resource.show = false
+            });
             this.resources.push(
                 {
                     id: '',

@@ -36,6 +36,7 @@ setup(
     install_requires=[
         'frictionless',
         'jsonschema',
+        'python-slugify'
     ],
     include_package_data=True,
     package_data={

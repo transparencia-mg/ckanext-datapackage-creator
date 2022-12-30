@@ -4,10 +4,13 @@ import tempfile
 
 from flask import make_response, request
 
+from slugify import slugify
+
 import ckan.model as model
 import ckan.plugins.toolkit as toolkit
 
 from ckan.logic import get_action, ValidationError
+from ckan.views.dataset import _tag_string_to_list
 
 from ckanext.datapackage_creator.utils import row_to_dict
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
@@ -36,8 +39,8 @@ def inference():
         'filepath': tmp.name
     }
     result = action(context, data)
-    _, name = os.path.split(file.filename)
-    result['metadata']['name'] = name
+    name, ext = os.path.splitext(file.filename)
+    result['metadata']['name'] = slugify(name)
     response.data = json.dumps(result)
     return response
 
@@ -134,6 +137,8 @@ def save_package():
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = request.form.copy()
     data['_ckan_phase'] = 'dataset_new_1'
+    tag_string = data.pop('tag_string')
+    data['tags'] = _tag_string_to_list(tag_string)
     package_id = data.get('id')
     if not package_id:
         data['state'] = 'draft'
@@ -141,9 +146,10 @@ def save_package():
     else:
         package_action = get_action('package_update')
     metadata = data.pop('metadata')
+    data['extras'] = metadata['extras']
     data_response = {
         'has_error': False,
-        'package': None
+        'package': None,
     }
     try:
         package = package_action(context, data)
