@@ -19,6 +19,8 @@ def inference_data(context, data):
             field['format'] = 'default'
             field['unique'] = False
             field['extras'] = []
+            field['primary_key'] = False
+            field['foreign_key'] = ''
     except TypeError:
         pass
     data = {

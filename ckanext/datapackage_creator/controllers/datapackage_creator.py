@@ -59,8 +59,10 @@ def save_resource():
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = request.form.copy()
+    data['state'] = 'active'
+    data['url_type'] = 'upload'
+    data['upload'] = request.files['upload']
     metadata = data['metadata']
-    package_id = data['package_id']
     del data['metadata']
     resource_id = data.get('id')
     data_response = {

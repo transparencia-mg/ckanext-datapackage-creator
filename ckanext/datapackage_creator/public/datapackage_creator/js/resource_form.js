@@ -182,9 +182,6 @@ var app = new Vue({
         editMetadata(resource, field) {
             resource.current_field = field
             resource.show_fields = false
-            // let resourceModal = this.$refs[`modal_${resource.index}`]
-            // let modalInstance = new bootstrap.Modal(resourceModal)
-            // modalInstance.show()
         },
         getFormatOptions(type) {
             if(type === 'string') {
@@ -202,6 +199,7 @@ var app = new Vue({
             formData.append('upload', resource.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
             formData.append('package_id', this.package_id)
+            formData.append('name', resource.name)
             formData.append('description', resource.description)
             formData.append('format', resource.format)
             formData.append('encoding', resource.encoding)

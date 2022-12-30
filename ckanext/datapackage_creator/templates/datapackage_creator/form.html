@@ -117,47 +117,64 @@
                               <div class="modal-body">
                                     <h4 style="color: rgb(186, 186, 186);">{{ _('General') }}</h4>
                                     <div class="row">
-                                    <div class="col-8">
-                                        <div class="mb-3">
-                                        <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
-                                        <input v-model="field.title" type="text" class="form-control" id="tituloModal" placeholder="{{ _('Enter the title') }}">
+                                        <div class="col-8">
+                                            <div class="mb-3">
+                                            <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
+                                            <input v-model="field.title" type="text" class="form-control" id="tituloModal" placeholder="{{ _('Enter the title') }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="descricaoModal" class="form-label">{{ _('Description') }}</label>
+                                                <textarea style="height: 105px;" v-model="field.description" class="form-control" id="descricaoModal" rows="8"></textarea>
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                        <label for="descricaoModal" class="form-label">{{ _('Description') }}</label>
-                                        <textarea v-model="field.description" class="form-control" id="descricaoModal" rows="8"></textarea>
+                                        <div class="col-4">
+                                            <div>
+                                                    <label for="tipoDado">{{ _('Type') }}</label>
+                                                    <select v-model="field.type" class="form-control" id="">
+                                                        <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
+                                                    </select>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                    <label for="formatoDado">{{ _('Format') }}</label>
+                                                    <select v-model="field.format" class="form-control" id="">
+                                                        <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
+                                                    </select>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                    <label for="obrigatorio">{{ _('Required') }}</label>
+                                                    <select v-model="field.required" class="form-select" id="">
+                                                        <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                                    </select>
+                                            </div>
+                                            <br>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                    <div>
-                                            <label for="tipoDado">{{ _('Type') }}</label>
-                                            <select v-model="field.type" class="form-control" id="">
-                                                <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
-                                            </select>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div>
+                                                <label for="unico">{{ _('Primary Key') }}</label>
+                                                <select v-model="field.primary_key" class="form-select" id="">
+                                                    <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <label for="unico">{{ _('Foreign Key') }}</label>
+                                                <input v-model="field.foreign_key" type="text" class="form-control" placeholder="{{ _('Table name, Field name') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <label for="unico">{{ _('Unique') }}</label>
+                                                <select v-model="field.unique" class="form-select" id="">
+                                                    <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                        <br>
-                                    <div>
-                                            <label for="formatoDado">{{ _('Format') }}</label>
-                                            <select v-model="field.format" class="form-control" id="">
-                                                <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
-                                            </select>
-                                    </div>
-                                        <br>
-                                    <div>
-                                            <label for="obrigatorio">{{ _('Required') }}</label>
-                                            <select v-model="field.required" class="form-select" id="">
-                                                <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
-                                            </select>
-                                    </div>
-                                        <br>
-                                    <div>
-                                            <label for="unico">{{ _('Unique') }}</label>
-                                            <select v-model="field.unique" class="form-select" id="">
-                                                <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
-                                            </select>
-                                    </div>
-
-                                    </div>
-                                </div>
                                 <br>
                                 <h4 style="color: rgb(186, 186, 186);">{{ _('Extras') }}</h4>
                                 <div class="row" v-for="extra in field.extras">
