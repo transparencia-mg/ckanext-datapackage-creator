@@ -63,7 +63,7 @@ def datapackage_show(context, data):
     Session = context['model'].Session
     datapackage = Session.query(Datapackage).filter(
         Datapackage.package_id==package_id
-    ).order_by(Datapackage.created.desc()).one()
+    ).order_by(Datapackage.created.desc()).first()
     return datapackage
 
 
@@ -72,7 +72,7 @@ def datapackage_resource_show(context, data):
     Session = context['model'].Session
     datapackage_resource = Session.query(DatapackageResource).filter(
         DatapackageResource.resource_id==resource_id
-    ).order_by(DatapackageResource.created.desc()).one()
+    ).order_by(DatapackageResource.created.desc()).first()
     return datapackage_resource
 
 
@@ -81,4 +81,4 @@ def generate_datapackage_json(context, data):
     package_id = data['id']
     datapackage = Session.query(Datapackage).filter(
         Datapackage.package_id==package_id
-    ).order_by(Datapackage.created.desc()).one()
+    ).order_by(Datapackage.created.desc()).first()

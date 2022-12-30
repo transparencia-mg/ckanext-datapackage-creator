@@ -1,6 +1,143 @@
 {% ckan_extends %}
 
+{% block pre_primary %}
+  {% block resource %}
+
+  {% endblock %}
+{% endblock %}
+
 {% block primary_content %}
+<section class="module module-resource" role="complementary">
+    {% block resource_inner %}
+    <div class="module-content">
+      <div class="actions">
+        {% block resource_actions %}
+          <ul>
+            {% block resource_actions_inner %}
+              {% block action_manage %}
+                {% if h.check_access('package_update', {'id':pkg.id }) %}
+                  <li>{% link_for _('Manage'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
+                {% endif %}
+              {% endblock action_manage %}
+          {% if res.url and h.is_url(res.url) %}
+            <li>
+              <div class="btn-group">
+              <a class="btn btn-primary resource-url-analytics" href="{{ res.url }}">
+                {% if res.resource_type in ('listing', 'service') %}
+                  <i class="fa fa-eye"></i> {{ _('View') }}
+                {% elif  res.resource_type == 'api' %}
+                  <i class="fa fa-key"></i> {{ _('API Endpoint') }}
+                {% elif not res.has_views and not res.url_type == 'upload' %}
+                  <i class="fa fa-external-link"></i> {{ _('Go to resource') }}
+                {% else %}
+                  <i class="fa fa-arrow-circle-o-down"></i> {{ _('Download') }}
+                {% endif %}
+              </a>
+              {% block download_resource_button %}
+                {% if res.datastore_active %}
+              <button class="btn btn-primary dropdown-toggle" role="button" id="dropdownDownloadFormat" data-bs-toggle="dropdown" aria-expanded="false" aria-label="list of downloadable formats">
+                  <span class="caret"></span>
+                </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownDownloadFormat">
+                <li>
+                  <a class="dropdown-item" href="{{ h.url_for('datastore.dump', resource_id=res.id, bom=True) }}"
+                    target="_blank" rel="noreferrer"><span>CSV</span></a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) }}"
+                    target="_blank" rel="noreferrer"><span>TSV</span></a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ h.url_for('datastore.dump', resource_id=res.id, format='json') }}"
+                    target="_blank" rel="noreferrer"><span>JSON</span></a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ h.url_for('datastore.dump', resource_id=res.id, format='xml') }}"
+                    target="_blank" rel="noreferrer"><span>XML</span></a>
+                </li>
+              </ul>
+                {% endif %}
+              {% endblock %}
+              </div>
+            </li>
+          {% endif %}
+          {% endblock %}
+        </ul>
+        {% endblock %}
+      </div>
+      {% block resource_content %}
+        {% block resource_read_title %}<h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>{% endblock %}
+        {% block resource_read_url %}
+          {% if res.url and h.is_url(res.url) %}
+            <p class="text-muted ellipsis">{{ _('URL:') }} <a class="resource-url-analytics" href="{{ res.url }}" title="{{ res.url }}">{{ res.url }}</a></p>
+          {% elif res.url %}
+            <p class="text-muted break-word">{{ _('URL:') }} {{ res.url }}</p>
+          {% endif %}
+        {% endblock %}
+        <div class="prose notes" property="rdfs:label">
+          {% if res.description %}
+            {{ h.render_markdown(res.description) }}
+          {% endif %}
+          {% if not res.description and package.notes %}
+            <h3>{{ _('Dataset description:') }}</h3>
+            <blockquote>{{ h.markdown_extract(h.get_translated(package, 'notes')) }}</blockquote>
+            <p>{% trans dataset=h.get_translated(package, 'title'), url=h.url_for(package.type ~ '.read', id=package.name) %}Source: <a href="{{ url }}">{{ dataset }}</a>{% endtrans %}
+          {% endif %}
+        </div>
+      {% endblock %}
+    {% block data_preview %}
+    {% block resource_view %}
+      {% block resource_view_nav %}
+        {% snippet "package/snippets/resource_views_list.html",
+           views=resource_views,
+           pkg=pkg,
+           is_edit=false,
+           view_id=current_resource_view['id'],
+           resource=resource,
+           extra_class="nav-tabs"
+         %}
+      {% endblock %}
+        {% block resource_view_content %}
+          <div class="resource-view">
+            {% if resource_views %}
+                {% for resource_view in resource_views %}
+                  {% if resource_view == current_resource_view %}
+                    {% snippet 'package/snippets/resource_view.html',
+                       resource_view=resource_view,
+                       resource=resource,
+                       package=package
+                     %}
+                  {% endif %}
+                {% endfor %}
+            {% else %}
+              {# Views not created #}
+              <div class="data-viewer-info">
+                <p>{{ _("There are no views created for this resource yet.") }}</p>
+                {% if h.check_access('resource_view_create', {'resource_id': resource.id}) %}
+                  <p class="text-muted">
+                    <i class="fa fa-info-circle"></i>
+                    {{ _("Not seeing the views you were expecting?")}}
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#data-view-info">
+                      {{ _('Click here for more information.') }}</a>
+                  </p>
+                  <div id="data-view-info" class="collapse">
+                    <p>{{ _('Here are some reasons you may not be seeing expected views:') }}</p>
+                    <ul>
+                      <li>{{ _("No view has been created that is suitable for this resource")}}</li>
+                      <li>{{ _("The site administrators may not have enabled the relevant view plugins")}}</li>
+                      <li>{{ _("If a view requires the DataStore, the DataStore plugin may not be enabled, or the data may not have been pushed to the DataStore, or the DataStore hasn't finished processing the data yet")}}</li>
+                    </ul>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endblock %}
+      </div>
+    {% endblock %}
+    {% endblock %}
+    {% endblock %}
+</section>
 <section class="module" id="vue-app">
     <input type="hidden" ref="resourceId" value="{{ res.id }}">
     <div class="module-content">
@@ -9,12 +146,187 @@
         <thead>
           <tr>
             <th scope="col">{{ _('Column') }}</th>
-            <th scope="col">{{ _('Tipo') }}</th>
+            <th scope="col">{{ _('Type') }}</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+            <tr v-for="field in resource.fields">
+                <td>
+                    [[ field.title || field.name ]]
+                </td>
+                <td>
+                    [[ field.type ]]
+                </td>
+                <td>
+                    <a data-bs-toggle="modal" :data-bs-target="'#modal_' + field.name" href="javascript:void(0)">{{ _('View Metadata') }}</a>
+                    <div class="modal fade" :id="'modal_' + field.name" tabindex="-1"  aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-3" id="editarMetaLabel">{{ _('Metadata') }}</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
+                            <div class="modal-body">
+                                  <h4 style="color: rgb(186, 186, 186);">{{ _('General') }}</h4>
+                                  <div class="row">
+                                      <div class="col-8">
+                                          <div class="mb-3">
+                                          <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
+                                          <input v-model="field.title" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="descricaoModal" class="form-label">{{ _('Description') }}</label>
+                                              <textarea style="height: 105px;" v-model="field.description" class="form-control" id="descricaoModal" rows="8" readonly></textarea>
+                                          </div>
+                                      </div>
+                                      <div class="col-4">
+                                          <div>
+                                                  <label for="tipoDado">{{ _('Type') }}</label>
+                                                  <input v-model="field.type" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                          <br>
+                                          <div>
+                                                  <label for="formatoDado">{{ _('Format') }}</label>
+                                                  <input v-model="field.format" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                          <br>
+                                          <div>
+                                                  <label for="obrigatorio">{{ _('Required') }}</label>
+                                                  <input v-model="field.required" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                          <br>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-4">
+                                          <div>
+                                              <label for="unico">{{ _('Primary Key') }}</label>
+                                              <input v-model="field.primary_key" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                          <div>
+                                              <label for="unico">{{ _('Foreign Key') }}</label>
+                                              <input v-model="field.foreign_key" type="text" class="form-control" readonly>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                          <div>
+                                              <label for="unico">{{ _('Unique') }}</label>
+                                              <input v-model="field.unique" type="text" class="form-control" id="tituloModal" readonly>
+                                          </div>
+                                      </div>
+                                  </div>
+                                <br>
+                                <h4 style="color: rgb(186, 186, 186);">{{ _('Advanced') }}</h4>
+                                <div v-for="extra in field.extras">
+                                    <div v-if="extra.type == 'max_min'" class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group control-full control-large">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto">
+                                                                <label class="form-label" for="field-title">{{ _('Min Value') }}</label>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="controls ">
+                                                                    <div class="form-group">
+                                                                        <input v-model="extra.min" type="number" class="form-control" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group control-full control-large">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto">
+                                                                <label class="form-label" for="field-title">{{ _('Max Value') }}</label>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="controls ">
+                                                                    <div class="form-group">
+                                                                        <input v-model="extra.max" type="number" class="form-control" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="extra.type == 'length'">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group control-full control-large">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto">
+                                                                <label class="form-label" for="field-title">{{ _('Min Lenght') }}</label>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="controls ">
+                                                                    <div class="form-group">
+                                                                        <input v-model="extra.min_length" type="number" class="form-control" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group control-full control-large">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-auto">
+                                                                <label class="form-label" for="field-title">{{ _('Max Lenght') }}</label>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="controls ">
+                                                                    <div class="form-group">
+                                                                        <input v-model="extra.max_length" type="number" class="form-control" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="extra.type == 'list' || extra.type == 'enum'">
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-auto">
+                                                    <label for="unico" v-if="extra.type == 'list'">{{ _('List of values') }}</label>
+                                                    <label for="unico" v-else>{{ _('Lista') }}</label>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="form-group control-full control-large">
+                                                        <label class="form-label" for="field-title">{{ _('Values') }}</label>
+                                                        <div class="controls ">
+                                                            <div class="form-group">
+                                                                <input v-model="extra.value" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button data-bs-dismiss="modal" type="button" class="btn btn-primary">{{ _('Close') }} <i class="fa-solid fa-circle-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
         </tbody>
       </table>
     </div>

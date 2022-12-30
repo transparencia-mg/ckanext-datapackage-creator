@@ -44,7 +44,7 @@ then itself be extended to add/remove blocks of functionality. #}
     <label class="form-label" for="field-title">Description</label>
     <div class="controls ">
         <div class="form-group">
-            <textarea v-model="form.description" class="form-control" rows="4"></textarea>
+            <textarea v-model="form.notes" class="form-control" rows="4"></textarea>
         </div>
     </div>
   </div>
@@ -180,11 +180,6 @@ then itself be extended to add/remove blocks of functionality. #}
               <button @click="deleteContributor(contributor)" class="btn col-2" type="button"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
-
-
-
-
-
         </div>
       </div>
   </nav>

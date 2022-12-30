@@ -61,7 +61,7 @@ var app = new Vue({
         ],
         licenseOptions: [
             {
-                value: '', text: 'Please select the license',
+                value: null, text: 'Please select the license',
             },
             {
                 value: "cc-by", text: "Creative Commons Atribuição"
@@ -177,13 +177,13 @@ var app = new Vue({
                 this.form.tags = res.data.package.tag_string
                 this.form.organization = res.data.package.owner_org
                 this.form.visibility = res.data.package.private
-                this.form.source = res.data.package.url
+                this.form.source = res.data.package.url || ''
                 this.form.version = res.data.package.version
-                this.form.contributors[0].name = res.data.package.author
-                this.form.contributors[0].email = res.data.package.author_email
-                this.form.contributors[1].name = res.data.package.maintainer
-                this.form.contributors[1].email = res.data.package.maintainer_email
-                this.form.tags = res.data.package.tags
+                let datapackage = JSON.parse(res.data.datapackage.data)
+                this.form.contributors = datapackage.contributors
+                this.form.tags = datapackage.tags
+                this.form.frequency = datapackage.frequency
+                this.form.tags = datapackage.tags
             })
         },
         slugifyTitle() {
@@ -230,6 +230,9 @@ var app = new Vue({
         submit() {
             const formData = new FormData()
             const headers = { 'Content-Type': 'multipart/form-data' }
+            if(this.form.id) {
+                formData.append('id', this.form.id)
+            }
             formData.append('title', this.form.title)
             formData.append('name', this.form.name)
             formData.append('notes', this.form.notes)

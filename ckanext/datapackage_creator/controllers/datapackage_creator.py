@@ -227,7 +227,7 @@ def datapackage_show(package_id):
     }
     try:
         datapackage = get_action('datapackage_show')(context, data)
-    except:
+    except Exception as ex:
         datapackage = Datapackage()
     data = {
         'id': package_id

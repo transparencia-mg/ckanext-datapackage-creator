@@ -20,7 +20,8 @@ var app = new Vue({
             has_error: false,
             error_summary: [],
             errors: {},
-            extras: []
+            extras: [],
+            package: {}
         }
     },
     mounted () {
@@ -31,11 +32,8 @@ var app = new Vue({
         getResource() {
             const url = `/datapackage-creator/show-datapackage-resource/${this.resource.id}`
             axios.get(url).then(res => {
-                this.package_id = res.data.resource.package_id
-                this.resources.description = res.data.resource.description
-                this.resources.format = res.data.resource.format
-                this.resources.encoding = res.data.resource.encoding
-                this.resources.type = res.data.resource.type
+                this.resource = JSON.parse(res.data.datapackage_resource.data)
+                this.resource.package = res.data.package
             })
         }
     }
