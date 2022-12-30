@@ -14,6 +14,7 @@ from ckan.views.dataset import _tag_string_to_list
 
 from ckanext.datapackage_creator.utils import row_to_dict
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
+from ckanext.datapackage_creator.validation import validate_resource
 
 
 def inference():
@@ -70,6 +71,7 @@ def save_resource():
         'resource': None
     }
     try:
+        validate_resource(data)
         if resource_id:
             action = get_action('resource_update')
         else:

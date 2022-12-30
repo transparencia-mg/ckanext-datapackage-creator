@@ -14,13 +14,13 @@ var app = new Vue({
                 show: true,
                 fields: [],
                 name: '',
+                title: '',
                 description: '',
                 format: '',
                 type: '',
                 encoding: '',
                 show_fields: true,
                 inference: null,
-                resource: null,
                 current_field: [],
                 has_error: false,
                 error_summary: [],
@@ -200,12 +200,13 @@ var app = new Vue({
             const headers = { 'Content-Type': 'multipart/form-data' }
             formData.append('package_id', this.package_id)
             formData.append('name', resource.name)
+            formData.append('title', resource.title)
             formData.append('description', resource.description)
             formData.append('format', resource.format)
             formData.append('encoding', resource.encoding)
             formData.append('type', resource.type)
             formData.append('id', resource.id)
-            formData.append('metadata', JSON.stringify(resource.fields))
+            formData.append('metadata', JSON.stringify(resource))
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
                 resource.has_error = res.data.has_error
                 resource.errors = res.data.errors
