@@ -146,7 +146,8 @@ def save_package():
     else:
         package_action = get_action('package_update')
     metadata = data.pop('metadata')
-    data['extras'] = metadata['extras']
+    metadata_json = json.loads(metadata)
+    data['extras'] = metadata_json['extras']
     data_response = {
         'has_error': False,
         'package': None,

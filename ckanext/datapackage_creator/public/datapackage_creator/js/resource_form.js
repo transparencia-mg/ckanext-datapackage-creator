@@ -86,7 +86,11 @@ var app = new Vue({
             },
             {
                 value: 'max_min',
-                name: 'Max / Min'
+                name: 'Maximum / Minimum'
+            },
+            {
+                value: 'length',
+                name: 'Maximum Length / Minimum Length'
             },
             {
                 value: 'list',
@@ -262,7 +266,8 @@ var app = new Vue({
                 type: '',
                 max: 0,
                 min: 0,
-                title: '',
+                maxLenght: 0,
+                minLenght: 0,
                 value: ''
             })
         },

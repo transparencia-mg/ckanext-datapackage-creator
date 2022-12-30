@@ -161,17 +161,7 @@
                                 <br>
                                 <h4 style="color: rgb(186, 186, 186);">{{ _('Extras') }}</h4>
                                 <div class="row" v-for="extra in field.extras">
-                                    <div class="col-md-4">
-                                        <div class="form-group control-full control-large">
-                                            <label class="form-label" for="field-title">{{ _('Title') }}</label>
-                                            <div class="controls ">
-                                                <div class="form-group">
-                                                    <input v-model="extra.title" type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" v-if="extra.type == ''">
                                         <div class="form-group control-full control-large">
                                             <label class="form-label" for="field-title">{{ _('Type') }}</label>
                                             <div class="controls ">
@@ -184,26 +174,60 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4" v-if="extra.type == 'max_min'">
-                                        <div class="form-group control-full control-large">
-                                            <label class="form-label" for="field-title">{{ _('Min') }}</label>
-                                            <div class="controls ">
-                                                <div class="form-group">
-                                                    <input v-model="extra.min" type="number" class="form-control">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group control-full control-large">
+                                                    <label class="form-label" for="field-title">{{ _('Min') }}</label>
+                                                    <div class="controls ">
+                                                        <div class="form-group">
+                                                            <input v-model="extra.min" type="number" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group control-full control-large">
+                                                    <label class="form-label" for="field-title">{{ _('Max') }}</label>
+                                                    <div class="controls ">
+                                                        <div class="form-group">
+                                                            <input v-model="extra.max" type="number" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button style="margin-top: 28px;" @click="deleteMetadata(field, extra)" type="button" role="button" class="btn"><i class="fa-solid fa-trash"></i></button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="extra.type == 'max_min'">
-                                        <div class="form-group control-full control-large">
-                                            <label class="form-label" for="field-title">{{ _('Max') }}</label>
-                                            <div class="controls ">
-                                                <div class="form-group">
-                                                    <input v-model="extra.max" type="number" class="form-control">
+                                    <div class="col-md-4" v-if="extra.type == 'length'">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group control-full control-large">
+                                                    <label class="form-label" for="field-title">{{ _('Min Lenght') }}</label>
+                                                    <div class="controls ">
+                                                        <div class="form-group">
+                                                            <input v-model="extra.min_length" type="number" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group control-full control-large">
+                                                    <label class="form-label" for="field-title">{{ _('Max Lenght') }}</label>
+                                                    <div class="controls ">
+                                                        <div class="form-group">
+                                                            <input v-model="extra.max_length" type="number" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button style="margin-top: 28px;" @click="deleteMetadata(field, extra)" type="button" role="button" class="btn"><i class="fa-solid fa-trash"></i></button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="extra.type != 'max_min'">
+                                    <div class="col-md-4" v-if="extra.type != 'max_min' && extra.type != 'length'">
                                         <div class="form-group control-full control-large">
                                             <label class="form-label" for="field-title">{{ _('Value') }}</label>
                                             <div class="controls ">
