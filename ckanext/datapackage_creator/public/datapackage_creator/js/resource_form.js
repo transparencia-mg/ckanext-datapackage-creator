@@ -271,6 +271,11 @@ var app = new Vue({
                 value: ''
             })
         },
+        deleteMetadata(field, extra) {
+            field.extras = field.extras.filter(function(value, index, arr){
+                return value.type != extra.type
+            })
+        },
         addResourceMetadadata(resource) {
             resource.extras.push({
                 title: '',

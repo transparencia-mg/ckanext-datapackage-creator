@@ -227,13 +227,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="extra.type != 'max_min' && extra.type != 'length'">
-                                        <div class="form-group control-full control-large">
-                                            <label class="form-label" for="field-title">{{ _('Value') }}</label>
-                                            <div class="controls ">
-                                                <div class="form-group">
-                                                    <input v-model="extra.value" type="text" class="form-control">
+                                    <div class="col-md-4" v-if="extra.type == 'list' || extra.type == 'enum'">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="form-group control-full control-large">
+                                                    <label class="form-label" for="field-title">{{ _('Values') }}</label>
+                                                    <div class="controls ">
+                                                        <div class="form-group">
+                                                            <input v-model="extra.value" type="text" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button style="margin-top: 28px;" @click="deleteMetadata(field, extra)" type="button" role="button" class="btn"><i class="fa-solid fa-trash"></i></button>
                                             </div>
                                         </div>
                                     </div>
