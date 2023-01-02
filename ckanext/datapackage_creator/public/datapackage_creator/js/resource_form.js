@@ -215,13 +215,13 @@ var app = new Vue({
                         extra.max_error = false
                     }
                 } else if(extra.type == 'length') {
-                    if(!extra.minLenght) {
+                    if(!extra.min_length) {
                         extra.min_length_error = true
                         valid = false
                     } else {
                         extra.min_length_error = false
                     }
-                    if(!extra.maxLenght) {
+                    if(!extra.max_length) {
                         extra.max_length_error = true
                         valid = false
                     } else {
@@ -308,8 +308,8 @@ var app = new Vue({
                 type: '',
                 max: 0,
                 min: 0,
-                maxLenght: 0,
-                minLenght: 0,
+                max_length: 0,
+                min_length: 0,
                 value: '',
                 min_error: false,
                 max_error: false,
