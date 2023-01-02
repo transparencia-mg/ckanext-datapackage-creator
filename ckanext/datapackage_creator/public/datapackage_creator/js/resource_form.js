@@ -190,6 +190,49 @@ var app = new Vue({
                 return this.defaultFormatOptions
             }
         },
+        checkMetadata(field) {
+            const closeButton = this.$refs[`modal_close_${field.name}`][0]
+            let valid = true
+            field.extras.forEach(extra => {
+                if(extra.type == 'enum' || extra.type == 'list') {
+                    if(extra.value === '') {
+                        extra.list_error = true
+                        valid = false
+                    } else {
+                        extra.list_error = false
+                    }
+                } else if(extra.type == 'max_min') {
+                    if(!extra.min) {
+                        extra.min_error = true
+                        valid = false
+                    } else {
+                        extra.min_error = false
+                    }
+                    if(!extra.max) {
+                        extra.max_error = true
+                        valid = false
+                    } else {
+                        extra.max_error = false
+                    }
+                } else if(extra.type == 'length') {
+                    if(!extra.minLenght) {
+                        extra.min_length_error = true
+                        valid = false
+                    } else {
+                        extra.min_length_error = false
+                    }
+                    if(!extra.maxLenght) {
+                        extra.max_length_error = true
+                        valid = false
+                    } else {
+                        extra.max_length_error = false
+                    }
+                }
+            })
+            if(valid) {
+                closeButton.click()
+            }
+        },
         saveMetadata(resource, field) {
             resource.current_field = null
             resource.show_fields = true
@@ -234,7 +277,7 @@ var app = new Vue({
             this.resource_index += 1
             this.resources.forEach(resource => {
                 resource.show = false
-            });
+            })
             this.resources.push(
                 {
                     id: '',
@@ -267,7 +310,12 @@ var app = new Vue({
                 min: 0,
                 maxLenght: 0,
                 minLenght: 0,
-                value: ''
+                value: '',
+                min_error: false,
+                max_error: false,
+                min_length_error: false,
+                max_length_error: false,
+                list_error: false
             })
         },
         deleteMetadata(field, extra) {

@@ -194,9 +194,10 @@ def publish_package():
     }
     data = request.form.copy()
     data['state'] = 'active'
+    package = model.Session.query(model.Package).filter(model.Package.name==data['id']).one()
     try:
-        action = get_action('package_update')
-        action(context, data)
+        package.state = 'active'
+        model.Session.commit()
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary

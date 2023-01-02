@@ -198,6 +198,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.min" type="number" class="form-control">
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.min_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,6 +209,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.max" type="number" class="form-control">
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.max_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -225,6 +227,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.min_length" type="number" class="form-control">
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.min_length_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,6 +238,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.max_length" type="number" class="form-control">
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.max_length_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,6 +256,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.value" type="text" class="form-control">
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.list_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -269,7 +274,8 @@
                                 </div>
                               </div>
                               <div class="modal-footer">
-                                <button data-bs-dismiss="modal" type="button" class="btn btn-primary">{{ _('Save') }} <i class="fa-solid fa-circle-check"></i></button>
+                                <button @click="checkMetadata(field)" type="button" class="btn btn-primary">{{ _('Save') }} <i class="fa-solid fa-circle-check"></i></button>
+                                <button :ref="'modal_close_' + field.name" data-bs-dismiss="modal" style="display: none;">{{ _('Close') }}</button>
                               </div>
                             </div>
                           </div>
