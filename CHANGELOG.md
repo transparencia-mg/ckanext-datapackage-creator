@@ -57,3 +57,8 @@ Create table command added
 ## [0.0.11] - 2022-12-29
 
 adjusting editing of packages and resources
+
+
+## [0.0.12] - 2023-01-04
+
+Bugs fixed in edit metadata resource
