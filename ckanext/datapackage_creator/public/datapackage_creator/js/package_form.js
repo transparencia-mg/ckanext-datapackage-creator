@@ -242,10 +242,8 @@ var app = new Vue({
             formData.append('private', this.form.visibility)
             formData.append('url', this.form.source)
             formData.append('version', this.form.version)
-            formData.append('author', this.form.contributors[0].name)
-            formData.append('author_email', this.form.contributors[0].email)
-            formData.append('maintainer', this.form.contributors[1].name)
-            formData.append('maintainer_email', this.form.contributors[1].email)
+            formData.append('author', this.form.contributors[1].name)
+            formData.append('author_email', this.form.contributors[1].email)
             formData.append('metadata', JSON.stringify(this.form))
             axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
                 this.error_summary = []

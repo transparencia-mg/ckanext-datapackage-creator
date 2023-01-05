@@ -14,7 +14,7 @@ from ckan.views.dataset import _tag_string_to_list
 
 from ckanext.datapackage_creator.utils import row_to_dict
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
-from ckanext.datapackage_creator.validation import validate_resource
+from ckanext.datapackage_creator.validation import validate_resource, validate_package
 
 
 def inference():
@@ -157,6 +157,7 @@ def save_package():
         'package': None,
     }
     try:
+        validate_package(data)
         package = package_action(context, data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict

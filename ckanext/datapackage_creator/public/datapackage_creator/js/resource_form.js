@@ -260,12 +260,6 @@ var app = new Vue({
                     }
                 }
                 resource.id = res.data.resource.id
-                if(!resource.has_error) {
-                    this.success_message = 'Successfully saved resource!'
-                    setTimeout(() => {
-                        this.success_message = ''
-                    }, 5000)
-                }
             })
         },
         deleteResource(resource) {
