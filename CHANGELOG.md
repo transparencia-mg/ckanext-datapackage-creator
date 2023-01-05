@@ -62,3 +62,8 @@ adjusting editing of packages and resources
 ## [0.0.12] - 2023-01-04
 
 Bugs fixed in edit metadata resource
+
+
+## [0.0.13] - 2023-01-05
+
+Updating resource validation
