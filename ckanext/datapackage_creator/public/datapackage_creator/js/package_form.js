@@ -6,6 +6,7 @@ var app = new Vue({
         error_summary: [],
         contributor_index: 2,
         extra_index: 0,
+        allowed_add_data: false,
         form: {
             title: '',
             id: '',
@@ -227,6 +228,9 @@ var app = new Vue({
                 return value.index != extra.index
             })
         },
+        checkAddData(){
+
+        },
         submit() {
             const formData = new FormData()
             const headers = { 'Content-Type': 'multipart/form-data' }
@@ -257,6 +261,12 @@ var app = new Vue({
                     window.location = `/dataset/${this.form.name}/resource/new`
                 }
             })
+        }
+    },
+    computed: {
+        allowedAddData() {
+            return this.form.title && this.form.notes && this.form.license && this.form.tags &&
+            this.form.contributors[1].name && this.form.contributors[1].email
         }
     }
 })
