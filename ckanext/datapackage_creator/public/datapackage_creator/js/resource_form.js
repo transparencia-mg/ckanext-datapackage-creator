@@ -6,6 +6,7 @@ var app = new Vue({
         resource_index: 1,
         success_message: '',
         allowed_add_resource: true,
+        allowed_publish: false,
         resources: [
             {
                 id: '',
@@ -323,16 +324,32 @@ var app = new Vue({
                 value: ''
             })
         },
-        publishPackage() {
-            const formData = new FormData()
-            const headers = { 'Content-Type': 'multipart/form-data' }
-            formData.append('id', this.package_id)
-            axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
-                this.success_message = 'Successfully published Package!'
-                setTimeout(() => {
-                    this.success_message = ''
-                }, 5000)
+        validate(){
+            this.resources.forEach(resource => {
+                this.saveResource(resource)
             })
+            this.allowed_publish = true
+        },
+        publishPackage() {
+            let ok = true
+            if(!this.packageValid) {
+                ok = confirm('One or more invalid resources, do you want to publish anyway?')
+            }
+            if(ok) {
+                const formData = new FormData()
+                const headers = { 'Content-Type': 'multipart/form-data' }
+                formData.append('id', this.package_id)
+                axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
+                    window.location = `/dataset/${this.package_id}`
+                })
+            }
+        }
+    },
+    computed: {
+        packageValid() {
+            return this.resources.reduce(function(accumulator, curValue) {
+                return accumulator && !curValue.has_error
+            }, false)
         }
     }
 })

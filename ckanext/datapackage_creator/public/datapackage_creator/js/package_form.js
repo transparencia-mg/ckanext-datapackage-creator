@@ -228,9 +228,6 @@ var app = new Vue({
                 return value.index != extra.index
             })
         },
-        checkAddData(){
-
-        },
         submit() {
             const formData = new FormData()
             const headers = { 'Content-Type': 'multipart/form-data' }
