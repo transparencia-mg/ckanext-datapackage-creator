@@ -15,7 +15,7 @@ var app = new Vue({
             organization: '',
             visibility: true,
             license: '',
-            type: 'Tabular',
+            type: 'tabular-data-package',
             source: '',
             version: '',
             tags: '',
@@ -62,7 +62,7 @@ var app = new Vue({
         ],
         licenseOptions: [
             {
-                value: null, text: 'Please select the license',
+                value: '', text: 'Please select the license',
             },
             {
                 value: "cc-by", text: "Creative Commons Atribuição"
@@ -114,8 +114,14 @@ var app = new Vue({
             }
         ],
         typeOptions: [
-            'Tabular',
-            'Not Tabular'
+            {
+                text: 'Tabular',
+                value: 'tabular-data-package'
+            },
+            {
+                text: 'Not Tabular',
+                value: 'data-package'
+            }
         ],
         frequencyOptions: [
             {

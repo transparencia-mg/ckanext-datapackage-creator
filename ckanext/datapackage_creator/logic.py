@@ -1,10 +1,11 @@
 import mimetypes
 import datetime as dt
 
-from sqlalchemy.orm.exc import NoResultFound
+from ckan.logic import get_action
 
 from ckanext.datapackage_creator.backends import default as inference_backend
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
+from ckanext.datapackage_creator.converter import ckan_to_frictionless
 
 
 def inference_data(context, data):
@@ -77,8 +78,5 @@ def datapackage_resource_show(context, data):
 
 
 def generate_datapackage_json(context, data):
-    Session = context['model'].Session
-    package_id = data['id']
-    datapackage = Session.query(Datapackage).filter(
-        Datapackage.package_id==package_id
-    ).order_by(Datapackage.created.desc()).first()
+    package = get_action('package_show')(context, data)
+    return ckan_to_frictionless(package)

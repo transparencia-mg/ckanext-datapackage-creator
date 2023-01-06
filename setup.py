@@ -36,7 +36,8 @@ setup(
     install_requires=[
         'frictionless',
         'jsonschema',
-        'python-slugify'
+        'python-slugify',
+        'frictionless_ckan_mapper'
     ],
     include_package_data=True,
     package_data={

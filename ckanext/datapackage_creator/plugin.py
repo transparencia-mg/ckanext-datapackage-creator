@@ -1,5 +1,6 @@
 import ckan.plugins as plugins
-import ckan.plugins.toolkit as toolkit
+
+from ckan.model import Session
 
 from flask import Blueprint
 
@@ -9,6 +10,8 @@ from ckanext.datapackage_creator.logic import (
     datapackage_resource_show, generate_datapackage_json
 )
 from ckanext.datapackage_creator.cli import get_commands
+from ckanext.datapackage_creator.model import DatapackageResource
+from ckanext.datapackage_creator.converter import ckan_to_frictionless
 
 
 class DatapackageCreatorPlugin(plugins.SingletonPlugin):
@@ -17,6 +20,44 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
+    plugins.implements(plugins.IPackageController)
+
+    def read(self, entity) -> None:
+        pass
+
+    def create(self, entity) -> None:
+        pass
+
+    def edit(self, entity):
+        pass
+
+    def delete(self, entity) -> None:
+        pass
+
+    def after_dataset_create(self, context, pkg_dict) -> None:
+        pass
+
+    def after_dataset_update(self, context, pkg_dict):
+        pass
+
+    def after_dataset_delete(self, context, pkg_dict):
+        pass
+
+    def after_dataset_show(self, context, pkg_dict):
+        pass
+
+    def before_dataset_search(self, search_params):
+        return search_params
+
+    def after_dataset_search(self, search_results, search_params):
+        return search_results
+
+    def before_dataset_index(self, pkg_dict):
+        return pkg_dict
+
+    def before_dataset_view(self, pkg_dict):
+        pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
+        return pkg_dict
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
@@ -47,6 +88,10 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         blueprint.add_url_rule(
             "/show-datapackage-resource/<resource_id>", view_func=datapackage_creator.datapackage_resource_show,
             endpoint='datapackage_resource_show', methods=['GET']
+        )
+        blueprint.add_url_rule(
+            "/show-datapackage-json/<package_id>", view_func=datapackage_creator.datapackage_json_show,
+            endpoint='datapackage_json_show', methods=['GET']
         )
         return blueprint
 

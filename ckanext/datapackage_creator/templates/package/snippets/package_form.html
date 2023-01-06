@@ -89,7 +89,7 @@ then itself be extended to add/remove blocks of functionality. #}
         <div class="controls ">
             <div class="form-group">
                 <select class="form-select"  v-model="form.type" id="">
-                  <option v-for="type in typeOptions" :value="type">[[ type ]]</option>
+                  <option v-for="type in typeOptions" :value="type.value">[[ type.text ]]</option>
                 </select>
             </div>
         </div>

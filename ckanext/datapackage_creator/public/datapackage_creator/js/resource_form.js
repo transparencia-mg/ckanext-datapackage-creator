@@ -259,6 +259,8 @@ var app = new Vue({
                     for(const property in res.data.error_summary) {
                         resource.error_summary.push(`${property}: ${res.data.error_summary[property]}`)
                     }
+                } else {
+                    this.success_message = 'Successfully saved resource!'
                 }
                 resource.id = res.data.resource.id
             })

@@ -216,7 +216,6 @@ def datapackage_show(package_id):
         'user': toolkit.c.user,
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
-        'for_edit': True,
     }
     try:
         toolkit.check_access('package_show', context)
@@ -250,7 +249,6 @@ def datapackage_resource_show(resource_id):
         'user': toolkit.c.user,
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
-        'for_edit': True,
     }
     try:
         toolkit.check_access('package_show', context)
@@ -277,17 +275,16 @@ def datapackage_resource_show(resource_id):
     return response
 
 
-def generate_datapackage_json(package_id):
+def datapackage_json_show(package_id):
     context = {
         'model': model,
         'session': model.Session,
         'user': toolkit.c.user,
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
-        'for_edit': True,
     }
     try:
-        toolkit.check_access('package_show', context)
+        toolkit.check_access('package_show', context, {'id': package_id})
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = {
@@ -296,5 +293,5 @@ def generate_datapackage_json(package_id):
     frictionless_package = get_action('generate_datapackage_json')(context, data)
     response = make_response()
     response.content_type = 'application/json'
-    response.data = json.dumps(frictionless_package.to_dict())
+    response.data = json.dumps(frictionless_package)
     return response
