@@ -36,6 +36,14 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <th scope="row" class="dataset-label" property="rdfs:label">Datapackage JSON</th>
+        <td class="dataset-details" property="rdf:value">
+          <a href="/datapackage-creator/show-datapackage-json/{{ pkg_dict.id }}" target="_blank">
+            /datapackage-creator/show-datapackage-json/{{ pkg_dict.id }}
+          </a>
+        </td>
+      </tr>
       {% for extra in extras %}
         {% set key, value = extra %}
         <tr rel="dc:relation" resource="_:extra{{ i }}">
