@@ -72,3 +72,8 @@ Updating resource validation
 ## [0.0.14] - 2023-01-06
 
 Datapackage json url created
+
+
+## [0.0.15] - 2023-01-12
+
+Bugs fixed: Resource update
