@@ -1,3 +1,5 @@
+import json
+
 from ckan.model import Session
 
 from frictionless_ckan_mapper import ckan_to_frictionless as converter
@@ -13,7 +15,7 @@ def ckan_to_frictionless(package):
     frictionless_package = converter.dataset(package)
     try:
         if datapackage:
-            extras = datapackage.data
+            extras = json.loads(datapackage.data)
             frictionless_package['contributors'] = []
             for contributor in extras['contributors']:
                 frictionless_package['contributors'].append({
