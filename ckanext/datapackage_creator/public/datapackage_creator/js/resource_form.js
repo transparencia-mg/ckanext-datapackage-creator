@@ -6,6 +6,7 @@ var app = new Vue({
         resource_index: 1,
         success_message: '',
         allowed_add_resource: true,
+        allowed_publish: false,
         resources: [
             {
                 id: '',
@@ -324,6 +325,7 @@ var app = new Vue({
             })
         },
         validate(){
+            this.allowed_publish = true
             this.resources.forEach(resource => {
                 this.saveResource(resource)
             })
@@ -345,7 +347,7 @@ var app = new Vue({
     },
     computed: {
         packageValid() {
-            return this.resources.reduce(function(accumulator, curValue) {
+            return this.allowed_publish && this.resources.reduce(function(accumulator, curValue) {
                 return accumulator && !curValue.has_error
             }, true)
         }

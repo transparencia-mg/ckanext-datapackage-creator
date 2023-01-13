@@ -366,6 +366,6 @@
     </div>
     <p style="text-align: right;margin-top: 20px;">
         <button @click="validate" type="button" class="btn btn-danger">{{ _('Validate') }}</button>
-        <button @click="publishPackage" type="button" class="btn btn-primary" :disabled="!allowed_publish">{{ _('Publish') }}</button>
+        <button @click="publishPackage" type="button" class="btn btn-primary" :disabled="!packageValid">{{ _('Publish') }}</button>
     </p>
 </div>
