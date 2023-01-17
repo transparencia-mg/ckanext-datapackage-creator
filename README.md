@@ -35,3 +35,27 @@ Once installed, add the `datapackage_creator` plugin to the `ckan.plugins` confi
 ```
 ckan.plugins = ... datapackage_creator
 ```
+
+# Datapackage Creator Configuration
+
+The plugin allows you to configure which fields of the resource and package are mandatory and/or editable, for this you just need to add a configuration in your INI file.
+
+
+```
+datapackage_creator = /path/to/datapackage_creator.json
+```
+
+Configuration example file:
+
+```
+{
+    "package": {
+        "required": [],
+        "editable": []
+    },
+    "resource": {
+        "required": [],
+        "editable": []
+    }
+}
+```
