@@ -12,7 +12,7 @@ var app = new Vue({
                 id: '',
                 index: 1,
                 file: null,
-                show: true,
+                show: false,
                 fields: [],
                 name: '',
                 title: '',
@@ -160,22 +160,32 @@ var app = new Vue({
             const headers = { 'Content-Type': 'multipart/form-data' }
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
-                    resource.error_summary = []
-                    resource.has_error = false
-                    resource.inference = res.data
-                    resource.name = resource.inference.metadata.name
-                    resource.encoding = resource.inference.metadata.encoding
-                    resource.format = resource.inference.metadata.format
-                    resource.type = resource.inference.metadata.profile
-                    try {
-                        resource.fields = res.data.metadata.schema.fields
-                    } catch (error) {
-                        resource.fields = []
+                    if(res.data.has_error) {
+                        resource.error_summary = [res.data.error_summary]
+                        resource.has_error = true
+                    } else {
+                        resource.show = true
+                        resource.error_summary = []
+                        resource.has_error = false
+                        resource.inference = res.data
+                        resource.name = resource.inference.metadata.name
+                        resource.encoding = resource.inference.metadata.encoding
+                        resource.format = resource.inference.metadata.format
+                        resource.type = resource.inference.metadata.profile
+                        try {
+                            resource.fields = res.data.metadata.schema.fields
+                        } catch (error) {
+                            resource.fields = []
+                        }
                     }
                 })
                 .catch(() => {
                     resource.has_error = true
                     resource.error_summary = ['Unable to upload the file']
+                    setTimeout(() => {
+                        resource.has_error = false
+                        resource.error_summary = ['']
+                    }, 5000)
                 })
         },
         editMetadata(resource, field) {
@@ -259,6 +269,9 @@ var app = new Vue({
                     }
                 } else {
                     this.success_message = 'Successfully saved resource!'
+                    setTimeout(() => {
+                        this.success_message = ''
+                    }, 5000)
                 }
                 resource.id = res.data.resource.id
             })
@@ -277,7 +290,7 @@ var app = new Vue({
                 {
                     id: '',
                     index: this.resource_index,
-                    show: true,
+                    show: false,
                     file: null,
                     fields: [],
                     name: '',

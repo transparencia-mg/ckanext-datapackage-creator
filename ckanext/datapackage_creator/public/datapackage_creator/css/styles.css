@@ -3,12 +3,15 @@
 }
 
 .nav-margin{
-    margin-left: -60px;
-    margin-right: -60px;
+    margin-left: -25px;
+    margin-right: -25px;
 }
 
 #collapseForm{
     background-color: #EEEEEE;
+}
+
+#vue-app {
     margin-left: -36px;
     margin-right: -36px;
 }
