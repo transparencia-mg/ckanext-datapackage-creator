@@ -267,13 +267,17 @@ var app = new Vue({
                     for(const property in res.data.error_summary) {
                         resource.error_summary.push(`${property}: ${res.data.error_summary[property]}`)
                     }
+                    setTimeout(() => {
+                        resource.has_error = false
+                        resource.errors = []
+                    }, 5000)
                 } else {
+                    resource.id = res.data.resource.id
                     this.success_message = 'Successfully saved resource!'
                     setTimeout(() => {
                         this.success_message = ''
                     }, 5000)
                 }
-                resource.id = res.data.resource.id
             })
         },
         deleteResource(resource) {

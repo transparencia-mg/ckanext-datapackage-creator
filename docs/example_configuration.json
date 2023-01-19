@@ -4,6 +4,7 @@
         "editable": []
     },
     "resource": {
-        "required": []
+        "required": [],
+        "editable": []
     }
 }

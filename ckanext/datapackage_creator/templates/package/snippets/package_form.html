@@ -10,7 +10,7 @@ then itself be extended to add/remove blocks of functionality. #}
 {% block errors %}{{ form.errors(error_summary) }}{% endblock %}
 
 {% block basic_fields %}
-<div id="vue-app">
+<div id="vue-app-package">
   <input type="hidden" ref="packageId" value="{{ data.id }}" />
   <input type="hidden" ref="userName" value="{{ c.userobj.name }}">
   <input type="hidden" ref="userEmail" value="{{ c.userobj.email }}">

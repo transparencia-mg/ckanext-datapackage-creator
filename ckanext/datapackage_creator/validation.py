@@ -1,14 +1,18 @@
 from ckan.logic import ValidationError
 
+from ckanext.datapackage_creator.settings import settings
+
 
 def validate_resource(data):
     errors = {}
-    title = data.get('title')
-    if not title:
-        errors['Title'] = ['This field is required']
-    description = data.get('description')
-    if not description:
-        errors['Description'] = ['This field is required']
+    name = data.get('name')
+    if not name:
+        errors['Name'] = ['This field is required']
+    fields_required = settings.get('package', {}).get('required', [])
+    for field in fields_required:
+        value = data.get(field)
+        if not value:
+            errors[field.capitalize()] = ['This field is required']
     if errors:
         error_summary = {k: ', '.join(v) for k, v in errors.items()}
         raise ValidationError(errors=errors, error_summary=error_summary)

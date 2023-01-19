@@ -1,6 +1,6 @@
 var app = new Vue({
     delimiters: ['[[', ']]'],
-    el: '#vue-app',
+    el: '#vue-app-package',
     data: {
         has_error: false,
         error_summary: [],
