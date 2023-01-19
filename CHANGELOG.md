@@ -77,3 +77,8 @@ Datapackage json url created
 ## [0.0.15] - 2023-01-12
 
 Bugs fixed: Resource update
+
+
+## [0.0.16] - 2023-01-19
+
+Adjusting configuration system
