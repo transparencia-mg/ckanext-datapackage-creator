@@ -1,3 +1,7 @@
+import string
+
+from functools import reduce
+
 from ckan.logic import ValidationError
 
 from ckanext.datapackage_creator.settings import settings
@@ -5,9 +9,14 @@ from ckanext.datapackage_creator.settings import settings
 
 def validate_resource(data):
     errors = {}
-    name = data.get('name')
+    name = data.get('name', '')
+    check_slug = lambda x, y: x and (y in string.ascii_lowercase or y in ['.', '-', '_'] or y.isdigit())
     if not name:
         errors['Name'] = ['This field is required']
+    elif not reduce(check_slug, name, True):
+        errors['Name'] = [
+            'It must consist only of lowercase alphanumeric characters plus “.”, “-” and “_”.'
+        ]
     fields_required = settings.get('package', {}).get('required', [])
     for field in fields_required:
         value = data.get(field)
