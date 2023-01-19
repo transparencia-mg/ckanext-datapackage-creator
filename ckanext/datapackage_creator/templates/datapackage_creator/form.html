@@ -129,24 +129,25 @@
                                         </div>
                                         <div class="col-4">
                                             <div>
-                                                    <label for="tipoDado">{{ _('Type') }}</label>
-                                                    <select v-model="field.type" class="form-control" id="">
-                                                        <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
-                                                    </select>
+                                                <label for="tipoDado">{{ _('Type') }}</label>
+                                                <select @change="changeType(field)" v-model="field.type" class="form-control" id="">
+                                                    <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
+                                                </select>
                                             </div>
                                             <br>
                                             <div>
-                                                    <label for="formatoDado">{{ _('Format') }}</label>
-                                                    <select v-model="field.format" class="form-control" id="">
-                                                        <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
-                                                    </select>
+                                                <label for="formatoDado">{{ _('Format') }}</label>
+                                                <input type="text" v-model="field.format" class="form-control" v-if="isDateType(field)">
+                                                <select v-model="field.format" class="form-control" v-else>
+                                                    <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
+                                                </select>
                                             </div>
                                             <br>
                                             <div>
-                                                    <label for="obrigatorio">{{ _('Required') }}</label>
-                                                    <select v-model="field.required" class="form-select" id="">
-                                                        <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
-                                                    </select>
+                                                <label for="obrigatorio">{{ _('Required') }}</label>
+                                                <select v-model="field.required" class="form-select" id="">
+                                                    <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
+                                                </select>
                                             </div>
                                             <br>
                                         </div>

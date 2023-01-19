@@ -44,7 +44,14 @@ var app = new Vue({
             'duration',
             'geopoint',
             'geojson',
-            'any',
+            'any'
+        ],
+        dataTypeFieldOptions: [
+            'date',
+            'time',
+            'datetime',
+            'year',
+            'yearmonth'
         ],
         defaultFormatOptions: [
             'default'
@@ -359,6 +366,17 @@ var app = new Vue({
                 axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
                     window.location = `/dataset/${this.package_id}`
                 })
+            }
+        },
+        isDateType(field) {
+            return this.dataTypeFieldOptions.includes(field.type)
+        },
+        changeType(field) {
+            let isDate = this.dataTypeFieldOptions.includes(field.type)
+            if(!isDate) {
+                field.format = 'default'
+            } else {
+                field.format = ''
             }
         }
     },
