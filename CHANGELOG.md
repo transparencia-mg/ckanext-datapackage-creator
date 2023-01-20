@@ -92,3 +92,8 @@ Name validation: must consist only of lowercase alphanumeric characters plus “
 ## [0.0.17] - 2023-01-19
 
 Adjusting dependencies for excel files
+
+
+## [0.0.18] - 2023-01-20
+
+Fix in resource validation configuration
