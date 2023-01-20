@@ -45,6 +45,8 @@ The plugin allows you to configure which fields of the resource and package are 
 datapackage_creator = /path/to/datapackage_creator.json
 ```
 
+We suggest that the file path would be `/etc/ckan/default/datapackage_creator.json` or in the same folder as `ckan.ini` file.
+
 Configuration example file:
 
 ```
