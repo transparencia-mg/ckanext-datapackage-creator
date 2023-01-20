@@ -39,7 +39,6 @@ def inference():
     data = {
         'filepath': tmp.name,
     }
-
     try:
         result = action(context, data)
         result['has_error'] = False
@@ -49,8 +48,11 @@ def inference():
             'has_error': True,
             'error_summary': 'Error in data inference'
         }
-    name, ext = os.path.splitext(file.filename)
-    result['metadata']['name'] = slugify(name)
+    else:
+        result['has_error'] = False
+        result['error_summary'] = ''
+        name, ext = os.path.splitext(file.filename)
+        result['metadata']['name'] = slugify(name)
     response.data = json.dumps(result)
     return response
 

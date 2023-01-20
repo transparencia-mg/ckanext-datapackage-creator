@@ -34,10 +34,12 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     namespace_packages=['ckanext'],
     install_requires=[
-        'frictionless',
+        'frictionless==4.40.8',
         'jsonschema',
         'python-slugify',
         'frictionless_ckan_mapper'
+        'openpyxl',
+        'xlrd',
     ],
     include_package_data=True,
     package_data={
