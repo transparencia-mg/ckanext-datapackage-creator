@@ -87,3 +87,8 @@ Adjusting configuration system
 ## [0.0.17] - 2023-01-19
 
 Name validation: must consist only of lowercase alphanumeric characters plus “.”, “-” and “_”
+
+
+## [0.0.17] - 2023-01-19
+
+Adjusting dependencies for excel files
