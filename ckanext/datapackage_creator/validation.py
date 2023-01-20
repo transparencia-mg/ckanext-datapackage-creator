@@ -17,7 +17,7 @@ def validate_resource(data):
         errors['Name'] = [
             'It must consist only of lowercase alphanumeric characters plus “.”, “-” and “_”.'
         ]
-    fields_required = settings.get('package', {}).get('required', [])
+    fields_required = settings.get('resource', {}).get('required', [])
     for field in fields_required:
         value = data.get(field)
         if not value:
