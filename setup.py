@@ -37,7 +37,7 @@ setup(
         'frictionless==4.40.8',
         'jsonschema',
         'python-slugify',
-        'frictionless_ckan_mapper'
+        'frictionless_ckan_mapper',
         'openpyxl',
         'xlrd',
     ],

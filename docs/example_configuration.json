@@ -1,10 +1,10 @@
 {
     "package": {
         "required": [],
-        "editable": []
+        "readonly": []
     },
     "resource": {
         "required": [],
-        "editable": []
+        "readonly": []
     }
 }

@@ -15,6 +15,7 @@ from ckan.views.dataset import _tag_string_to_list
 from ckanext.datapackage_creator.utils import row_to_dict
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
 from ckanext.datapackage_creator.validation import validate_resource, validate_package
+from ckanext.datapackage_creator.settings import settings
 
 
 def inference():
@@ -57,6 +58,29 @@ def inference():
     return response
 
 
+def settings_show():
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+        'for_edit': True,
+    }
+    try:
+        toolkit.check_access('package_create', context)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+    response = make_response()
+    response.content_type = 'application/json'
+    options = {
+        'resource': settings.get('resource', {'required': [], 'editable': []}),
+        'package': settings.get('package', {'required': [], 'editable': []}),
+    }
+    response.data = json.dumps(options)
+    return response
+
+
 def save_resource():
     context = {
         'model': model,
@@ -73,10 +97,11 @@ def save_resource():
     data = request.form.copy()
     data['state'] = 'active'
     data['url_type'] = 'upload'
-    data['upload'] = request.files['upload']
+    resource_id = data.get('id')
+    if not resource_id:
+        data['upload'] = request.files['upload']
     metadata = data['metadata']
     del data['metadata']
-    resource_id = data.get('id')
     data_response = {
         'has_error': False,
         'resource': None

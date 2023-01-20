@@ -130,7 +130,7 @@
                                         <div class="col-4">
                                             <div>
                                                 <label for="tipoDado">{{ _('Type') }}</label>
-                                                <select @change="changeType(field)" v-model="field.type" class="form-control" id="">
+                                                <select @change="changeType(field)" v-model="field.type" class="form-control" id="" :disabled="isReadonly('field.type')">
                                                     <option v-for="type in typeFieldOptions" :value="type">[[ type ]]</option>
                                                 </select>
                                             </div>
@@ -138,14 +138,14 @@
                                             <div>
                                                 <label for="formatoDado">{{ _('Format') }}</label>
                                                 <input type="text" v-model="field.format" class="form-control" v-if="isDateType(field)">
-                                                <select v-model="field.format" class="form-control" v-else>
+                                                <select :disabled="isReadonly('field.format')" v-model="field.format" class="form-control" v-else>
                                                     <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
                                                 </select>
                                             </div>
                                             <br>
                                             <div>
                                                 <label for="obrigatorio">{{ _('Required') }}</label>
-                                                <select v-model="field.required" class="form-select" id="">
+                                                <select :disabled="isReadonly('field.required')" v-model="field.required" class="form-select" id="">
                                                     <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
                                                 </select>
                                             </div>
@@ -170,7 +170,7 @@
                                         <div class="col-md-4">
                                             <div>
                                                 <label for="unico">{{ _('Unique') }}</label>
-                                                <select v-model="field.unique" class="form-select" id="">
+                                                <select :disabled="isReadonly('field.unique')" v-model="field.unique" class="form-select" id="">
                                                     <option v-for="boolean in booleanOptions" :value="boolean.value">[[ boolean.text ]]</option>
                                                 </select>
                                             </div>

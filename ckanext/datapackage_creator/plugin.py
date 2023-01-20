@@ -93,6 +93,10 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             "/show-datapackage-json/<package_id>", view_func=datapackage_creator.datapackage_json_show,
             endpoint='datapackage_json_show', methods=['GET']
         )
+        blueprint.add_url_rule(
+            "/show-settings", view_func=datapackage_creator.settings_show,
+            endpoint='settings_show', methods=['GET']
+        )
         return blueprint
 
     def update_config(self, config):

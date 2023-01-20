@@ -7,6 +7,7 @@ var app = new Vue({
         success_message: '',
         allowed_add_resource: true,
         allowed_publish: false,
+        settings: null,
         resources: [
             {
                 id: '',
@@ -144,6 +145,9 @@ var app = new Vue({
             this.resources[0].id = resourceId
             this.getResource()
         }
+        axios.get('/datapackage-creator/show-settings').then(res => {
+            this.settings = res.data
+        })
     },
     methods: {
         getResource() {
@@ -378,6 +382,13 @@ var app = new Vue({
             } else {
                 field.format = ''
             }
+        },
+        isReadonly(field_name) {
+            let readonly = false
+            if(this.settings != null && this.settings.resource && this.settings.resource.readonly) {
+                readonly = this.settings.resource.readonly.includes(field_name)
+            }
+            return readonly
         }
     },
     computed: {
