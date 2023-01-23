@@ -99,6 +99,16 @@ Adjusting dependencies for excel files
 Fix in resource validation configuration
 
 
-## [0.0.18] - 2023-01-20
+## [0.0.19] - 2023-01-20
 
 Bugs fixed: update resource
+
+
+## [0.0.20] - 2023-01-20
+
+Bugs fixed: update resource
+
+
+## [0.0.21] - 2023-01-23
+
+Bugs fixed: new metadata of resource
