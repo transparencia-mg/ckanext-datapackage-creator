@@ -185,7 +185,7 @@
                                             <div class="controls ">
                                                 <div class="form-group">
                                                     <select v-model="extra.type" class="form-control" id="">
-                                                        <option v-for="metadata_type in metadataTypeOptions" :value="metadata_type.value">[[ metadata_type.name ]]</option>
+                                                        <option v-for="metadata_type in filterMetadataTypeOptions(field)" :value="metadata_type.value">[[ metadata_type.name ]]</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -198,7 +198,7 @@
                                                     <label class="form-label" for="field-title">{{ _('Min') }}</label>
                                                     <div class="controls ">
                                                         <div class="form-group">
-                                                            <input v-model="extra.min" type="number" class="form-control">
+                                                            <input v-model="extra.min" type="number" class="form-control" step="1">
                                                             <div class="invalid-feedback" style="display: block !important;" v-if="extra.min_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
@@ -209,7 +209,7 @@
                                                     <label class="form-label" for="field-title">{{ _('Max') }}</label>
                                                     <div class="controls ">
                                                         <div class="form-group">
-                                                            <input v-model="extra.max" type="number" class="form-control">
+                                                            <input v-model="extra.max" type="number" class="form-control" step="1">
                                                             <div class="invalid-feedback" style="display: block !important;" v-if="extra.max_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
@@ -227,7 +227,7 @@
                                                     <label class="form-label" for="field-title">{{ _('Min Lenght') }}</label>
                                                     <div class="controls ">
                                                         <div class="form-group">
-                                                            <input v-model="extra.min_length" type="number" class="form-control">
+                                                            <input v-model="extra.min_length" type="number" class="form-control" step="1">
                                                             <div class="invalid-feedback" style="display: block !important;" v-if="extra.min_length_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
@@ -238,7 +238,7 @@
                                                     <label class="form-label" for="field-title">{{ _('Max Lenght') }}</label>
                                                     <div class="controls ">
                                                         <div class="form-group">
-                                                            <input v-model="extra.max_length" type="number" class="form-control">
+                                                            <input v-model="extra.max_length" type="number" class="form-control" step="1">
                                                             <div class="invalid-feedback" style="display: block !important;" v-if="extra.max_length_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
@@ -249,7 +249,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="extra.type == 'list' || extra.type == 'enum'">
+                                    <div class="col-md-4" v-if="extra.type == 'pattern' || extra.type == 'enum'">
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <div class="form-group control-full control-large">
@@ -257,7 +257,7 @@
                                                     <div class="controls ">
                                                         <div class="form-group">
                                                             <input v-model="extra.value" type="text" class="form-control">
-                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.list_error">{{ _('This field is required') }}</div>
+                                                            <div class="invalid-feedback" style="display: block !important;" v-if="extra.pattern_error">{{ _('This field is required') }}</div>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -102,8 +102,8 @@ var app = new Vue({
                 name: 'Maximum Length / Minimum Length'
             },
             {
-                value: 'list',
-                name: 'List'
+                value: 'pattern',
+                name: 'Pattern'
             },
             {
                 value: 'enum',
@@ -214,12 +214,12 @@ var app = new Vue({
             const closeButton = this.$refs[`modal_close_${field.name}`][0]
             let valid = true
             field.extras.forEach(extra => {
-                if(extra.type == 'enum' || extra.type == 'list') {
+                if(extra.type == 'enum' || extra.type == 'pattern') {
                     if(extra.value === '') {
-                        extra.list_error = true
+                        extra.pattern_error = true
                         valid = false
                     } else {
-                        extra.list_error = false
+                        extra.pattern_error = false
                     }
                 } else if(extra.type == 'max_min') {
                     if(!extra.min) {
@@ -338,7 +338,7 @@ var app = new Vue({
                 max_error: false,
                 min_length_error: false,
                 max_length_error: false,
-                list_error: false
+                pattern_error: false
             })
         },
         deleteMetadata(field, extra) {
@@ -389,6 +389,20 @@ var app = new Vue({
                 readonly = this.settings.resource.readonly.includes(field_name)
             }
             return readonly
+        },
+        filterMetadataTypeOptions(field) {
+            return this.metadataTypeOptions.filter(function(value, index, arr){
+                if(value.value == 'pattern') {
+                    return field.type == 'string'
+                } else if(value.value == 'length') {
+                    return ['array', 'string', 'object'].includes(field.type)
+                } else if(value.value == 'max_min') {
+                    return ['integer', 'number', 'date', 'time', 'datetime', 'year', 'yearmonth'].includes(
+                        field.type
+                    )
+                }
+                return true
+            })
         }
     },
     computed: {
