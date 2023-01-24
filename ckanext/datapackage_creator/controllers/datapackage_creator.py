@@ -178,15 +178,15 @@ def save_package():
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = request.form.copy()
-    data['_ckan_phase'] = 'dataset_new_1'
     tag_string = data.pop('tag_string')
     data['tags'] = _tag_string_to_list(tag_string)
     package_id = data.get('id')
     if not package_id:
         data['state'] = 'draft'
+        data['_ckan_phase'] = 'dataset_new_1'
         package_action = get_action('package_create')
     else:
-        package_action = get_action('package_update')
+        package_action = get_action('package_patch')
     metadata = data.pop('metadata')
     metadata_json = json.loads(metadata)
     data['extras'] = metadata_json['extras']

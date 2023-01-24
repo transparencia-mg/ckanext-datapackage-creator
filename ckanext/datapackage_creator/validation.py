@@ -33,7 +33,7 @@ def validate_resource(data):
             if not value:
                 errors_field.append(f'{field_required.capitalize()} is required')
         if errors_field:
-            errors[f'Field {index}'] = [', '.join(errors_field)]
+            errors[f'Table Schema {index}'] = [', '.join(errors_field)]
     if errors:
         error_summary = {k: ', '.join(v) for k, v in errors.items()}
         raise ValidationError(errors=errors, error_summary=error_summary)
