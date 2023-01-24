@@ -17,11 +17,23 @@ def validate_resource(data):
         errors['Name'] = [
             'It must consist only of lowercase alphanumeric characters plus “.”, “-” and “_”.'
         ]
-    fields_required = settings.get('resource', {}).get('required', [])
-    for field in fields_required:
+    resource_required = settings.get('resource', {}).get('required', [])
+    resource_fields_required = [field for field in resource_required if not field.startswith('field.')]
+    fields_required = [field for field in resource_required if field.startswith('field.')]
+    for field in resource_fields_required:
         value = data.get(field)
         if not value:
             errors[field.capitalize()] = ['This field is required']
+    for i, field in enumerate(data.get('fields', [])):
+        index = i + 1
+        errors_field = []
+        for field_required in fields_required:
+            field_required = field_required.replace('field.', '')
+            value = field.get(field_required)
+            if not value:
+                errors_field.append(f'{field_required.capitalize()} is required')
+        if errors_field:
+            errors[f'Field {index}'] = [', '.join(errors_field)]
     if errors:
         error_summary = {k: ', '.join(v) for k, v in errors.items()}
         raise ValidationError(errors=errors, error_summary=error_summary)

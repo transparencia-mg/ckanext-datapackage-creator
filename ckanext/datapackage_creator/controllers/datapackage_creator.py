@@ -106,8 +106,10 @@ def save_resource():
         'has_error': False,
         'resource': None
     }
+    data_validate = data.copy()
+    data_validate['fields'] = json.loads(metadata).get('fields')
     try:
-        validate_resource(data)
+        validate_resource(data_validate)
         if resource_id:
             action = get_action('resource_update')
         else:

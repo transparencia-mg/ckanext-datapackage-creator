@@ -196,7 +196,7 @@ var app = new Vue({
                     setTimeout(() => {
                         resource.has_error = false
                         resource.error_summary = ['']
-                    }, 5000)
+                    }, 8000)
                 })
         },
         editMetadata(resource, field) {
