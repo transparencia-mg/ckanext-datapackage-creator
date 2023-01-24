@@ -112,3 +112,8 @@ Bugs fixed: update resource
 ## [0.0.21] - 2023-01-23
 
 Bugs fixed: new metadata of resource
+
+
+## [0.0.22] - 2023-01-24
+
+Readonly fields validation added
