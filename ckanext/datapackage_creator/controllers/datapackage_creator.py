@@ -111,7 +111,7 @@ def save_resource():
     try:
         validate_resource(data_validate)
         if resource_id:
-            action = get_action('resource_update')
+            action = get_action('resource_patch')
         else:
             action = get_action('resource_create')
         resource = action(context, data)
