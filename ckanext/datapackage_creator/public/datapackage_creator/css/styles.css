@@ -62,3 +62,7 @@ input::placeholder{
     margin-right: -17px!important;
     margin-top: -17px!important;
 }
+
+.required {
+    color: #dc3545;
+}

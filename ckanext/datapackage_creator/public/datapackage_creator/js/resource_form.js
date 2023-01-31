@@ -390,6 +390,13 @@ var app = new Vue({
             }
             return readonly
         },
+        isRequired(field_name) {
+            let required = false
+            if(this.settings != null && this.settings.resource && this.settings.resource.required) {
+                required = this.settings.resource.required.includes(field_name)
+            }
+            return required
+        },
         filterMetadataTypeOptions(field) {
             return this.metadataTypeOptions.filter(function(value, index, arr){
                 if(value.value == 'pattern') {

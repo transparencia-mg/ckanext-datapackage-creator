@@ -18,12 +18,14 @@ def ckan_to_frictionless(package):
             extras = json.loads(datapackage.data)
             frictionless_package['contributors'] = []
             for contributor in extras['contributors']:
-                frictionless_package['contributors'].append({
+                contributor_item = {
                     'title': contributor['name'],
                     'role': contributor['type'].lower(),
-                    'path': contributor['url'],
                     'email': contributor['email'],
-                })
+                }
+                if contributor['url'].strip():
+                    contributor_item['path'] = contributor['url']
+                frictionless_package['contributors'].append(contributor_item)
             frictionless_package['frequency'] = extras['frequency']
             for extra in package['extras']:
                 frictionless_package[extra['key']] = extra['value']

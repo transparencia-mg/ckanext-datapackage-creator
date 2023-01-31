@@ -61,3 +61,33 @@ Configuration example file:
     }
 }
 ```
+
+Mandatory possible package fields:
+
+- title
+- notes
+- source
+- version
+
+Possible read-only package fields:
+
+Nothing
+
+Mandatory possible resource fields:
+
+- title
+- description
+- format
+- type
+- encoding
+- field.name (Column field)
+- field.title (Column field)
+- field.description (Column field)
+- field.format (Column field)
+
+
+Possible read-only package fields:
+
+- format
+- type
+- encoding
