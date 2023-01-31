@@ -16,6 +16,7 @@ from ckanext.datapackage_creator.utils import row_to_dict
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
 from ckanext.datapackage_creator.validation import validate_resource, validate_package
 from ckanext.datapackage_creator.settings import settings
+from ckanext.datapackage_creator.backends import default as default_backend
 
 
 def inference():
@@ -239,10 +240,20 @@ def publish_package():
     }
     try:
         get_action('package_patch')(context, package_data)
+        frictionless_package = get_action('generate_datapackage_json')(context, package_data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary
         data_response['has_error'] = True
+    else:
+        validation = default_backend.validate_package(frictionless_package)
+        datapackage = model.Session.query(Datapackage).filter(
+            Datapackage.package_id==package_data['id']
+        ).order_by(Datapackage.created.desc()).first()
+        if datapackage:
+            datapackage.errors = validation.to_dict()
+            model.Session.commit()
+    default_backend.validate_package(package_data)
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
@@ -323,10 +334,6 @@ def datapackage_json_show(package_id):
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
     }
-    try:
-        toolkit.check_access('package_show', context, {'id': package_id})
-    except toolkit.NotAuthorized:
-        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = {
         'id': package_id
     }

@@ -369,6 +369,8 @@ var app = new Vue({
                 const headers = { 'Content-Type': 'multipart/form-data' }
                 formData.append('id', this.package_id)
                 axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
+                    console.log("---------publish------------")
+                    console.log(this.package_id)
                     window.location = `/dataset/${this.package_id}`
                 })
             }

@@ -32,6 +32,7 @@ def ckan_to_frictionless(package):
         resources = []
         for resource in package['resources']:
             frictionless_resource = converter.resource(resource)
+            frictionless_resource['path'] = resource['path']
             datapackage_resource = Session.query(DatapackageResource).filter(
                 DatapackageResource.resource_id==resource['id']
             ).order_by(DatapackageResource.created.desc()).first()
@@ -39,8 +40,8 @@ def ckan_to_frictionless(package):
                 extras = json.loads(datapackage_resource.data)
                 frictionless_resource['schema'] = {
                     'fields': [],
-                    'foreignKeys': []
                 }
+                foreign_keys = []
                 try:
                     fields = extras['inference']['metadata']['schema']['fields']
                 except:
@@ -64,7 +65,7 @@ def ckan_to_frictionless(package):
                         except:
                             pass
                         else:
-                            frictionless_resource['schema']['foreignKeys'].append(
+                            foreign_keys.append(
                                 {
                                     'fields': field['name'],
                                     'reference': {
@@ -74,6 +75,8 @@ def ckan_to_frictionless(package):
                                 }
                             )
                     frictionless_resource['schema']['fields'].append(field_dict)
+                if foreign_keys:
+                    frictionless_resource['foreignKeys'] = []
             resources.append(frictionless_resource)
         frictionless_package['resources'] = resources
     except:
