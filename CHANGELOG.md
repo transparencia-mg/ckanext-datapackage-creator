@@ -122,3 +122,8 @@ Readonly fields validation added
 ## [0.0.23] - 2023-01-24
 
 Bugs fixed: resource update
+
+
+## [0.0.24] - 2023-01-31
+
+Bugs fixed: datapackage json
