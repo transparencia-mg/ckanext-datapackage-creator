@@ -132,3 +132,8 @@ Bugs fixed: datapackage json
 ## [0.0.25] - 2023-01-31
 
 Bugs fixed: generate validation
+
+
+## [0.0.26] - 2023-01-31
+
+Bugs fixed: datapackage_json in package_show and fields in table schema
