@@ -127,3 +127,8 @@ Bugs fixed: resource update
 ## [0.0.24] - 2023-01-31
 
 Bugs fixed: datapackage json
+
+
+## [0.0.25] - 2023-01-31
+
+Bugs fixed: generate validation
