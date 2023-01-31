@@ -154,6 +154,7 @@ var app = new Vue({
             const url = `/datapackage-creator/show-datapackage-resource/${this.resources[0].id}`
             axios.get(url).then(res => {
                 this.package_id = res.data.resource.package_id
+                console.log(this.package_id)
                 this.resources = []
                 this.resources.push(JSON.parse(res.data.datapackage_resource.data))
             })

@@ -233,10 +233,12 @@ def publish_package():
     }
     data = request.form.copy()
     data['state'] = 'active'
-    package = model.Session.query(model.Package).filter(model.Package.name==data['id']).one()
+    package_data = {
+        'id': data['id'],
+        'state': 'active'
+    }
     try:
-        package.state = 'active'
-        model.Session.commit()
+        get_action('package_patch')(context, package_data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary
