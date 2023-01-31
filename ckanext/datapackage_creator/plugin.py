@@ -9,6 +9,7 @@ from ckanext.datapackage_creator.logic import (
     save_datapackage, inference_data, save_datapackage_resource, datapackage_show,
     datapackage_resource_show, generate_datapackage_json
 )
+from ckanext.datapackage_creator.converter import ckan_resource_to_frictionless
 from ckanext.datapackage_creator.cli import get_commands
 from ckanext.datapackage_creator.model import DatapackageResource
 from ckanext.datapackage_creator.converter import ckan_to_frictionless
@@ -21,6 +22,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
     plugins.implements(plugins.IPackageController)
+    # plugins.implements(plugins.IResourceController)
 
     def read(self, entity) -> None:
         pass
@@ -44,7 +46,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         pass
 
     def after_dataset_show(self, context, pkg_dict):
-        pass
+        pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
 
     def before_dataset_search(self, search_params):
         return search_params
@@ -56,8 +58,29 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         return pkg_dict
 
     def before_dataset_view(self, pkg_dict):
-        pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
         return pkg_dict
+
+    def before_resource_create(self, context, resource) -> None:
+        pass
+
+    def after_resource_create(self, context, resource) -> None:
+        pass
+
+    def before_resource_update(self, context, current, resource) -> None:
+        pass
+
+    def after_resource_update(self, context, resource) -> None:
+        pass
+
+    def before_resource_delete(self, context, resource, resources) -> None:
+        pass
+
+    def after_resource_delete(self, context, resources) -> None:
+        pass
+
+    def before_resource_show(self, resource_dict):
+        resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
+        return resource_dict
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
@@ -92,6 +115,10 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         blueprint.add_url_rule(
             "/show-datapackage-json/<package_id>", view_func=datapackage_creator.datapackage_json_show,
             endpoint='datapackage_json_show', methods=['GET']
+        )
+        blueprint.add_url_rule(
+            "/show-validation/<package_id>", view_func=datapackage_creator.datapackage_validation_show,
+            endpoint='datapackage_validation_show', methods=['GET']
         )
         blueprint.add_url_rule(
             "/show-settings", view_func=datapackage_creator.settings_show,

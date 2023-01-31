@@ -216,6 +216,21 @@ def save_package():
     return response
 
 
+# def validate_package():
+#     context = {
+#         'model': model,
+#         'session': model.Session,
+#         'user': toolkit.c.user,
+#         'auth_user_obj': toolkit.c.userobj,
+#         'api_version': 3,
+#         'for_edit': True,
+#     }
+#     try:
+#         toolkit.check_access('package_create', context)
+#     except toolkit.NotAuthorized:
+#         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
+
+
 def publish_package():
     context = {
         'model': model,
@@ -342,3 +357,27 @@ def datapackage_json_show(package_id):
     response.content_type = 'application/json'
     response.data = json.dumps(frictionless_package)
     return response
+
+
+def datapackage_validation_show(package_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+    }
+    data = {
+        'id': package_id
+    }
+    package = get_action('package_show')(context, data)
+    datapackage_list = model.Session.query(Datapackage).filter(
+        Datapackage.package_id==package_id
+    ).order_by(Datapackage.created.desc())
+    return toolkit.render(
+        'datapackage_creator/validation_read.html',
+        extra_vars={
+            'datapackage_list': datapackage_list,
+            'pkg_dict': package
+        }
+    )

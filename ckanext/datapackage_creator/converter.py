@@ -7,6 +7,56 @@ from frictionless_ckan_mapper import ckan_to_frictionless as converter
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
 
 
+def ckan_resource_to_frictionless(resource):
+    frictionless_resource = converter.resource(resource)
+    frictionless_resource['path'] = resource['url']
+    datapackage_resource = Session.query(DatapackageResource).filter(
+        DatapackageResource.resource_id==resource['id']
+    ).order_by(DatapackageResource.created.desc()).first()
+    if datapackage_resource:
+        extras = json.loads(datapackage_resource.data)
+        frictionless_resource['schema'] = {
+            'fields': [],
+        }
+        foreign_keys = []
+        try:
+            fields = extras['inference']['metadata']['schema']['fields']
+        except:
+            pass
+        for field in fields:
+            field_dict = {
+                'name': field['name'],
+                'description': field['description'],
+                'title': field['title'],
+                'format': field['format'],
+                'description': field['description'],
+                'type': field['type'],
+            }
+            primary_key = field.get('primary_key')
+            if primary_key:
+                frictionless_resource['schema']['primary_key'] = field['name']
+            foreign_key = field.get('foreign_key')
+            if foreign_key:
+                try:
+                    resource, resource_field = foreign_key.split()
+                except:
+                    pass
+                else:
+                    foreign_keys.append(
+                        {
+                            'fields': field['name'],
+                            'reference': {
+                                "resource": resource,
+                                "fields": resource_field
+                            }
+                        }
+                    )
+            frictionless_resource['schema']['fields'].append(field_dict)
+        if foreign_keys:
+            frictionless_resource['foreignKeys'] = []
+    return frictionless_resource
+
+
 def ckan_to_frictionless(package):
     package_id = package['id']
     datapackage = Session.query(Datapackage).filter(
@@ -31,52 +81,7 @@ def ckan_to_frictionless(package):
                 frictionless_package[extra['key']] = extra['value']
         resources = []
         for resource in package['resources']:
-            frictionless_resource = converter.resource(resource)
-            frictionless_resource['path'] = resource['path']
-            datapackage_resource = Session.query(DatapackageResource).filter(
-                DatapackageResource.resource_id==resource['id']
-            ).order_by(DatapackageResource.created.desc()).first()
-            if datapackage_resource:
-                extras = json.loads(datapackage_resource.data)
-                frictionless_resource['schema'] = {
-                    'fields': [],
-                }
-                foreign_keys = []
-                try:
-                    fields = extras['inference']['metadata']['schema']['fields']
-                except:
-                    continue
-                for field in fields:
-                    field_dict = {
-                        'name': field['name'],
-                        'description': field['description'],
-                        'title': field['title'],
-                        'format': field['format'],
-                        'description': field['description'],
-                        'type': field['type'],
-                    }
-                    primary_key = field.get('primary_key')
-                    if primary_key:
-                        frictionless_resource['schema']['primary_key'] = field['name']
-                    foreign_key = field.get('foreign_key')
-                    if foreign_key:
-                        try:
-                            resource, resource_field = foreign_key.split()
-                        except:
-                            pass
-                        else:
-                            foreign_keys.append(
-                                {
-                                    'fields': field['name'],
-                                    'reference': {
-                                        "resource": resource,
-                                        "fields": resource_field
-                                    }
-                                }
-                            )
-                    frictionless_resource['schema']['fields'].append(field_dict)
-                if foreign_keys:
-                    frictionless_resource['foreignKeys'] = []
+            frictionless_resource = ckan_resource_to_frictionless(resource)
             resources.append(frictionless_resource)
         frictionless_package['resources'] = resources
     except:

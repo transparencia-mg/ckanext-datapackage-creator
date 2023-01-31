@@ -1,0 +1,31 @@
+{% extends "package/read.html" %}
+
+
+{%- block subtitle %}{{ _('Validation Report') }}{% endblock -%}
+
+{% block breadcrumb_content_selected %}{% endblock %}
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active"><a href="">Validation Report</a></li>
+{% endblock %}
+
+{% block pre_primary %}
+
+    <section class="module module-validation">
+      <div class="module-content">
+        <div class="actions">
+
+        </div>
+
+        <h1 class="page-heading">{{ h.dataset_display_name(pkg_dict)|truncate(30) }}
+        </h1>
+
+      </div>
+    </section>
+
+{% endblock %}
+
+
+{% block primary %}{% endblock %}
+
+{% block secondary %}{% endblock %}

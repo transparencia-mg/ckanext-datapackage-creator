@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+  {{ super() }}
+  <li><a href="/datapackage-creator/show-validation/{{ pkg.name }}"><i class="fa fa-circle-info"></i> {{ _('Validation Report') }}</a></li>
+{% endblock %}
