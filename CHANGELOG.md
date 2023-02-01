@@ -137,3 +137,8 @@ Bugs fixed: generate validation
 ## [0.0.26] - 2023-01-31
 
 Bugs fixed: datapackage_json in package_show and fields in table schema
+
+
+## [0.0.27] - 2023-02-01
+
+Bugs fixed: package fields required
