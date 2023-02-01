@@ -135,7 +135,7 @@ def save_resource():
     return response
 
 
-def delete_resource():
+def delete_resource(resource_id):
     context = {
         'model': model,
         'session': model.Session,
@@ -148,13 +148,16 @@ def delete_resource():
         toolkit.check_access('package_create', context)
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
-    data = request.form.copy()
+    data = {
+        'id': resource_id,
+        'state': 'deleted'
+    }
     data_response = {
         'has_error': False,
         'package': None
     }
     try:
-        resource = get_action('resource_delete')(context, data)
+        resource = get_action('resource_patch')(context, data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary

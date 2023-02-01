@@ -25,12 +25,12 @@ def ckan_resource_to_frictionless(resource):
             pass
         for field in fields:
             field_dict = {
-                'name': field['name'],
-                'description': field['description'],
-                'title': field['title'],
-                'format': field['format'],
-                'description': field['description'],
-                'type': field['type'],
+                'name': field.get('name', ''),
+                'description': field.get('description', ''),
+                'title': field.get('title', ''),
+                'format': field.get('format'),
+                'description': field.get('description', ''),
+                'type': field.get('type', ''),
             }
             primary_key = field.get('primary_key')
             if primary_key:

@@ -21,8 +21,8 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
-    plugins.implements(plugins.IPackageController)
-    # plugins.implements(plugins.IResourceController)
+    # plugins.implements(plugins.IPackageController)
+    plugins.implements(plugins.IResourceController)
 
     def read(self, entity) -> None:
         pass
@@ -93,7 +93,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             endpoint='save_resource', methods=['POST']
         )
         blueprint.add_url_rule(
-            "/delete-resource", view_func=datapackage_creator.delete_resource,
+            "/delete-resource/<resource_id>", view_func=datapackage_creator.delete_resource,
             endpoint='delete_resource', methods=['DELETE']
         )
         blueprint.add_url_rule(

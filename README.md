@@ -62,18 +62,22 @@ Configuration example file:
 }
 ```
 
-Mandatory possible package fields:
+## Mandatory possible package fields:
 
-- title
-- notes
+- description
 - source
 - version
+- license
+- frequency
+- tags
+- author
+- author_email
 
-Possible read-only package fields:
+## Possible read-only package fields:
 
 Nothing
 
-Mandatory possible resource fields:
+## Mandatory possible resource fields:
 
 - title
 - description
@@ -86,7 +90,7 @@ Mandatory possible resource fields:
 - field.format (Column field)
 
 
-Possible read-only package fields:
+## Possible read-only package fields:
 
 - format
 - type

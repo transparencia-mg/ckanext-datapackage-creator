@@ -7,6 +7,7 @@ var app = new Vue({
         contributor_index: 2,
         extra_index: 0,
         allowed_add_data: false,
+        settings: null,
         form: {
             title: '',
             id: '',
@@ -169,6 +170,9 @@ var app = new Vue({
         this.form.contributors[0].email = userEmail
         this.form.organization = this.$refs.organizationId.value
         this.form.id = this.$refs.packageId.value
+        axios.get('/datapackage-creator/show-settings').then(res => {
+            this.settings = res.data
+        })
         if(this.form.id !== '') {
             this.getPackage()
         }
@@ -251,6 +255,7 @@ var app = new Vue({
             formData.append('version', this.form.version)
             formData.append('author', this.form.contributors[1].name)
             formData.append('author_email', this.form.contributors[1].email)
+            formData.append('frequency', this.form.frequency)
             formData.append('metadata', JSON.stringify(this.form))
             axios.post("/datapackage-creator/save-package", formData, { headers }).then((res) => {
                 this.error_summary = []
@@ -264,6 +269,13 @@ var app = new Vue({
                     window.location = `/dataset/${this.form.name}/resource/new`
                 }
             })
+        },
+        isRequired(field_name) {
+            let required = false
+            if(this.settings != null && this.settings.package && this.settings.package.required) {
+                required = this.settings.package.required.includes(field_name)
+            }
+            return required
         }
     },
     computed: {

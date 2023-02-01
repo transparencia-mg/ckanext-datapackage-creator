@@ -293,9 +293,24 @@ var app = new Vue({
             })
         },
         deleteResource(resource) {
-            this.resources = this.resources.filter(function(value, index, arr){
-                return value.index != resource.index
-            })
+            console.log(resource)
+            if(resource.id) {
+                axios.delete(`/datapackage-creator/delete-resource/${resource.id}`).then((res) => {
+                    if(!this.allowed_add_resource) {
+                        window.location = `/dataset/${this.package_id}`
+                    }
+                    this.resources = this.resources.filter(function(value, index, arr){
+                        return value.index != resource.index
+                    })
+                }).catch(() => {
+                    resource.has_error = true
+                    resource.error_summary = ['Unable to delete the resource']
+                })
+            } else {
+                this.resources = this.resources.filter(function(value, index, arr){
+                    return value.index != resource.index
+                })
+            }
         },
         addResource() {
             this.resource_index += 1
@@ -369,8 +384,6 @@ var app = new Vue({
                 const headers = { 'Content-Type': 'multipart/form-data' }
                 formData.append('id', this.package_id)
                 axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
-                    console.log("---------publish------------")
-                    console.log(this.package_id)
                     window.location = `/dataset/${this.package_id}`
                 })
             }

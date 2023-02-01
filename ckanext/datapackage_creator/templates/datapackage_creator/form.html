@@ -119,11 +119,11 @@
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="mb-3">
-                                            <label for="tituloModal" class="form-label">{{ _('Title') }}</label>
+                                            <label for="tituloModal" class="form-label">{{ _('Title') }} <span class="required" v-if="isRequired('field.title')">*</span></label>
                                             <input v-model="field.title" type="text" class="form-control" id="tituloModal" placeholder="{{ _('Enter the title') }}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="descricaoModal" class="form-label">{{ _('Description') }}</label>
+                                                <label for="descricaoModal" class="form-label">{{ _('Description') }} <span class="required" v-if="isRequired('field.description')">*</span></label>
                                                 <textarea style="height: 105px;" v-model="field.description" class="form-control" id="descricaoModal" rows="8"></textarea>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
                                             </div>
                                             <br>
                                             <div>
-                                                <label for="formatoDado">{{ _('Format') }}</label>
+                                                <label for="formatoDado">{{ _('Format') }} <span class="required" v-if="isRequired('field.format')">*</span></label>
                                                 <input type="text" v-model="field.format" class="form-control" v-if="isDateType(field)">
                                                 <select v-model="field.format" class="form-control" v-else>
                                                     <option v-for="format in getFormatOptions(field.type)" :value="format">[[ format ]]</option>
@@ -292,21 +292,21 @@
               <div class="module module-narrow module-shallow">
                 <div class="container">
                   <div class="mb-3">
-                    <label for="titulo" class="form-label">{{ _('Title') }}<span class="required" v-if="isRequired('title')">*</span></label>
+                    <label for="titulo" class="form-label">{{ _('Title') }} <span class="required" v-if="isRequired('title')">*</span></label>
                     <input type="text" class="form-control" id="titulo" v-model="resource.title" placeholder="{{ _('Enter a title for the resource') }}">
                   </div>
                   <div class="mb-3">
-                    <label for="descricao" class="form-label">{{ _('Description') }}<span class="required" v-if="isRequired('description')">*</span></label>
+                    <label for="descricao" class="form-label">{{ _('Description') }} <span class="required" v-if="isRequired('description')">*</span></label>
                     <textarea v-model="resource.description" class="form-control" id="descricao" rows="4"></textarea>
                   </div>
                   <div class="row">
                     <div class="col-lg-4 col-sm-6 col-xs-12">
-                        <label for="formatoRecurso">{{ _('Format') }}<span class="required" v-if="isRequired('format')">*</span></label>
+                        <label for="formatoRecurso">{{ _('Format') }} <span class="required" v-if="isRequired('format')">*</span></label>
                         <input v-model="resource.format" type="text" class="form-control" :disabled="isReadonly('format')">
                     </div>
 
                     <div class="col-lg-4 col-sm-6 col-xs-12">
-                        <label for="tipoRecurso">{{ _('Type') }}<span class="required" v-if="isRequired('type')">*</span></label>
+                        <label for="tipoRecurso">{{ _('Type') }} <span class="required" v-if="isRequired('type')">*</span></label>
                         <input v-model="resource.type" type="text" class="form-control" readonly="true" v-if="isDataResource(resource)">
                         <select :disabled="isReadonly('type')" v-model="resource.type" class="form-select" id="" v-else>
                             <option v-for="type in typeOptions" :value="type.value">[[ type.text ]]</option>
@@ -314,7 +314,7 @@
                     </div>
 
                     <div class="col-lg-4 col-sm-6 col-xs-12">
-                        <label for="codificacaoRecurso">{{ _('Encoding') }}<span class="required" v-if="isRequired('encoding')">*</span></label>
+                        <label for="codificacaoRecurso">{{ _('Encoding') }} <span class="required" v-if="isRequired('encoding')">*</span></label>
                         <input v-model="resource.encoding" type="text" class="form-control" :disabled="isReadonly('encoding')">
                     </div>
                   </div>

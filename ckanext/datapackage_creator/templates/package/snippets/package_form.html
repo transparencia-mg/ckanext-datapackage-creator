@@ -24,7 +24,7 @@ then itself be extended to add/remove blocks of functionality. #}
       </div>
   </div>
   <div class="form-group control-full control-large">
-    <label class="form-label" for="field-title">Title</label>
+    <label class="form-label" for="field-title">Title <span class="required">*</span></label>
     <div class="controls ">
         <div class="form-group">
             <input type="text" v-model="form.title" class="form-control" @keyup="slugifyTitle">
@@ -41,7 +41,7 @@ then itself be extended to add/remove blocks of functionality. #}
     </div>
   </div>
   <div class="form-group control-full control-large">
-    <label class="form-label" for="field-title">Description</label>
+    <label class="form-label" for="field-title">Description <span class="required" v-if="isRequired('description')">*</span></label>
     <div class="controls ">
         <div class="form-group">
             <textarea v-model="form.notes" class="form-control" rows="4"></textarea>
@@ -97,7 +97,7 @@ then itself be extended to add/remove blocks of functionality. #}
     </div>
     <div class="col-md-3">
       <div class="form-group control-full control-large">
-        <label class="form-label" for="field-title">License</label>
+        <label class="form-label" for="field-title">License <span class="required" v-if="isRequired('license')">*</span></label>
         <div class="controls ">
             <div class="form-group">
                 <select class="form-select"  v-model="form.license" id="id_license">
@@ -109,7 +109,7 @@ then itself be extended to add/remove blocks of functionality. #}
     </div>
     <div class="col-md-9">
       <div class="form-group control-full control-large">
-        <label class="form-label" for="field-title">Source</label>
+        <label class="form-label" for="field-title">Source <span class="required" v-if="isRequired('source')">*</span></label>
         <div class="controls ">
             <div class="form-group">
                 <input type="text" v-model="form.source" class="form-control">
@@ -119,7 +119,7 @@ then itself be extended to add/remove blocks of functionality. #}
     </div>
     <div class="col-md-3">
       <div class="form-group control-full control-large">
-        <label class="form-label" for="field-title">Version</label>
+        <label class="form-label" for="field-title">Version <span class="required" v-if="isRequired('version')">*</span></label>
         <div class="controls ">
             <div class="form-group">
                 <input type="text" v-model="form.version" class="form-control">
@@ -193,13 +193,13 @@ then itself be extended to add/remove blocks of functionality. #}
   <h2>{{ _('Others Properties') }}</h2>
   <div class="row">
     <div class="col-md-4">
-        <label class="form-label" for="field-title">Frequency</label>
+        <label class="form-label" for="field-title">Frequency <span class="required" v-if="isRequired('frequency')">*</span></label>
         <select class="form-select"  v-model="form.frequency" id="">
           <option v-for="frequency in frequencyOptions" :value="frequency.value">[[ frequency.name ]]</option>
         </select>
     </div>
     <div class="col-md-8">
-      <label class="form-label" for="codificacaoRecurso">{{ _('Tags') }}</label>
+      <label class="form-label" for="codificacaoRecurso">{{ _('Tags') }} <span class="required" v-if="isRequired('tags')">*</span></label>
       <input v-model="form.tags" type="text" class="form-control">
     </div>
   </div>
@@ -226,7 +226,7 @@ then itself be extended to add/remove blocks of functionality. #}
     </div>
   </div>
   <p style="text-align: right; margin-top: 15px;">
-    <button @click="submit" class="btn btn-primary" :disabled="!allowedAddData">{{ _('Add Data') }}
+    <button @click="submit" class="btn btn-primary">{{ _('Add Data') }}
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
       </svg>
