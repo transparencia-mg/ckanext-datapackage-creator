@@ -142,3 +142,8 @@ Bugs fixed: datapackage_json in package_show and fields in table schema
 ## [0.0.27] - 2023-02-01
 
 Bugs fixed: package fields required
+
+
+## [0.0.28] - 2023-02-03
+
+Adding loading screen
