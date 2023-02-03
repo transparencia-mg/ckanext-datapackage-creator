@@ -1,4 +1,13 @@
 <div id="vue-app">
+    <div class="loading-container" v-if="loading">
+        <div class="loading-backdrop"></div>
+        <div class="loading">
+            <div class="loading-icon">
+                <i class="fa fa-spin fa-spinner"></i>
+            </div>
+            <div class="loading-label">[[ loading_message ]]</div>
+        </div>
+    </div>
     <input type="hidden" ref="packageName" value="{{ pkg_name }}">
     <input type="hidden" ref="resourceId" value="{{ data.id }}">
     <div v-if="success_message">

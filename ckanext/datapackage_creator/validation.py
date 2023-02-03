@@ -48,6 +48,7 @@ def validate_package(data):
     map_fields = {
         'license': 'license_id',
         'source': 'url',
+        'description': 'notes',
     }
     for field in package_required:
         real_field = map_fields.get(field, field)

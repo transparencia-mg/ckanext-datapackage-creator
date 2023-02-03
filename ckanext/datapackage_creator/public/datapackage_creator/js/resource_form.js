@@ -8,6 +8,8 @@ var app = new Vue({
         allowed_add_resource: true,
         allowed_publish: false,
         settings: null,
+        loading_message: 'Loading...',
+        loading: false,
         resources: [
             {
                 id: '',
@@ -152,11 +154,15 @@ var app = new Vue({
     methods: {
         getResource() {
             const url = `/datapackage-creator/show-datapackage-resource/${this.resources[0].id}`
+            this.loading = true
             axios.get(url).then(res => {
+                this.loading = false
                 this.package_id = res.data.resource.package_id
                 console.log(this.package_id)
                 this.resources = []
                 this.resources.push(JSON.parse(res.data.datapackage_resource.data))
+            }).catch(() => {
+                this.loading = false
             })
         },
         isDataResource(resource) {
@@ -170,8 +176,10 @@ var app = new Vue({
             const formData = new FormData()
             formData.append('file', resource.file)
             const headers = { 'Content-Type': 'multipart/form-data' }
+            this.loading = true
             axios.post("/datapackage-creator/inference", formData, { headers })
                 .then((res) => {
+                    this.loading = false
                     if(res.data.has_error) {
                         resource.error_summary = [res.data.error_summary]
                         resource.has_error = true
@@ -192,6 +200,7 @@ var app = new Vue({
                     }
                 })
                 .catch(() => {
+                    this.loading = false
                     resource.has_error = true
                     resource.error_summary = ['Unable to upload the file']
                     setTimeout(() => {
@@ -271,7 +280,9 @@ var app = new Vue({
             formData.append('type', resource.type)
             formData.append('id', resource.id)
             formData.append('metadata', JSON.stringify(resource))
+            this.loading = true
             axios.post("/datapackage-creator/save-resource", formData, { headers }).then((res) => {
+                this.loading = false
                 resource.has_error = res.data.has_error
                 resource.errors = res.data.errors
                 resource.error_summary = []
@@ -290,12 +301,15 @@ var app = new Vue({
                         this.success_message = ''
                     }, 5000)
                 }
+            }).catch(() => {
+                this.loading = false
             })
         },
         deleteResource(resource) {
-            console.log(resource)
             if(resource.id) {
+                this.loading = true
                 axios.delete(`/datapackage-creator/delete-resource/${resource.id}`).then((res) => {
+                    this.loading = false
                     if(!this.allowed_add_resource) {
                         window.location = `/dataset/${this.package_id}`
                     }
@@ -303,6 +317,7 @@ var app = new Vue({
                         return value.index != resource.index
                     })
                 }).catch(() => {
+                    this.loading = false
                     resource.has_error = true
                     resource.error_summary = ['Unable to delete the resource']
                 })
@@ -383,8 +398,12 @@ var app = new Vue({
                 const formData = new FormData()
                 const headers = { 'Content-Type': 'multipart/form-data' }
                 formData.append('id', this.package_id)
+                this.loading = true
                 axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
+                    this.loading = false
                     window.location = `/dataset/${this.package_id}`
+                }).catch(() => {
+                    this.loading = false
                 })
             }
         },
