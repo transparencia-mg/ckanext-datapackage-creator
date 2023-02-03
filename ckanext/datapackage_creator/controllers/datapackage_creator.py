@@ -271,7 +271,6 @@ def publish_package():
         if datapackage:
             datapackage.errors = validation.to_dict()
             model.Session.commit()
-    default_backend.validate_package(package_data)
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
@@ -375,7 +374,7 @@ def datapackage_validation_show(package_id):
     }
     package = get_action('package_show')(context, data)
     datapackage_list = model.Session.query(Datapackage).filter(
-        Datapackage.package_id==package_id
+        Datapackage.package_id==package['id']
     ).order_by(Datapackage.created.desc())
     return toolkit.render(
         'datapackage_creator/validation_read.html',

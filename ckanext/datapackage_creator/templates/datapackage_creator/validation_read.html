@@ -6,26 +6,37 @@
 {% block breadcrumb_content_selected %}{% endblock %}
 {% block breadcrumb_content %}
   {{ super() }}
-  <li class="active"><a href="">Validation Report</a></li>
+  <li class="active"><a href="">{{ _('Validation Report') }}</a></li>
 {% endblock %}
 
-{% block pre_primary %}
-
-    <section class="module module-validation">
-      <div class="module-content">
-        <div class="actions">
-
-        </div>
-
-        <h1 class="page-heading">{{ h.dataset_display_name(pkg_dict)|truncate(30) }}
-        </h1>
-
-      </div>
-    </section>
-
+{% block primary_content %}
+<h1 style="margin-top: 20px;">{{ _('Validation Report') }}</h1>
+<div id="vue-app-validation">
+  {% for datapackage in datapackage_list %}
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        {{ h.render_datetime(datapackage.created) }}
+        {% if datapackage.errors.valid %}
+        <span class="badge bg-success">VALID</span>
+        {% else %}
+        <span class="badge bg-danger">NOT VALID</span>
+        {% endif %}
+      </h3>
+    </div>
+    <div class="card-body">
+      <pre>
+        <code>
+          {{ datapackage.errors }}
+        </code>
+      </pre>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
 
-
-{% block primary %}{% endblock %}
-
-{% block secondary %}{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="/datapackage_creator/js/validation.js"></script>
+{% endblock %}

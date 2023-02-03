@@ -79,7 +79,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         pass
 
     def before_resource_show(self, resource_dict):
-        resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
+        # resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
         return resource_dict
 
     def get_blueprint(self):
