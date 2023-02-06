@@ -270,7 +270,7 @@ def publish_package():
             Datapackage.package_id==package_data['id']
         ).order_by(Datapackage.created.desc()).first()
         new_datapackage = Datapackage()
-        new_datapackage.package_id = datapackage.package_id
+        new_datapackage.package_id = package_data['id']
         new_datapackage.errors = validation.to_dict()
         if datapackage:
             new_datapackage.data = datapackage.data
