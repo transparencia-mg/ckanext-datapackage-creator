@@ -11,28 +11,28 @@
 
 {% block primary_content %}
 <h1 style="margin-top: 20px;">{{ _('Validation Report') }}</h1>
-<div id="vue-app-validation">
-  {% for datapackage in datapackage_list %}
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">
-        {{ h.render_datetime(datapackage.created) }}
-        {% if datapackage.errors.valid %}
-        <span class="badge bg-success">VALID</span>
-        {% else %}
-        <span class="badge bg-danger">NOT VALID</span>
-        {% endif %}
-      </h3>
+<div>
+  <div class="accordion" id="accordionExample">
+    {% for datapackage in datapackage_list %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading-{{ datapackage.id }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ datapackage.id }}" aria-expanded="true" aria-controls="collapseOne">
+          {{ h.render_datetime(datapackage.created) }}
+          {% if datapackage.errors.valid %}
+          <span class="badge bg-success">VALID</span>
+          {% else %}
+          <span class="badge bg-danger">NOT VALID</span>
+          {% endif %}
+        </button>
+      </h2>
+      <div id="collapse-{{ datapackage.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ datapackage.id }}" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <pre class="frictionless-validation">{{ datapackage.errors_json() }}</pre>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <pre>
-        <code>
-          {{ datapackage.errors }}
-        </code>
-      </pre>
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}
 

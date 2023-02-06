@@ -1,6 +1,7 @@
 import datetime as dt
 import uuid
 import logging
+import json
 
 from sqlalchemy import Column, Unicode, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -27,6 +28,9 @@ class Datapackage(Base):
     created = Column(DateTime, default=dt.datetime.utcnow)
     data = Column(JSON)
     errors = Column(JSON)
+
+    def errors_json(self):
+        return json.dumps(self.errors)
 
 
 class DatapackageResource(Base):

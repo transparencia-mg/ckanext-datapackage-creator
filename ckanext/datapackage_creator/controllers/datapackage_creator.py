@@ -269,7 +269,11 @@ def publish_package():
             Datapackage.package_id==package_data['id']
         ).order_by(Datapackage.created.desc()).first()
         if datapackage:
-            datapackage.errors = validation.to_dict()
+            new_datapackage = Datapackage()
+            new_datapackage.package_id = datapackage.package_id
+            new_datapackage.data = datapackage.data
+            new_datapackage.errors = validation.to_dict()
+            model.Session.add(new_datapackage)
             model.Session.commit()
     response = make_response()
     response.content_type = 'application/json'
