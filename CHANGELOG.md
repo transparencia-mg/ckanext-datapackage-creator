@@ -162,3 +162,8 @@ Validation badge added
 ## [0.0.31] - 2023-02-06
 
 Bbugs fixed: author required
+
+
+## [0.0.32] - 2023-02-06
+
+Bbugs fixed: validation
