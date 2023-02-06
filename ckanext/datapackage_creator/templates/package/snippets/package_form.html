@@ -51,12 +51,12 @@ then itself be extended to add/remove blocks of functionality. #}
   <div class="row">
     <div class="col-md-3">
       <div class="form-group control-full control-large">
-        <label class="form-label" for="field-title">Organization</label>
+        <label class="form-label" for="field-title">Organization <span class="required">*</span></label>
         <div class="controls ">
             <div class="form-group">
               {% if organizations|length > 1 %}
                 <select class="form-select" v-model="form.organization" id="">
-                  <option value="">Select the Organization <span class="required">*</span></option>
+                  <option value="">Select the Organization</option>
                   {% for organization in organizations %}
                   <option value="{{ organization.id }}">{{ organization.title }}</option>
                   {% endfor %}
