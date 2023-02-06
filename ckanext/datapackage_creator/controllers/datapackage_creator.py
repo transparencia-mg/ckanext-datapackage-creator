@@ -306,8 +306,10 @@ def datapackage_show(package_id):
         'id': package_id
     }
     package = get_action('package_show')(context, data)
+    datapackage_json = row_to_dict(datapackage)
+    datapackage_json['errors_json'] = datapackage.errors_json()
     data_response = {
-        'datapackage': row_to_dict(datapackage),
+        'datapackage': datapackage_json,
         'package': package,
     }
     response.data = json.dumps(data_response)
