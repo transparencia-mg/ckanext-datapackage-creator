@@ -10,6 +10,9 @@ var app = new Vue({
         settings: null,
         loading_message: 'Loading...',
         loading: false,
+        package: {
+
+        },
         resources: [
             {
                 id: '',
@@ -146,21 +149,43 @@ var app = new Vue({
             this.allowed_add_resource = false
             this.resources[0].id = resourceId
             this.getResource()
+        } else {
+            this.getPackage()
         }
         axios.get('/datapackage-creator/show-settings').then(res => {
             this.settings = res.data
         })
     },
     methods: {
+        getPackage() {
+            const url = `/datapackage-creator/show-datapackage/${this.package_id}`
+            axios.get(url).then(res => {
+                this.package.title = res.data.package.title
+                this.package.name = res.data.package.name
+                this.package.notes = res.data.package.notes
+                this.package.license = res.data.package.license_id
+                this.package.tags = res.data.package.tag_string
+                this.package.organization = res.data.package.owner_org
+                this.package.visibility = res.data.package.private
+                this.package.source = res.data.package.url || ''
+                this.package.version = res.data.package.version
+                let datapackage = JSON.parse(res.data.datapackage.data)
+                this.package.contributors = datapackage.contributors
+                this.package.tags = datapackage.tags
+                this.package.frequency = datapackage.frequency
+                this.package.tags = datapackage.tags
+                this.package.metadata = datapackage
+            })
+        },
         getResource() {
             const url = `/datapackage-creator/show-datapackage-resource/${this.resources[0].id}`
             this.loading = true
             axios.get(url).then(res => {
                 this.loading = false
                 this.package_id = res.data.resource.package_id
-                console.log(this.package_id)
                 this.resources = []
                 this.resources.push(JSON.parse(res.data.datapackage_resource.data))
+                this.getPackage()
             }).catch(() => {
                 this.loading = false
             })
@@ -398,6 +423,8 @@ var app = new Vue({
                 const formData = new FormData()
                 const headers = { 'Content-Type': 'multipart/form-data' }
                 formData.append('id', this.package_id)
+                formData.append('metadata', JSON.stringify(this.package))
+                console.log(this.package)
                 this.loading = true
                 axios.post("/datapackage-creator/publish-package", formData, { headers }).then((res) => {
                     this.loading = false

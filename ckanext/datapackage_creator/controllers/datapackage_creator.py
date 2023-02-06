@@ -256,6 +256,7 @@ def publish_package():
         'id': data['id'],
         'state': 'active'
     }
+    metadata = data['metadata']
     try:
         get_action('package_patch')(context, package_data)
         frictionless_package = get_action('generate_datapackage_json')(context, package_data)
@@ -268,13 +269,15 @@ def publish_package():
         datapackage = model.Session.query(Datapackage).filter(
             Datapackage.package_id==package_data['id']
         ).order_by(Datapackage.created.desc()).first()
+        new_datapackage = Datapackage()
+        new_datapackage.package_id = datapackage.package_id
+        new_datapackage.errors = validation.to_dict()
         if datapackage:
-            new_datapackage = Datapackage()
-            new_datapackage.package_id = datapackage.package_id
             new_datapackage.data = datapackage.data
-            new_datapackage.errors = validation.to_dict()
-            model.Session.add(new_datapackage)
-            model.Session.commit()
+        else:
+            new_datapackage.data = json.loads(metadata)
+        model.Session.add(new_datapackage)
+        model.Session.commit()
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
