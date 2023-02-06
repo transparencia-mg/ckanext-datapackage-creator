@@ -54,7 +54,7 @@ def validate_package(data):
         real_field = map_fields.get(field, field)
         value = data.get(real_field)
         if not value:
-            errors[field.capitalize()] = ['This field is required']
+            errors[field.capitalize().replace('_', ' ')] = ['This field is required']
     if errors:
         error_summary = {k: ', '.join(v) for k, v in errors.items()}
         raise ValidationError(errors=errors, error_summary=error_summary)
