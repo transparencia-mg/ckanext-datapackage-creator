@@ -1,6 +1,7 @@
 import os
 import json
 import tempfile
+import threading
 
 from flask import make_response, request
 
@@ -265,19 +266,21 @@ def publish_package():
         data_response['error_summary'] = e.error_summary
         data_response['has_error'] = True
     else:
-        validation = default_backend.validate_package(frictionless_package)
-        datapackage = model.Session.query(Datapackage).filter(
-            Datapackage.package_id==package_data['id']
-        ).order_by(Datapackage.created.desc()).first()
-        new_datapackage = Datapackage()
-        new_datapackage.package_id = package_data['id']
-        new_datapackage.errors = validation.to_dict()
-        if datapackage:
-            new_datapackage.data = datapackage.data
-        else:
-            new_datapackage.data = json.loads(metadata)
-        model.Session.add(new_datapackage)
-        model.Session.commit()
+        def _validate():
+            validation = default_backend.validate_package(frictionless_package)
+            datapackage = model.Session.query(Datapackage).filter(
+                Datapackage.package_id==package_data['id']
+            ).order_by(Datapackage.created.desc()).first()
+            new_datapackage = Datapackage()
+            new_datapackage.package_id = package_data['id']
+            new_datapackage.errors = validation.to_dict()
+            if datapackage:
+                new_datapackage.data = datapackage.data
+            else:
+                new_datapackage.data = json.loads(metadata)
+            model.Session.add(new_datapackage)
+            model.Session.commit()
+        threading.Thread(target=_validate).start()
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
