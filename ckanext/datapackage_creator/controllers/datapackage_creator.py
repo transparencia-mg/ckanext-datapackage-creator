@@ -278,6 +278,10 @@ def publish_package():
             new_datapackage.data = json.loads(metadata)
         model.Session.add(new_datapackage)
         model.Session.commit()
+        with open("validation.txt", "w") as f:
+            f.write(validation.to_dict())
+            f.write("\n")
+            f.write(new_datapackage)
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
