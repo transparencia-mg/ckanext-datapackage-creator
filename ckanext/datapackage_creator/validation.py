@@ -44,6 +44,9 @@ def validate_package(data):
     title = data.get('title')
     if not title:
         errors['Title'] = ['This field is required']
+    owner_org = data.get('owner_org')
+    if not owner_org:
+        errors['Organization'] = ['This field is required']
     package_required = settings.get('package', {}).get('required', [])
     map_fields = {
         'license': 'license_id',
