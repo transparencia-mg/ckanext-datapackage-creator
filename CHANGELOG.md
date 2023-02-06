@@ -157,3 +157,8 @@ Validation page improvements
 ## [0.0.30] - 2023-02-06
 
 Validation badge added
+
+
+## [0.0.31] - 2023-02-06
+
+Bbugs fixed: author required
