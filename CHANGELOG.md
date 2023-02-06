@@ -152,3 +152,8 @@ Adding loading screen
 ## [0.0.29] - 2023-02-06
 
 Validation page improvements
+
+
+## [0.0.30] - 2023-02-06
+
+Validation badge added
