@@ -147,3 +147,8 @@ Bugs fixed: package fields required
 ## [0.0.28] - 2023-02-03
 
 Adding loading screen
+
+
+## [0.0.29] - 2023-02-06
+
+Validation page improvements
