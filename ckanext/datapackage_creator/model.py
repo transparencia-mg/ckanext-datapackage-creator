@@ -32,6 +32,9 @@ class Datapackage(Base):
     def errors_json(self):
         return json.dumps(self.errors)
 
+    def data_json(self):
+        return json.dumps(self.data)
+
 
 class DatapackageResource(Base):
     __tablename__ = u'datapackage_resource'

@@ -10,8 +10,12 @@ var app = new Vue({
         settings: null,
         loading_message: 'Loading...',
         loading: false,
-        package: {
-
+        package: {},
+        file_icons: {
+            pdf: 'fa-file-pdf',
+            jpg: 'fa-image',
+            jpeg: 'fa-image',
+            png: 'fa-   image'
         },
         resources: [
             {
@@ -169,7 +173,7 @@ var app = new Vue({
                 this.package.visibility = res.data.package.private
                 this.package.source = res.data.package.url || ''
                 this.package.version = res.data.package.version
-                let datapackage = JSON.parse(res.data.datapackage.data)
+                let datapackage = JSON.parse(res.data.datapackage.data_json)
                 this.package.contributors = datapackage.contributors
                 this.package.tags = datapackage.tags
                 this.package.frequency = datapackage.frequency
@@ -326,6 +330,7 @@ var app = new Vue({
                         this.success_message = ''
                     }, 5000)
                 }
+                this.$refs["success-message"].scrollIntoView({ behavior: "smooth" })
             }).catch(() => {
                 this.loading = false
             })
@@ -375,7 +380,8 @@ var app = new Vue({
                     current_field: [],
                     has_error: false,
                     error_summary: [],
-                    errors: {}
+                    errors: {},
+                    extras: []
                 }
             )
         },
@@ -472,6 +478,10 @@ var app = new Vue({
                 }
                 return true
             })
+        },
+        getFileIcon(format) {
+            let icon =  this.file_icons[format]
+            return icon ? icon : 'file'
         }
     },
     computed: {

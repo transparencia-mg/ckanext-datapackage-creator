@@ -24,63 +24,18 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     # plugins.implements(plugins.IPackageController)
     # plugins.implements(plugins.IResourceController)
 
-    def read(self, entity) -> None:
-        pass
+    # def after_dataset_show(self, context, pkg_dict):
+    #     pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
 
-    def create(self, entity) -> None:
-        pass
+    # def before_resource_update(self, *args, **kwargs):
+    #     pass
 
-    def edit(self, entity):
-        pass
+    # def after_resource_update(self, *args, **kwargs):
+    #     pass
 
-    def delete(self, entity) -> None:
-        pass
-
-    def after_dataset_create(self, context, pkg_dict) -> None:
-        pass
-
-    def after_dataset_update(self, context, pkg_dict):
-        pass
-
-    def after_dataset_delete(self, context, pkg_dict):
-        pass
-
-    def after_dataset_show(self, context, pkg_dict):
-        pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
-
-    def before_dataset_search(self, search_params):
-        return search_params
-
-    def after_dataset_search(self, search_results, search_params):
-        return search_results
-
-    def before_dataset_index(self, pkg_dict):
-        return pkg_dict
-
-    def before_dataset_view(self, pkg_dict):
-        return pkg_dict
-
-    def before_resource_create(self, context, resource) -> None:
-        pass
-
-    def after_resource_create(self, context, resource) -> None:
-        pass
-
-    def before_resource_update(self, context, current, resource) -> None:
-        pass
-
-    def after_resource_update(self, context, resource) -> None:
-        pass
-
-    def before_resource_delete(self, context, resource, resources) -> None:
-        pass
-
-    def after_resource_delete(self, context, resources) -> None:
-        pass
-
-    def before_resource_show(self, resource_dict):
-        resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
-        return resource_dict
+    # def before_resource_show(self, resource_dict):
+    #     resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
+    #     return resource_dict
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')

@@ -286,7 +286,7 @@ def publish_package():
                 new_datapackage.data = json.loads(metadata)
             model.Session.add(new_datapackage)
             model.Session.commit()
-        threading.Thread(target=_validate).start()
+        _validate()
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
@@ -308,18 +308,19 @@ def datapackage_show(package_id):
     response = make_response()
     response.content_type = 'application/json'
     data = {
-        'package_id': package_id
+        'id': package_id
     }
     try:
+        package = get_action('package_show')(context, data)
+        data = {
+            'package_id': package['id']
+        }
         datapackage = get_action('datapackage_show')(context, data)
     except Exception as ex:
         datapackage = Datapackage()
-    data = {
-        'id': package_id
-    }
-    package = get_action('package_show')(context, data)
     datapackage_json = row_to_dict(datapackage)
     datapackage_json['errors_json'] = datapackage.errors_json()
+    datapackage_json['data_json'] = datapackage.data_json()
     data_response = {
         'datapackage': datapackage_json,
         'package': package,

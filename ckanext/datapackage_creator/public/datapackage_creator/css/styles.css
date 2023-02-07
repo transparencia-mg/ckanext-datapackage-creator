@@ -104,3 +104,7 @@ input::placeholder{
 .loading-container .loading .loading-icon {
     margin-bottom: 8px;
 }
+
+.file-icon {
+    font-size: 3em;
+}
