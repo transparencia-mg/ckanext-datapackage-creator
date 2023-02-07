@@ -286,7 +286,7 @@ def publish_package():
                 new_datapackage.data = json.loads(metadata)
             model.Session.add(new_datapackage)
             model.Session.commit()
-        _validate()
+        threading.Thread(target=_validate).start()
     response = make_response()
     response.content_type = 'application/json'
     response.data = json.dumps(data_response)
