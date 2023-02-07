@@ -1,10 +1,5 @@
 import frictionless
 
-import ckan.model as model
-from ckan.common import config
-
-from ckanext.datapackage_creator.model import Datapackage
-
 
 class BaseBackend(object):
 

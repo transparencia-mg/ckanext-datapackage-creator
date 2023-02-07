@@ -10,6 +10,7 @@ from slugify import slugify
 import ckan.model as model
 import ckan.plugins.toolkit as toolkit
 
+from ckan.common import config
 from ckan.logic import get_action, ValidationError
 from ckan.views.dataset import _tag_string_to_list
 
@@ -267,7 +268,12 @@ def publish_package():
         data_response['has_error'] = True
     else:
         def _validate():
-            validation = default_backend.validate_package(frictionless_package)
+            site_url = config.get('ckan.site_url')
+            if site_url.endswith('/'):
+                url = f"{site_url}datapackage-creator/show-datapackage-json/{data['id']}"
+            else:
+                url = f"{site_url}/datapackage-creator/show-datapackage-json/{data['id']}"
+            validation = default_backend.validate_package(url)
             datapackage = model.Session.query(Datapackage).filter(
                 Datapackage.package_id==package_data['id']
             ).order_by(Datapackage.created.desc()).first()
