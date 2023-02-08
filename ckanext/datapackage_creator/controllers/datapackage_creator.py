@@ -300,6 +300,7 @@ def datapackage_show(package_id):
         'user': toolkit.c.user,
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
+        'id': package_id,
     }
     try:
         toolkit.check_access('package_show', context)
