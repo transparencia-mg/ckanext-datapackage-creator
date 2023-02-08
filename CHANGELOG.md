@@ -171,3 +171,8 @@ Bugs fixed: validation
 ## [0.0.33] - 2023-02-07
 
 Frictionless validation performed by url
+
+
+## [0.0.34] - 2023-02-08
+
+Bus fixed: resource update
