@@ -151,8 +151,7 @@ var app = new Vue({
         let resourceId = this.$refs.resourceId.value
         if(resourceId) {
             this.allowed_add_resource = false
-            this.resources[0].id = resourceId
-            this.getResource()
+            this.getResource(resourceId)
         } else {
             this.getPackage()
         }
@@ -181,14 +180,15 @@ var app = new Vue({
                 this.package.metadata = datapackage
             })
         },
-        getResource() {
-            const url = `/datapackage-creator/show-datapackage-resource/${this.resources[0].id}`
+        getResource(resourceId) {
+            const url = `/datapackage-creator/show-datapackage-resource/${resourceId}`
             this.loading = true
             axios.get(url).then(res => {
                 this.loading = false
                 this.package_id = res.data.resource.package_id
                 this.resources = []
                 this.resources.push(JSON.parse(res.data.datapackage_resource.data))
+                this.resources[0].id = resourceId
                 this.getPackage()
             }).catch(() => {
                 this.loading = false
