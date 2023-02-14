@@ -176,3 +176,8 @@ Frictionless validation performed by url
 ## [0.0.34] - 2023-02-08
 
 Bus fixed: resource update
+
+
+## [0.0.35] - 2023-02-14
+
+Bus fixed: resource update
