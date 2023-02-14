@@ -14,15 +14,18 @@
 <div>
   <div class="accordion" id="accordionExample">
     {% for datapackage in datapackage_list %}
+    {% if datapackage.errors %}
     <div class="accordion-item">
       <h2 class="accordion-header" id="heading-{{ datapackage.id }}">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ datapackage.id }}" aria-expanded="true" aria-controls="collapseOne">
-          {{ h.render_datetime(datapackage.created) }}
           {% if datapackage.errors.valid %}
           <span class="badge bg-success">VALID</span>
           {% else %}
           <span class="badge bg-danger">NOT VALID</span>
           {% endif %}
+          <span style="margin-left: 15px;">
+            {{ h.render_datetime(datapackage.created) }}
+          </span>
         </button>
       </h2>
       <div id="collapse-{{ datapackage.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ datapackage.id }}" data-bs-parent="#accordionExample">
@@ -31,6 +34,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% endfor %}
   </div>
 </div>
