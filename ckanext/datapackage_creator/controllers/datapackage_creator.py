@@ -307,8 +307,11 @@ def datapackage_show(package_id):
         'api_version': 3,
         'id': package_id,
     }
+    data = {
+        'id': package_id
+    }
     try:
-        toolkit.check_access('package_show', context)
+        toolkit.check_access('package_show', context, data)
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     response = make_response()
