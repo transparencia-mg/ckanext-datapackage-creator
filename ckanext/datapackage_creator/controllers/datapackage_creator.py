@@ -2,6 +2,8 @@ import os
 import json
 import tempfile
 import threading
+import requests
+import frictionless
 
 from flask import make_response, request
 
@@ -268,12 +270,16 @@ def publish_package():
         data_response['has_error'] = True
     else:
         def _validate():
+            admin = model.Session.query(model.User).filter(model.User.sysadmin==True).first()
+            session = requests.Session()
+            session.headers['Authorization'] = admin.apikey
             site_url = config.get('ckan.site_url')
             if site_url.endswith('/'):
                 url = f"{site_url}datapackage-creator/show-datapackage-json/{data['id']}"
             else:
                 url = f"{site_url}/datapackage-creator/show-datapackage-json/{data['id']}"
-            validation = default_backend.validate_package(url)
+            with frictionless.system.use_http_session(session) as ctx:
+                validation = frictionless.validate(url)
             datapackage = model.Session.query(Datapackage).filter(
                 Datapackage.package_id==package_data['id']
             ).order_by(Datapackage.created.desc()).first()
@@ -364,11 +370,12 @@ def datapackage_resource_show(resource_id):
 
 
 def datapackage_json_show(package_id):
+    admin = model.Session.query(model.User).filter(model.User.sysadmin==True, model.User.name!='default').first()
     context = {
         'model': model,
         'session': model.Session,
-        'user': toolkit.c.user,
-        'auth_user_obj': toolkit.c.userobj,
+        'user': admin.name,
+        'auth_user_obj': admin,
         'api_version': 3,
     }
     data = {
