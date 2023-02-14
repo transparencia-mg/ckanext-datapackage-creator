@@ -262,8 +262,7 @@ def publish_package():
     }
     metadata = data['metadata']
     try:
-        get_action('package_patch')(context, package_data)
-        frictionless_package = get_action('generate_datapackage_json')(context, package_data)
+        package_data = get_action('package_patch')(context, package_data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary
