@@ -59,7 +59,7 @@ def inference():
         result['error_summary'] = ''
         name, ext = os.path.splitext(file.filename)
         result['metadata']['name'] = slugify(name)
-    response.data = json.dumps(result)
+    response.data = json.dumps(result, default=str)
     return response
 
 
