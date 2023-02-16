@@ -181,3 +181,8 @@ Bus fixed: resource update
 ## [0.0.35] - 2023-02-14
 
 Bus fixed: resource update
+
+
+## [0.0.36] - 2023-02-16
+
+Added icons for non-tabular files
