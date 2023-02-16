@@ -17,6 +17,7 @@ var app = new Vue({
             jpeg: 'jpg.png',
             png: 'png.png',
             doc: 'doc.png',
+            docx: 'doc.png',
             json: 'json.png',
             txt: 'txt.png',
             rar: 'rar.png',
