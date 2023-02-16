@@ -224,6 +224,7 @@ var app = new Vue({
                         resource.error_summary = []
                         resource.has_error = false
                         resource.inference = res.data
+                        console.log(res.data)
                         resource.name = resource.inference.metadata.name
                         resource.encoding = resource.inference.metadata.encoding
                         resource.format = resource.inference.metadata.format
@@ -337,7 +338,6 @@ var app = new Vue({
                         this.success_message = ''
                     }, 5000)
                 }
-                this.$refs["success-message"].scrollIntoView({ behavior: "smooth" })
             }).catch(() => {
                 this.loading = false
             })
@@ -422,6 +422,7 @@ var app = new Vue({
             })
         },
         validate(){
+            this.$refs["success-message"].scrollIntoView({ behavior: "smooth" })
             this.allowed_publish = true
             this.resources.forEach(resource => {
                 this.saveResource(resource)

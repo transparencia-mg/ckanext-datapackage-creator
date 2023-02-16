@@ -14,6 +14,7 @@ then itself be extended to add/remove blocks of functionality. #}
   <input type="hidden" ref="packageId" value="{{ data.id }}" />
   <input type="hidden" ref="userName" value="{{ c.userobj.name }}">
   <input type="hidden" ref="userEmail" value="{{ c.userobj.email }}">
+  <div ref="success-message"></div>
   <div v-if="has_error">
     <div class="alert alert-danger">
         <ul>

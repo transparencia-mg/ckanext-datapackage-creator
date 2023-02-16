@@ -268,6 +268,7 @@ var app = new Vue({
                 if(!this.has_error) {
                     window.location = `/dataset/${this.form.name}/resource/new`
                 }
+                this.$refs["success-message"].scrollIntoView({ behavior: "smooth" })
             })
         },
         isRequired(field_name) {
