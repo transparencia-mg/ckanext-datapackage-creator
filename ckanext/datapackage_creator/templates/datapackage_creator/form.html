@@ -63,8 +63,8 @@
                 <!-- COMPONENTE DA COLUNA -->
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-xs-12" v-if="isDataResource(resource)">
-                        <div class="card">
-                            <div class="card-body" style="text-align: center;">
+                        <div>
+                            <div style="text-align: center;">
                                 <img :src="'/datapackage_creator/img/' + getFileIcon(resource.inference.metadata.format)" alt="">
                             </div>
                         </div>
