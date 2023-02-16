@@ -15,7 +15,7 @@ var app = new Vue({
             pdf: 'fa-file-pdf',
             jpg: 'fa-image',
             jpeg: 'fa-image',
-            png: 'fa-   image'
+            png: 'fa-image'
         },
         resources: [
             {
