@@ -12,10 +12,15 @@ var app = new Vue({
         loading: false,
         package: {},
         file_icons: {
-            pdf: 'fa-file-pdf',
-            jpg: 'fa-image',
-            jpeg: 'fa-image',
-            png: 'fa-image'
+            pdf: 'pdf.png',
+            jpg: 'jpg.png',
+            jpeg: 'jpg.png',
+            png: 'png.png',
+            doc: 'doc.png',
+            json: 'json.png',
+            txt: 'txt.png',
+            rar: 'rar.png',
+            zip: 'zip.png'
         },
         resources: [
             {
@@ -36,7 +41,8 @@ var app = new Vue({
                 has_error: false,
                 error_summary: [],
                 errors: {},
-                extras: []
+                extras: [],
+                file_icon: 'default.png'
             }
         ],
         typeFieldOptions: [
@@ -481,7 +487,7 @@ var app = new Vue({
         },
         getFileIcon(format) {
             let icon =  this.file_icons[format]
-            return icon ? icon : 'file'
+            return icon ? icon : 'default.png'
         }
     },
     computed: {

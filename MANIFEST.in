@@ -1,2 +1,2 @@
 include README.markdown
-recursive-include ckanext/datapackage_creator *.html *.json *.js *.css
+recursive-include ckanext/datapackage_creator *.html *.json *.js *.css *.png
