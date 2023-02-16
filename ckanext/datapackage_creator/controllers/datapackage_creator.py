@@ -346,10 +346,6 @@ def datapackage_resource_show(resource_id):
         'auth_user_obj': toolkit.c.userobj,
         'api_version': 3,
     }
-    try:
-        toolkit.check_access('package_show', context)
-    except toolkit.NotAuthorized:
-        toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     response = make_response()
     response.content_type = 'application/json'
     data = {
