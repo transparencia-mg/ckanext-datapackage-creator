@@ -186,3 +186,8 @@ Bus fixed: resource update
 ## [0.0.36] - 2023-02-16
 
 Added icons for non-tabular files
+
+
+## [0.0.37] - 2023-02-16
+
+Improvements to icons and error and success messages
