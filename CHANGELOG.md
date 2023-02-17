@@ -191,3 +191,8 @@ Added icons for non-tabular files
 ## [0.0.37] - 2023-02-16
 
 Improvements to icons and error and success messages
+
+
+## [0.0.38] - 2023-02-17
+
+Bugs fixed: metadata serialization
