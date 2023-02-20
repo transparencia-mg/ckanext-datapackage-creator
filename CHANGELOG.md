@@ -196,3 +196,8 @@ Improvements to icons and error and success messages
 ## [0.0.38] - 2023-02-17
 
 Bugs fixed: metadata serialization
+
+
+## [0.0.39] - 2023-02-20
+
+Bugfix: validation always ok
