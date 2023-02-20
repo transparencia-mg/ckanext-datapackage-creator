@@ -223,21 +223,6 @@ def save_package():
     return response
 
 
-# def validate_package():
-#     context = {
-#         'model': model,
-#         'session': model.Session,
-#         'user': toolkit.c.user,
-#         'auth_user_obj': toolkit.c.userobj,
-#         'api_version': 3,
-#         'for_edit': True,
-#     }
-#     try:
-#         toolkit.check_access('package_create', context)
-#     except toolkit.NotAuthorized:
-#         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
-
-
 def publish_package():
     context = {
         'model': model,
@@ -278,7 +263,9 @@ def publish_package():
             else:
                 url = f"{site_url}/datapackage-creator/show-datapackage-json/{data['id']}"
             with frictionless.system.use_http_session(session) as ctx:
-                validation = frictionless.validate(url)
+                datapackage_json = requests.get(url).json()
+                package = frictionless.Package(datapackage_json)
+                validation = package.validate(skip_errors=["byte-count-error"])
             datapackage = model.Session.query(Datapackage).filter(
                 Datapackage.package_id==package_data['id']
             ).order_by(Datapackage.created.desc()).first()

@@ -20,7 +20,7 @@ def ckan_resource_to_frictionless(resource):
         }
         foreign_keys = []
         try:
-            fields = extras['inference']['metadata']['schema']['fields']
+            fields = extras['fields']
         except:
             pass
         for field in fields:
