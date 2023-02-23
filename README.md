@@ -58,7 +58,8 @@ Configuration example file:
     "resource": {
         "required": [],
         "readonly": []
-    }
+    },
+    "token": ""
 }
 ```
 
@@ -95,3 +96,8 @@ Nothing
 - format
 - type
 - encoding
+
+
+## Token
+
+It is necessary to configure an administrator token so that the plugin can query private data

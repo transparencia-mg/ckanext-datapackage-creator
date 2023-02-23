@@ -254,9 +254,10 @@ def publish_package():
         data_response['has_error'] = True
     else:
         def _validate():
-            admin = model.Session.query(model.User).filter(model.User.sysadmin==True).first()
+            token = settings.get('token')
             session = requests.Session()
-            session.headers['Authorization'] = admin.apikey
+            if token:
+                session.headers['Authorization'] = token
             site_url = config.get('ckan.site_url')
             if site_url.endswith('/'):
                 url = f"{site_url}datapackage-creator/show-datapackage-json/{data['id']}"

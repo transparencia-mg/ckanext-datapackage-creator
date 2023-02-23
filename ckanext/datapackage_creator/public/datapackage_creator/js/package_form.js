@@ -190,11 +190,10 @@ var app = new Vue({
                 this.form.visibility = res.data.package.private
                 this.form.source = res.data.package.url || ''
                 this.form.version = res.data.package.version
+                this.form.extras = res.data.package.extras
                 let datapackage = JSON.parse(res.data.datapackage.data)
                 this.form.contributors = datapackage.contributors
-                this.form.tags = datapackage.tags
                 this.form.frequency = datapackage.frequency
-                this.form.tags = datapackage.tags
             })
         },
         slugifyTitle() {
