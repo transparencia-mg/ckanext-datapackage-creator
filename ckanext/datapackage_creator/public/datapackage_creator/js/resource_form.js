@@ -377,6 +377,7 @@ var app = new Vue({
                     file: null,
                     fields: [],
                     name: '',
+                    title: '',
                     description: '',
                     format: '',
                     type: '',
