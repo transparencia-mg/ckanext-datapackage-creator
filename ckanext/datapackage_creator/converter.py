@@ -32,13 +32,13 @@ def ckan_resource_to_frictionless(resource):
                 'format': field.get('format'),
                 'description': field.get('description', ''),
                 'type': field.get('type', ''),
+                'constraints': {
+                    'unique': field.get('unique', False),
+                    'required': field.get('required', False),
+                }
             }
-            unique = field.get('unique')
-            if unique:
-                uniques.append(field.get('name', ''))
             primary_key = field.get('primary_key')
             if primary_key:
-                uniques.append(field['name'])
                 frictionless_resource['schema']['primaryKey'] = field['name']
             foreign_key = field.get('foreign_key')
             if foreign_key:
