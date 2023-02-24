@@ -206,3 +206,8 @@ Bugfix: validation always ok
 ## [0.0.40] - 2023-02-23
 
 Token settings added
+
+
+## [0.0.41] - 2023-02-24
+
+Metadata validation improvements
