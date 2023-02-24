@@ -23,6 +23,7 @@ def ckan_resource_to_frictionless(resource):
             fields = extras['fields']
         except:
             pass
+        uniques = []
         for field in fields:
             field_dict = {
                 'name': field.get('name', ''),
@@ -32,6 +33,9 @@ def ckan_resource_to_frictionless(resource):
                 'description': field.get('description', ''),
                 'type': field.get('type', ''),
             }
+            unique = field.get('unique')
+            if unique:
+                uniques.append(field.get('name', ''))
             primary_key = field.get('primary_key')
             if primary_key:
                 frictionless_resource['schema']['primary_key'] = field['name']
@@ -51,6 +55,8 @@ def ckan_resource_to_frictionless(resource):
                             }
                         }
                     )
+            if uniques:
+                frictionless_resource['schema']['uniqueKeys'] = uniques
             frictionless_resource['schema']['fields'].append(field_dict)
         if foreign_keys:
             frictionless_resource['foreignKeys'] = []
