@@ -77,8 +77,6 @@ def ckan_to_frictionless(package):
                     contributor_item['path'] = contributor['url']
                 frictionless_package['contributors'].append(contributor_item)
             frictionless_package['frequency'] = extras['frequency']
-            for extra in package['extras']:
-                frictionless_package[extra['key']] = extra['value']
         resources = []
         for resource in package['resources']:
             frictionless_resource = ckan_resource_to_frictionless(resource)
