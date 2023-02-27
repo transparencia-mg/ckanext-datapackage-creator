@@ -56,8 +56,18 @@ def ckan_resource_to_frictionless(resource):
                             }
                         }
                     )
-            if uniques:
-                frictionless_resource['schema']['uniqueKeys'] = uniques
+            extras = field.get('extras', [])
+            for extra in extras:
+                if extra['type'] == 'max_min':
+                    field_dict['constraints']['minimum'] = extra['min']
+                    field_dict['constraints']['maximum'] = extra['max']
+                elif extra['type'] == 'length':
+                    field_dict['constraints']['minLength'] = extra['min_length']
+                    field_dict['constraints']['maxLength'] = extra['max_length']
+                elif extra['type'] == 'pattern':
+                    field_dict['constraints']['pattern'] = extra['value'].split(',')
+                elif extra['enum'] == 'enum':
+                    field_dict['constraints']['pattern'] = extra['value'].split(',')
             frictionless_resource['schema']['fields'].append(field_dict)
         if foreign_keys:
             frictionless_resource['foreignKeys'] = []
