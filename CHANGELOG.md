@@ -211,3 +211,8 @@ Token settings added
 ## [0.0.41] - 2023-02-24
 
 Metadata validation improvements
+
+
+## [0.0.42] - 2023-02-27
+
+bugfix: extras metadata
