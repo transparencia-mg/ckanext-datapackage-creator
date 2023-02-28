@@ -216,3 +216,8 @@ Metadata validation improvements
 ## [0.0.42] - 2023-02-27
 
 bugfix: extras metadata
+
+
+## [0.0.43] - 2023-02-28
+
+updated validation page
