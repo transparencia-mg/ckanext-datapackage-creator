@@ -1,8 +1,7 @@
-let validations = document.getElementsByClassName('frictionless-validation')
-for (let index = 0; index < validations.length; index++) {
-    const element = validations[index]
-    console.log(element.innerHTML)
-    let jsonObj = JSON.parse(element.innerHTML)
-    var jsonPretty = JSON.stringify(jsonObj, null, '\t')
-    element.innerHTML = jsonPretty
+const reports = document.getElementsByClassName('datapackage-validation')
+for (let i = 0; i < reports.length; i++) {
+    const reportElement = reports[i]
+    const report = JSON.parse(reportElement.textContent)
+    const element = document.getElementById('livemark-report-' + reportElement.id)
+    frictionlessComponents.render(frictionlessComponents.Report, {report}, element)
 }

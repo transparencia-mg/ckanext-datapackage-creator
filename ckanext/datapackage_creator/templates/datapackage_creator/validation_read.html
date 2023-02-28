@@ -1,7 +1,12 @@
 {% extends "package/read.html" %}
 
-
 {%- block subtitle %}{{ _('Validation Report') }}{% endblock -%}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/datapackage_creator/css/styles.css">
+<link rel="stylesheet" href="https://unpkg.com/frictionless-components@1.0.1/dist/frictionless-components.min.css">
+{% endblock %}
 
 {% block breadcrumb_content_selected %}{% endblock %}
 {% block breadcrumb_content %}
@@ -11,7 +16,7 @@
 
 {% block primary_content %}
 <h1 style="margin-top: 20px;">{{ _('Validation Report') }}</h1>
-<div>
+<div id="livemark-main">
   <div class="accordion" id="accordionExample">
     {% for datapackage in datapackage_list %}
     {% if datapackage.errors %}
@@ -30,7 +35,11 @@
       </h2>
       <div id="collapse-{{ datapackage.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ datapackage.id }}" data-bs-parent="#accordionExample">
         <div class="accordion-body">
-          <pre class="frictionless-validation">{{ datapackage.errors_json() }}</pre>
+          <script class="datapackage-validation" id="{{ datapackage.id|safe }}" type="application/json">{{ datapackage.errors_json()|safe }}</script>
+          <div class="livemark-report">
+            <div id="livemark-report-{{ datapackage.id|safe }}">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,5 +51,7 @@
 
 {% block scripts %}
 {{ super() }}
+<script src="https://unpkg.com/frictionless-components@1.0.1/dist/frictionless-components.min.js"></script>
+<script src="https://unpkg.com/tocbot@4.12.3/dist/tocbot.min.js"></script>
 <script src="/datapackage_creator/js/validation.js"></script>
 {% endblock %}
