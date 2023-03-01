@@ -221,3 +221,8 @@ bugfix: extras metadata
 ## [0.0.43] - 2023-02-28
 
 updated validation page
+
+
+## [0.0.44] - 2023-03-01
+
+Bugfix: package home
