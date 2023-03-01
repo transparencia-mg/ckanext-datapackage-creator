@@ -194,6 +194,7 @@ var app = new Vue({
                 let datapackage = JSON.parse(res.data.datapackage.data)
                 this.form.contributors = datapackage.contributors
                 this.form.frequency = datapackage.frequency
+                this.form.tags = datapackage.tags
             })
         },
         slugifyTitle() {
@@ -276,6 +277,9 @@ var app = new Vue({
                 required = this.settings.package.required.includes(field_name)
             }
             return required
+        },
+        deletePackage() {
+
         }
     },
     computed: {

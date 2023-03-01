@@ -5,7 +5,8 @@ if(element){
         el: '#additional-app',
         data: {
             package_id: '',
-            additionals: [],
+            frequency: '',
+            profile: '',
             contributors: []
         },
         mounted () {
@@ -17,10 +18,8 @@ if(element){
                 const url = `/datapackage-creator/show-datapackage/${this.package_id}`
                 axios.get(url).then(res => {
                     let data = JSON.parse(res.data.datapackage.data)
-                    this.additionals.push({
-                        key: 'Frequency',
-                        value: data.frequency
-                    })
+                    this.profile = data.type
+                    this.frequency = data.frequency
                     this.contributors = data.contributors
                 })
             }
