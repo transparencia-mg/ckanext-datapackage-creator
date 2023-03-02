@@ -38,6 +38,11 @@ ckan.plugins = ... datapackage_creator
 
 # Datapackage Creator Configuration
 
+Opening the file with vi editor
+````
+sudo vi /etc/ckan/default/datapackage_creator.json
+````
+
 The plugin allows you to configure which fields of the resource and package are mandatory and/or 'readonly', for this you just need to add a configuration in your INI file.
 
 
