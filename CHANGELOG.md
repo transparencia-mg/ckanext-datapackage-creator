@@ -226,3 +226,8 @@ updated validation page
 ## [0.0.44] - 2023-03-01
 
 Bugfix: package home
+
+
+## [0.0.45] - 2023-03-02
+
+Deleted button added
