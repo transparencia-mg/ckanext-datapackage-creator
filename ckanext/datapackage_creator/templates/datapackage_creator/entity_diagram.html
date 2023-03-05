@@ -1,0 +1,15 @@
+{% extends "package/read.html" %}
+
+{%- block subtitle %}{{ _('Validation Report') }}{% endblock -%}
+
+{% block breadcrumb_content_selected %}{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active"><a href="">{{ _('Entity Diagram') }}</a></li>
+{% endblock %}
+
+{% block primary_content %}
+<h1 style="margin-top: 20px;">{{ _('Entity Diagram') }}</h1>
+{% endblock %}
+

@@ -396,3 +396,28 @@ def datapackage_validation_show(package_id):
             'pkg_dict': package
         }
     )
+
+
+def entity_diagram_show(package_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+    }
+    data = {
+        'id': package_id
+    }
+    package = get_action('package_show')(context, data)
+    data = {
+        'id': package_id
+    }
+    frictionless_package = get_action('generate_datapackage_json')(context, data)
+    return toolkit.render(
+        'datapackage_creator/entity_diagram.html',
+        extra_vars={
+            'frictionless_package': frictionless_package,
+            'pkg_dict': package
+        }
+    )

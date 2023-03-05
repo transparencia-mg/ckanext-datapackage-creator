@@ -43,7 +43,7 @@ def ckan_resource_to_frictionless(resource):
             foreign_key = field.get('foreign_key')
             if foreign_key:
                 try:
-                    resource, resource_field = foreign_key.split()
+                    resource, resource_field = foreign_key.split(',')
                 except:
                     pass
                 else:
@@ -70,7 +70,7 @@ def ckan_resource_to_frictionless(resource):
                     field_dict['constraints']['pattern'] = extra['value'].split(',')
             frictionless_resource['schema']['fields'].append(field_dict)
         if foreign_keys:
-            frictionless_resource['foreignKeys'] = []
+            frictionless_resource['foreignKeys'] = foreign_keys
     return frictionless_resource
 
 
