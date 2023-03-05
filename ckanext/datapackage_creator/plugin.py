@@ -22,20 +22,33 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
     # plugins.implements(plugins.IPackageController)
-    # plugins.implements(plugins.IResourceController)
+    plugins.implements(plugins.IResourceController)
 
     # def after_dataset_show(self, context, pkg_dict):
     #     pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
+    def before_resource_delete(self, *args, **kwargs):
+        pass
 
-    # def before_resource_update(self, *args, **kwargs):
-    #     pass
+    def after_resource_delete(self, *args, **kwargs):
+        pass
 
-    # def after_resource_update(self, *args, **kwargs):
-    #     pass
+    def after_resource_create(self, *args, **kwargs):
+        pass
 
-    # def before_resource_show(self, resource_dict):
-    #     resource_dict['table_schema'] = ckan_resource_to_frictionless(resource_dict)
-    #     return resource_dict
+    def before_resource_create(self, *args, **kwargs):
+        pass
+
+    def before_resource_update(self, *args, **kwargs):
+        pass
+
+    def after_resource_update(self, *args, **kwargs):
+        pass
+
+    def before_resource_show(self, resource_dict):
+        if 'datapackage' not in resource_dict:
+            resource_dict['datapackage'] = ckan_resource_to_frictionless(resource_dict)
+            del resource_dict['datapackage']['table_schema']
+        return resource_dict
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
