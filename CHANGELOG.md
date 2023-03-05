@@ -231,3 +231,8 @@ Bugfix: package home
 ## [0.0.45] - 2023-03-02
 
 Deleted button added
+
+
+## [0.0.45] - 2023-03-05
+
+Bugfix: foreign key in datapackage json
