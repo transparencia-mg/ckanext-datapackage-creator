@@ -233,6 +233,10 @@ Bugfix: package home
 Deleted button added
 
 
-## [0.0.45] - 2023-03-05
+## [0.0.46] - 2023-03-05
 
 Bugfix: foreign key in datapackage json
+
+## [0.0.47] - 2023-03-06
+
+Bugfix: vue app in package and resource pages
