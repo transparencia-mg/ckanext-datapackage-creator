@@ -1,5 +1,4 @@
-var appElem = document.getElementById('#vue-app')
-if(appElem) {
+try {
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#vue-app',
@@ -40,4 +39,4 @@ if(appElem) {
             }
         }
     })
-}
+} catch (error) {}

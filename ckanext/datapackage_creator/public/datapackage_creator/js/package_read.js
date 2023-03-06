@@ -1,5 +1,4 @@
-let element = document.getElementById("additional-app")
-if(element){
+try {
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#additional-app',
@@ -25,10 +24,10 @@ if(element){
             }
         }
     })
-}
+} catch (error) {}
 
-const validation_badge = document.getElementById('badge-validation')
-if(validation_badge) {
+try {
+    const validation_badge = document.getElementById('badge-validation')
     const package_id = validation_badge.getAttribute('data-package-id')
     const url_datapackage = `/datapackage-creator/show-datapackage/${package_id}`
     axios.get(url_datapackage).then(res => {
@@ -44,4 +43,6 @@ if(validation_badge) {
             }
         }
     })
+} catch (error) {
+    
 }
