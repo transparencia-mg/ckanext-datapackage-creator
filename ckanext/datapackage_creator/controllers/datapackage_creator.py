@@ -4,6 +4,7 @@ import tempfile
 import threading
 import requests
 import frictionless
+import base64
 
 from flask import make_response, request
 
@@ -414,10 +415,18 @@ def entity_diagram_show(package_id):
         'id': package_id
     }
     frictionless_package = get_action('generate_datapackage_json')(context, data)
+    package = frictionless.Package(frictionless_package)
+    tmp_dot = tempfile.NamedTemporaryFile(suffix='.dot', delete=False)
+    tmp_png = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    package.to_er_diagram(path=tmp_dot.name)
+    os.system(f"dot -Tpng {tmp_dot.name} -o {tmp_png.name}")
+    with open(tmp_png.name, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
     return toolkit.render(
         'datapackage_creator/entity_diagram.html',
         extra_vars={
             'frictionless_package': frictionless_package,
-            'pkg_dict': package
+            'pkg_dict': package,
+            'entity_diagram': encoded_string.decode('utf-8'),
         }
     )

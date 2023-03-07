@@ -106,3 +106,9 @@ Nothing
 ## Token
 
 It is necessary to configure an administrator token so that the plugin can query private data
+
+# Entity Diagram
+
+To generate the entity diagram it is necessary to install the library: graphviz.
+
+On ubuntu: sudo apt-get install graphviz
