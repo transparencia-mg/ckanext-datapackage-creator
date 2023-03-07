@@ -240,3 +240,8 @@ Bugfix: foreign key in datapackage json
 ## [0.0.47] - 2023-03-06
 
 Bugfix: vue app in package and resource pages
+
+
+## [0.0.48] - 2023-03-07
+
+Entity diagram added
