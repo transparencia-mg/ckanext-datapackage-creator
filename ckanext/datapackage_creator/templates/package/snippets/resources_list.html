@@ -18,6 +18,21 @@
         margin-bottom: 20px;
         display: block;
     }
+    .resource-item .form-check-input {
+      position: absolute;
+      left: 5px;
+      top: 15px;
+    }
+    .resource-item {
+      padding-left: 70px;
+    }
+    .resource-item .format-label {
+      left: 30px;
+    }
+    .form-check-all {
+      margin-bottom: 30px;
+      margin-left: -5px;
+    }
   </style>
   <a id="badge-validation" href="/datapackage-creator/show-validation/{{ pkg.name }}" data-package-id="{{ pkg.id }}">
     <span id="datapackage-valid" class="badge bg-success" style="display: none;">DATAPACKAGE VALID</span>
@@ -28,14 +43,31 @@
     <h2>{{ _('Data and Resources') }}</h2>
     {% block resource_list %}
       {% if resources %}
-        {% set can_edit = can_edit or h.check_access('package_update', {'id':pkg.id }) %}
-        <ul class="{% block resource_list_class %}resource-list{% endblock %}">
-          {% block resource_list_inner %}
-            {% for resource in resources %}
-              {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, can_edit=can_edit %}
-            {% endfor %}
-          {% endblock %}
-        </ul>
+        <form action="/datapackage-creator/download-resources/{{ pkg.id }}" method="get">
+          {% set can_edit = can_edit or h.check_access('package_update', {'id':pkg.id }) %}
+          <div class="row">
+            <div class="col">
+              <div class="form-check form-check-all">
+                <input class="form-check-input" type="checkbox" value="" id="select-all-resources">
+                <label class="form-check-label" for="select-all-resources">
+                  {{ _('Select All') }}
+                </label>
+              </div>
+            </div>
+            <div class="col" style="text-align: right;">
+              <button class="btn btn-success" id="btn-download">
+                <i class="fa fa-download"></i> {{ _('Download Selected') }}
+              </button>
+            </div>
+          </div>
+          <ul class="{% block resource_list_class %}resource-list{% endblock %}">
+            {% block resource_list_inner %}
+              {% for resource in resources %}
+                {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, can_edit=can_edit %}
+              {% endfor %}
+            {% endblock %}
+          </ul>
+        </form>
       {% else %}
         {% block resource_list_empty %}
           {% if h.check_access('resource_create', {'package_id': pkg['id']}) %}

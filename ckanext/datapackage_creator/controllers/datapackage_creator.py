@@ -1,10 +1,12 @@
 import os
+import io
 import json
 import tempfile
 import threading
 import requests
 import frictionless
 import base64
+import zipfile
 
 from flask import make_response, request
 
@@ -13,6 +15,7 @@ from slugify import slugify
 import ckan.model as model
 import ckan.plugins.toolkit as toolkit
 
+from ckan.lib import uploader
 from ckan.common import config
 from ckan.logic import get_action, ValidationError
 from ckan.views.dataset import _tag_string_to_list
@@ -430,3 +433,42 @@ def entity_diagram_show(package_id):
             'entity_diagram': encoded_string.decode('utf-8'),
         }
     )
+
+
+def download_resources(package_id):
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': toolkit.c.user,
+        'auth_user_obj': toolkit.c.userobj,
+        'api_version': 3,
+    }
+    data = {
+        'id': package_id
+    }
+    try:
+        toolkit.check_access('package_show', context, data)
+    except toolkit.NotAuthorized:
+        toolkit.abort(401, toolkit._('Unauthorized to download a dataset'))
+    resources = request.args.getlist('resource')
+    contents = []
+    token = settings.get('token')
+    session = requests.Session()
+    if token:
+        session.headers['Authorization'] = token
+    for resource in resources:
+        data = {
+            'id': resource
+        }
+        resource = get_action('resource_show')({'ignore_auth': True}, data)
+        filename = resource['url'].split("/")[-1]
+        resource_uploader = uploader.get_resource_uploader(resource)
+        contents.append((filename, resource_uploader.get_path(id=resource['id'])))
+    memory_zip = io.BytesIO()
+    with zipfile.ZipFile(memory_zip, "w") as zip_file:
+        for filename, content in contents:
+            zip_file.writestr(filename, content)
+    response = make_response()
+    response.content_type = 'application/zip'
+    response.data = memory_zip.getvalue()
+    return response

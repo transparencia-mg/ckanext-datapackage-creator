@@ -9,10 +9,7 @@ from ckanext.datapackage_creator.logic import (
     save_datapackage, inference_data, save_datapackage_resource, datapackage_show,
     datapackage_resource_show, generate_datapackage_json
 )
-from ckanext.datapackage_creator.converter import ckan_resource_to_frictionless
 from ckanext.datapackage_creator.cli import get_commands
-from ckanext.datapackage_creator.model import DatapackageResource
-from ckanext.datapackage_creator.converter import ckan_to_frictionless
 
 
 class DatapackageCreatorPlugin(plugins.SingletonPlugin):
@@ -21,35 +18,6 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
-    # plugins.implements(plugins.IPackageController)
-    # plugins.implements(plugins.IResourceController)
-
-    # def after_dataset_show(self, context, pkg_dict):
-    #     pkg_dict['datapackage_json'] = ckan_to_frictionless(pkg_dict)
-    # def before_resource_delete(self, *args, **kwargs):
-    #     pass
-
-    # def after_resource_delete(self, *args, **kwargs):
-    #     pass
-
-    # def after_resource_create(self, *args, **kwargs):
-    #     pass
-
-    # def before_resource_create(self, *args, **kwargs):
-    #     pass
-
-    # def before_resource_update(self, *args, **kwargs):
-    #     pass
-
-    # def after_resource_update(self, *args, **kwargs):
-    #     pass
-
-    # def before_resource_show(self, resource_dict):
-    #     if 'datapackage' not in resource_dict:
-    #         resource_dict['datapackage'] = ckan_resource_to_frictionless(resource_dict)
-    #         if 'table_schema' in resource_dict['datapackage']:
-    #             del resource_dict['datapackage']['table_schema']
-    #     return resource_dict
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
@@ -92,6 +60,10 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         blueprint.add_url_rule(
             "/show-diagram/<package_id>", view_func=datapackage_creator.entity_diagram_show,
             endpoint='datapackage_entity_diagram_show', methods=['GET']
+        )
+        blueprint.add_url_rule(
+            "/download-resources/<package_id>", view_func=datapackage_creator.download_resources,
+            endpoint='datapackage_download_resources', methods=['GET']
         )
         blueprint.add_url_rule(
             "/show-settings", view_func=datapackage_creator.settings_show,
