@@ -245,3 +245,8 @@ Bugfix: vue app in package and resource pages
 ## [0.0.48] - 2023-03-07
 
 Entity diagram added
+
+
+## [0.0.49] - 2023-03-08
+
+Download button for all resources
