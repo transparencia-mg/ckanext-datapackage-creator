@@ -250,3 +250,7 @@ Entity diagram added
 ## [0.0.49] - 2023-03-08
 
 Download button for all resources
+
+
+## [0.0.50] - 2023-03-09
+Tableschema added in package_show

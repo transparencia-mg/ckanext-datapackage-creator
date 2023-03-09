@@ -17,7 +17,7 @@ README = read("README.md")
 
 setup(
     name='''ckanext-datapackage-creator''',
-    version='0.0.49',
+    version='0.0.50',
     description='''Data Package Creator.''',
     long_description=README,
     long_description_content_type="text/markdown",
