@@ -21,7 +21,6 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IClick)
     plugins.implements(plugins.IResourceController)
 
-
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
         blueprint.add_url_rule(
