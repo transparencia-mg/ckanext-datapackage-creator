@@ -5,6 +5,7 @@ from ckan.model import Session
 from flask import Blueprint
 
 from ckanext.datapackage_creator.controllers import datapackage_creator
+from ckanext.datapackage_creator.converter import ckan_resource_to_frictionless
 from ckanext.datapackage_creator.logic import (
     save_datapackage, inference_data, save_datapackage_resource, datapackage_show,
     datapackage_resource_show, generate_datapackage_json
@@ -18,6 +19,8 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IClick)
+    plugins.implements(plugins.IResourceController)
+
 
     def get_blueprint(self):
         blueprint = Blueprint('datapackage_creator', __name__, url_prefix='/datapackage-creator')
@@ -70,6 +73,28 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
             endpoint='settings_show', methods=['GET']
         )
         return blueprint
+    
+    def before_resource_create(self, context, resource) -> None:
+        pass
+
+    def after_resource_create(self, context, resource) -> None:
+        pass
+
+    def before_resource_update(self, context, current, resource) -> None:
+        pass
+
+    def after_resource_update(self, context, resource) -> None:
+        pass
+
+    def before_resource_delete(self, context, resource, resources) -> None:
+        pass
+
+    def after_resource_delete(self, context, resources) -> None:
+        pass
+
+    def before_resource_show(self, resource_dict):
+        resource_dict['tableschema'] = ckan_resource_to_frictionless(resource_dict)
+        return resource_dict
 
     def update_config(self, config):
         plugins.toolkit.add_public_directory(config, 'public')
