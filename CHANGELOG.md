@@ -256,5 +256,9 @@ Download button for all resources
 Tableschema added in package_show
 
 
-## [0.0.50] - 2023-03-09
+## [0.0.51] - 2023-03-09
 Adjusting entity image
+
+
+## [0.0.52] - 2023-03-10
+Links in entity diagram
