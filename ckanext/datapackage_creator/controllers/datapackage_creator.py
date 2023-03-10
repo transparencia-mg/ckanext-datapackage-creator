@@ -5,8 +5,9 @@ import tempfile
 import threading
 import requests
 import frictionless
-import base64
 import zipfile
+import re
+import html
 
 from flask import make_response, request
 
@@ -420,17 +421,36 @@ def entity_diagram_show(package_id):
     frictionless_package = get_action('generate_datapackage_json')(context, data)
     package = frictionless.Package(frictionless_package)
     tmp_dot = tempfile.NamedTemporaryFile(suffix='.dot', delete=False)
-    tmp_png = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    tmp_png = tempfile.NamedTemporaryFile(suffix='.svg', delete=False)
     package.to_er_diagram(path=tmp_dot.name)
-    os.system(f"dot -Tpng {tmp_dot.name} -o {tmp_png.name}")
-    with open(tmp_png.name, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
+    os.system(f"dot -Tsvg {tmp_dot.name} -o {tmp_png.name}")
+    with open(tmp_png.name, "r") as image_file:
+        encoded_string = image_file.read()
+    nodes = []
+    for node in re.findall(r'<g.*?class="node"', encoded_string):
+        start_tag = encoded_string.index(node)
+        close_tag = encoded_string[start_tag:].index("</g>")
+        nodes.append(encoded_string[start_tag:start_tag + close_tag + 4])
+    for resource in package.resources:
+        name = resource.name
+        id = resource.to_dict()['tableschema']['id']
+        site_url = config.get('ckan.site_url')
+        if site_url.endswith('/'):
+            url = f"{site_url}dataset/{package['name']}/resource/{id}"
+        else:
+            url = f"{site_url}/dataset/{package['name']}/resource/{id}"
+        for node in nodes:
+            node_test = html.unescape(node)
+            if f'<title>{name}</title>' in node_test:
+                new_node = f'<a href="{url}">{node}</a>'
+                encoded_string = encoded_string.replace(node, new_node)
+                break
     return toolkit.render(
         'datapackage_creator/entity_diagram.html',
         extra_vars={
             'frictionless_package': frictionless_package,
             'pkg_dict': package,
-            'entity_diagram': encoded_string.decode('utf-8'),
+            'entity_diagram': encoded_string,
         }
     )
 
