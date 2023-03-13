@@ -10,9 +10,14 @@
 {% endblock %}
 
 {% block primary_content %}
+<style>
+.entity-diagram svg {
+  max-width: 90%;
+}
+</style>
 <h1 style="margin-top: 20px;">{{ _('Entity Diagram') }}</h1>
 <div class="text-center">
-  <div style="max-width: 80%;">{{ entity_diagram|safe }}</div>
+  <div class="entity-diagram">{{ entity_diagram|safe }}</div>
 </div>
 {% endblock %}
 

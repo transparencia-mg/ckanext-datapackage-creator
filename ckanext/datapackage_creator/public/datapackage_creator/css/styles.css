@@ -109,6 +109,10 @@ input::placeholder{
     font-size: 3em;
 }
 
+.entity-diagram svg {
+  max-width: 90%;
+}
+
 #livemark-main {
     padding: 24px 20px;
     min-height: 100vh;
