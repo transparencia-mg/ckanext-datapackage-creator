@@ -262,3 +262,7 @@ Adjusting entity image
 
 ## [0.0.52] - 2023-03-10
 Links in entity diagram
+
+
+## [0.0.53] - 2023-03-13
+Adjusting diagram image size
