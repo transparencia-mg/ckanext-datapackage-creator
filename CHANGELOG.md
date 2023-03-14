@@ -270,3 +270,7 @@ Adjusting diagram image size
 
 ## [0.0.54] - 2023-03-13
 Bugfix: resources zipfile
+
+
+## [0.0.55] - 2023-03-14
+pt_BR translation messages
