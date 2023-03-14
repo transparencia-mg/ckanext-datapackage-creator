@@ -45,9 +45,17 @@ setup(
     package_data={
     },
     data_files=[],
-    entry_points={
-        'ckan.plugins': [
-            'datapackage_creator=ckanext.datapackage_creator.plugin:DatapackageCreatorPlugin'
+    entry_points='''
+        [ckan.plugins]
+        datapackage_creator=ckanext.datapackage_creator.plugin:DatapackageCreatorPlugin
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
+    ''',
+
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**/templates/**.html', 'ckan', None),
         ],
-    },
+    }
 )
