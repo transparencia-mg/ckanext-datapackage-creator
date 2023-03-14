@@ -266,3 +266,7 @@ Links in entity diagram
 
 ## [0.0.53] - 2023-03-13
 Adjusting diagram image size
+
+
+## [0.0.54] - 2023-03-13
+Bugfix: resources zipfile
