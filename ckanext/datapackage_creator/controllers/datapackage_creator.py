@@ -487,7 +487,8 @@ def download_resources(package_id):
     memory_zip = io.BytesIO()
     with zipfile.ZipFile(memory_zip, "w") as zip_file:
         for filename, content in contents:
-            zip_file.writestr(filename, content)
+            with open(content, 'rb') as content_file:
+                zip_file.writestr(filename, content_file.read())
     response = make_response()
     response.content_type = 'application/zip'
     response.data = memory_zip.getvalue()
