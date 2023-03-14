@@ -108,7 +108,7 @@ def save_resource():
     data['state'] = 'active'
     data['url_type'] = 'upload'
     resource_id = data.get('id')
-    if not resource_id:
+    if not resource_id or request.files.get('upload'):
         data['upload'] = request.files['upload']
     metadata = data['metadata']
     del data['metadata']
@@ -154,7 +154,7 @@ def delete_resource(resource_id):
         'for_edit': True,
     }
     try:
-        toolkit.check_access('package_create', context)
+        toolkit.check_access('resource_delete', context)
     except toolkit.NotAuthorized:
         toolkit.abort(401, toolkit._('Unauthorized to create a dataset'))
     data = {
@@ -166,7 +166,7 @@ def delete_resource(resource_id):
         'package': None
     }
     try:
-        resource = get_action('resource_patch')(context, data)
+        resource = get_action('resource_delete')(context, data)
     except ValidationError as e:
         data_response['errors'] = e.error_dict
         data_response['error_summary'] = e.error_summary

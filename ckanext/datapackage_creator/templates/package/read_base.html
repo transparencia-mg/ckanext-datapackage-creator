@@ -2,6 +2,6 @@
 
 {% block content_primary_nav %}
   {{ super() }}
-  <li><a href="/datapackage-creator/show-validation/{{ pkg.name }}"><i class="fa fa-circle-info"></i> {{ _('Validation Report') }}</a></li>
-  <li><a href="/datapackage-creator/show-diagram/{{ pkg.name }}"><i class="fa fa-diagram-project"></i> {{ _('Entity Diagram') }}</a></li>
+  <li><a href="/datapackage-creator/show-validation/{{ pkg.name }}"><i class="fa fa-circle-info"></i> {% trans %} Validation Report{% endtrans %} </a></li>
+  <li><a href="/datapackage-creator/show-diagram/{{ pkg.name }}"><i class="fa fa-diagram-project"></i> {% trans %}Entity Diagram {% endtrans %}</a></li>
 {% endblock %}
