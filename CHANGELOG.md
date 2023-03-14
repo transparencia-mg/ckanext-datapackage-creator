@@ -274,3 +274,7 @@ Bugfix: resources zipfile
 
 ## [0.0.55] - 2023-03-14
 pt_BR translation messages
+
+
+## [0.0.56] - 2023-03-14
+Bugfix: resource update new file
