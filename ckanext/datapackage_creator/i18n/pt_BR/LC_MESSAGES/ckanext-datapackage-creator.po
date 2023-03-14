@@ -27,11 +27,11 @@ msgstr ""
 #: ckanext/datapackage_creator/controllers/datapackage_creator.py:243
 #: ckanext/datapackage_creator/controllers/datapackage_creator.py:309
 msgid "Unauthorized to create a dataset"
-msgstr ""
+msgstr "Não autorizado a criar um conjunto de dados"
 
 #: ckanext/datapackage_creator/controllers/datapackage_creator.py:472
 msgid "Unauthorized to download a dataset"
-msgstr ""
+msgstr "Não autorizado a baixar um conjunto de dados"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/entity_diagram.html:3
 #: ckanext/datapackage_creator/templates/datapackage_creator/validation_read.html:3
@@ -39,62 +39,62 @@ msgstr ""
 #: ckanext/datapackage_creator/templates/datapackage_creator/validation_read.html:18
 #: ckanext/datapackage_creator/templates/package/read_base.html:5
 msgid "Validation Report"
-msgstr ""
+msgstr "Relatório de Validação"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/entity_diagram.html:9
 #: ckanext/datapackage_creator/templates/datapackage_creator/entity_diagram.html:18
 #: ckanext/datapackage_creator/templates/package/read_base.html:6
 msgid "Entity Diagram"
-msgstr ""
+msgstr "Diagrama de Entidade"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:34
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:36
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:8
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:37
 msgid "Typing resource name"
-msgstr ""
+msgstr "Digite o nome do recurso"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:46
 msgid "Load"
-msgstr ""
+msgstr "Carregar"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:87
 msgid "Preview item"
-msgstr ""
+msgstr "Visualizar o item"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:110
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:134
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:307
 #: ckanext/datapackage_creator/templates/package/resource_read.html:176
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:111
 msgid "Enter the column title"
-msgstr ""
+msgstr "Informe o título da coluna"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:117
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:125
 msgid "Edit Metadata"
-msgstr ""
+msgstr "Editar metadados"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:130
 #: ckanext/datapackage_creator/templates/package/resource_read.html:172
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:135
 msgid "Enter the title"
-msgstr ""
+msgstr "Digite o título"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:138
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:311
 #: ckanext/datapackage_creator/templates/package/resource_read.html:180
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:144
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:196
@@ -103,45 +103,45 @@ msgstr ""
 #: ckanext/datapackage_creator/templates/package/resource_read.html:186
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:7
 msgid "Type"
-msgstr ""
+msgstr "Digite"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:151
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:316
 #: ckanext/datapackage_creator/templates/package/resource_read.html:191
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:159
 #: ckanext/datapackage_creator/templates/package/resource_read.html:196
 msgid "Required"
-msgstr ""
+msgstr "Obrigatório"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:170
 #: ckanext/datapackage_creator/templates/package/resource_read.html:205
 msgid "Primary Key"
-msgstr ""
+msgstr "Chave primária"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:178
 #: ckanext/datapackage_creator/templates/package/resource_read.html:211
 msgid "Foreign Key"
-msgstr ""
+msgstr "Chave estrangeira"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:179
 msgid "Table name, Field name"
-msgstr ""
+msgstr "Nome da tabela, nome do campo"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:184
 #: ckanext/datapackage_creator/templates/package/resource_read.html:217
 msgid "Unique"
-msgstr ""
+msgstr "Único"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:192
 msgid "Extras"
-msgstr ""
+msgstr "Extras"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:210
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:214
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:225
@@ -149,134 +149,134 @@ msgstr ""
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:254
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:272
 msgid "This field is required"
-msgstr ""
+msgstr "Este campo é obrigatório"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:221
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:239
 #: ckanext/datapackage_creator/templates/package/resource_read.html:270
 msgid "Min Lenght"
-msgstr ""
+msgstr "Tamanho Min"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:250
 #: ckanext/datapackage_creator/templates/package/resource_read.html:286
 msgid "Max Lenght"
-msgstr ""
+msgstr "Tamanho Max"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:268
 #: ckanext/datapackage_creator/templates/package/resource_read.html:310
 msgid "Values"
-msgstr ""
+msgstr "Valores"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:285
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:365
 msgid "Add Metadata"
-msgstr ""
+msgstr "Adicionar Metadado"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:290
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:291
 #: ckanext/datapackage_creator/templates/package/resource_read.html:323
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:302
 msgid "Resource Data"
-msgstr ""
+msgstr "Dados do recurso"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:308
 msgid "Enter a title for the resource"
-msgstr ""
+msgstr "Informe o título para o recurso"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:329
 msgid "Encoding"
-msgstr ""
+msgstr "Codificação"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:341
 msgid "Select the Metadata"
-msgstr ""
+msgstr "Selecione o metadado"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:353
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:35
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:215
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:378
 msgid "Add Resource"
-msgstr ""
+msgstr "Adicionar Recurso"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:384
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #: ckanext/datapackage_creator/templates/datapackage_creator/form.html:385
 msgid "Publish"
-msgstr ""
+msgstr "Publicar"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:19
 msgid "Manage"
-msgstr ""
+msgstr "Gerenciar"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:27
 msgid "View"
-msgstr ""
+msgstr "Visualizar"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:29
 msgid "API Endpoint"
-msgstr ""
+msgstr "Link da API"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:31
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:65
 msgid "Go to resource"
-msgstr ""
+msgstr "Ir para o recurso"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:33
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:62
 msgid "Download"
-msgstr ""
+msgstr "Baixar"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:72
 #: ckanext/datapackage_creator/templates/package/resource_read.html:74
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:82
 msgid "Dataset description:"
-msgstr ""
+msgstr "Descrição do Conjunto de Dados:"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:84
 #, python-format
 msgid "Source: <a href=\"%(url)s\">%(dataset)s</a>"
-msgstr ""
+msgstr "Fonte: <a href=\"%(url)s\">%(dataset)s</a>"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:115
 msgid "There are no views created for this resource yet."
-msgstr ""
+msgstr "Ainda não há exibições criadas para este recurso."
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:119
 msgid "Not seeing the views you were expecting?"
-msgstr ""
+msgstr "Não está vendo as visualizações que esperava?"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:121
 msgid "Click here for more information."
-msgstr ""
+msgstr "Clique aqui para obter mais informações."
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:124
 msgid "Here are some reasons you may not be seeing expected views:"
-msgstr ""
+msgstr "Aqui estão alguns motivos pelos quais você pode não estar vendo as visualizações esperadas:"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:126
 msgid "No view has been created that is suitable for this resource"
-msgstr ""
+msgstr "Nenhuma exibição foi criada que seja adequada para este recurso"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:127
 msgid "The site administrators may not have enabled the relevant view plugins"
-msgstr ""
+msgstr "Os administradores do site podem não ter ativado os plug-ins de exibição relevantes"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:128
 msgid ""
@@ -284,203 +284,206 @@ msgid ""
 "enabled, or the data may not have been pushed to the DataStore, or the "
 "DataStore hasn't finished processing the data yet"
 msgstr ""
+"Se uma exibição exigir o DataStore, o plug-in do DataStore pode não estar "
+"ativado ou os dados podem não ter sido enviados para o DataStore ou o DataStore "
+"ainda não concluiu o processamento dos dados"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:144
-msgid "Dicionário de Dados"
-msgstr ""
+msgid "Table schema"
+msgstr "Dicionário de Dados"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:148
 msgid "Column"
-msgstr ""
+msgstr "Coluna"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:162
 msgid "View Metadata"
-msgstr ""
+msgstr "Visualizar Metadados"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:167
 msgid "Metadata"
-msgstr ""
+msgstr "Metadados"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:223
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:232
 msgid "Min Value"
-msgstr ""
+msgstr "Valor Min"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:248
 msgid "Max Value"
-msgstr ""
+msgstr "Valor Max"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:305
 msgid "List of values"
-msgstr ""
+msgstr "Lista de valores"
 
 #: ckanext/datapackage_creator/templates/package/resource_read.html:306
-msgid "Lista"
-msgstr ""
+msgid "List"
+msgstr "Lista"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:3
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:133
 msgid "Contributors"
-msgstr ""
+msgstr "Contribuidores"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:9
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:145
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:173
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:10
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:30
 msgid "Additional Info"
-msgstr ""
+msgstr "Informação Adicional"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:34
 msgid "Field"
-msgstr ""
+msgstr "Campo"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:41
 msgid "Source"
-msgstr ""
+msgstr "Fonte"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:56
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:61
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:68
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:73
 msgid "Maintainer"
-msgstr ""
+msgstr "Mantenedor"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:80
 msgid "Version"
-msgstr ""
+msgstr "Versão"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:87
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:93
 msgid "Last Updated"
-msgstr ""
+msgstr "Última atualização"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:101
 msgid "Created"
-msgstr ""
+msgstr "Criado"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:116
 msgid "Frequency"
-msgstr ""
+msgstr "Frequência"
 
 #: ckanext/datapackage_creator/templates/package/snippets/additional_info.html:120
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:159
 msgid "Select the contributor type"
-msgstr ""
+msgstr "Selecione um tipo de contribuidor"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:190
 msgid "Add Contributor"
-msgstr ""
+msgstr "Adicionar Contribuidor"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:194
 msgid "Others Properties"
-msgstr ""
+msgstr "Outras Propriedades"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:203
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:209
 msgid "Key"
-msgstr ""
+msgstr "Chave"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:226
 msgid "Add Property"
-msgstr ""
+msgstr "Adicionar Propriedade"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:232
 msgid "Delete"
-msgstr ""
+msgstr "Apagar"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:236
 msgid "Add Data"
-msgstr ""
+msgstr "Adicionar Dados"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:238
 msgid "Update Dataset"
-msgstr ""
+msgstr "Atualizar Conjunto de Dados"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:250
 msgid "Confirm delete"
-msgstr ""
+msgstr "Confirmar remoção"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:255
 msgid "Are you sure you want to delete this dataset?"
-msgstr ""
+msgstr "Tem certeza de que deseja excluir este conjunto de dados?"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:259
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: ckanext/datapackage_creator/templates/package/snippets/package_form.html:260
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:38
 msgid "Explore"
-msgstr ""
+msgstr "Explorar"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:48
 msgid "Preview"
-msgstr ""
+msgstr "Visualização"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:51
 msgid "More information"
-msgstr ""
+msgstr "Mais informações"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resource_item.html:74
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resources_list.html:43
 msgid "Data and Resources"
-msgstr ""
+msgstr "Dados e Recursos"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resources_list.html:53
 msgid "Select All"
-msgstr ""
+msgstr "Selecionar todos"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resources_list.html:59
 msgid "Download Selected"
-msgstr ""
+msgstr "Baixar Selecionados"
 
 #: ckanext/datapackage_creator/templates/package/snippets/resources_list.html:74
 #, python-format
 msgid ""
-"<p class=\"empty\">This dataset has no data, <a href=\"%(url)s\">why not "
-"add some?</a></p>"
+"<p class=\"empty\">Este conjunto não tem dados, <a href=\"%(url)s\">porque não "
+"adicionar algum?</a></p>"
 msgstr ""
 
 #: ckanext/datapackage_creator/templates/package/snippets/resources_list.html:78
 msgid "This dataset has no data"
-msgstr ""
+msgstr "Este conjunto não tem dados"
 
 #: ckanext/datapackage_creator/templates/package/snippets/stages.html:23
 #: ckanext/datapackage_creator/templates/package/snippets/stages.html:25
 msgid "Create dataset"
-msgstr ""
+msgstr "Criar Conjunto de Dados"
 
 #: ckanext/datapackage_creator/templates/package/snippets/stages.html:30
 #: ckanext/datapackage_creator/templates/package/snippets/stages.html:34
 #: ckanext/datapackage_creator/templates/package/snippets/stages.html:36
 msgid "Add data"
-msgstr ""
+msgstr "Adicionar Dados"
 
