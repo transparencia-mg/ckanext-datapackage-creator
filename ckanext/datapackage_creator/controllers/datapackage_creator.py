@@ -433,7 +433,7 @@ def entity_diagram_show(package_id):
         nodes.append(encoded_string[start_tag:start_tag + close_tag + 4])
     for resource in package.resources:
         name = resource.name
-        id = resource.to_dict()['tableschema']['id']
+        id = resource.to_dict()['id']
         site_url = config.get('ckan.site_url')
         if site_url.endswith('/'):
             url = f"{site_url}dataset/{package['name']}/resource/{id}"
