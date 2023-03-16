@@ -77,6 +77,8 @@ def ckan_resource_to_frictionless(resource):
     frictionless_resource = converter.resource(resource)
     frictionless_resource['path'] = resource['url']
     frictionless_resource['schema'] = extract_resource_metadata(resource)
+    if 'tableschema' in frictionless_resource:
+        del frictionless_resource['tableschema']
     return frictionless_resource
 
 
