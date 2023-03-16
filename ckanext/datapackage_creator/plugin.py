@@ -5,7 +5,7 @@ from ckan.model import Session
 from flask import Blueprint
 
 from ckanext.datapackage_creator.controllers import datapackage_creator
-from ckanext.datapackage_creator.converter import ckan_resource_to_frictionless
+from ckanext.datapackage_creator.converter import ckan_resource_to_frictionless, extract_resource_metadata
 from ckanext.datapackage_creator.logic import (
     save_datapackage, inference_data, save_datapackage_resource, datapackage_show,
     datapackage_resource_show, generate_datapackage_json
@@ -92,7 +92,7 @@ class DatapackageCreatorPlugin(plugins.SingletonPlugin):
         pass
 
     def before_resource_show(self, resource_dict):
-        resource_dict['tableschema'] = ckan_resource_to_frictionless(resource_dict)
+        resource_dict['tableschema'] = extract_resource_metadata(resource_dict)
         return resource_dict
 
     def update_config(self, config):

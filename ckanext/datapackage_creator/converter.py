@@ -7,15 +7,14 @@ from frictionless_ckan_mapper import ckan_to_frictionless as converter
 from ckanext.datapackage_creator.model import Datapackage, DatapackageResource
 
 
-def ckan_resource_to_frictionless(resource):
-    frictionless_resource = converter.resource(resource)
-    frictionless_resource['path'] = resource['url']
+def extract_resource_metadata(resource):
     datapackage_resource = Session.query(DatapackageResource).filter(
         DatapackageResource.resource_id==resource['id']
     ).order_by(DatapackageResource.created.desc()).first()
+    resource_metadata = {}
     if datapackage_resource:
         extras = json.loads(datapackage_resource.data)
-        frictionless_resource['schema'] = {
+        resource_metadata = {
             'fields': [],
         }
         foreign_keys = []
@@ -39,7 +38,7 @@ def ckan_resource_to_frictionless(resource):
             }
             primary_key = field.get('primary_key')
             if primary_key:
-                frictionless_resource['schema']['primaryKey'] = field['name']
+                resource_metadata['primaryKey'] = field['name']
             foreign_key = field.get('foreign_key')
             if foreign_key:
                 try:
@@ -68,9 +67,16 @@ def ckan_resource_to_frictionless(resource):
                     field_dict['constraints']['pattern'] = extra['value'].split(',')
                 elif extra['enum'] == 'enum':
                     field_dict['constraints']['pattern'] = extra['value'].split(',')
-            frictionless_resource['schema']['fields'].append(field_dict)
+            resource_metadata['fields'].append(field_dict)
         if foreign_keys:
-            frictionless_resource['schema']['foreignKeys'] = foreign_keys
+            resource_metadata['foreignKeys'] = foreign_keys
+    return resource_metadata
+
+
+def ckan_resource_to_frictionless(resource):
+    frictionless_resource = converter.resource(resource)
+    frictionless_resource['path'] = resource['url']
+    frictionless_resource['schema'] = extract_resource_metadata(resource)
     return frictionless_resource
 
 
