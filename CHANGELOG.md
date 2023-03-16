@@ -278,3 +278,7 @@ pt_BR translation messages
 
 ## [0.0.56] - 2023-03-14
 Bugfix: resource update new file
+
+
+## [0.0.57] - 2023-03-16
+Bugfix: package_show conflicted with datapackage
