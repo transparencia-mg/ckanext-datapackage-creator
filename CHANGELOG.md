@@ -286,3 +286,7 @@ Bugfix: package_show conflicted with datapackage
 
 ## [0.0.58] - 2023-03-16
 Bugfix: resource id in entity diagram page
+
+
+## [0.0.59] - 2023-03-16
+Bugfix: tableschema in datapackage json
