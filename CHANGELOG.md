@@ -282,3 +282,7 @@ Bugfix: resource update new file
 
 ## [0.0.57] - 2023-03-16
 Bugfix: package_show conflicted with datapackage
+
+
+## [0.0.58] - 2023-03-16
+Bugfix: resource id in entity diagram page
