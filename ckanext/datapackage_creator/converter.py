@@ -50,8 +50,8 @@ def extract_resource_metadata(resource):
                         {
                             'fields': field['name'],
                             'reference': {
-                                "resource": resource,
-                                "fields": resource_field
+                                "resource": resource.strip(),
+                                "fields": resource_field.strip()
                             }
                         }
                     )
