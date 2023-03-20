@@ -290,3 +290,7 @@ Bugfix: resource id in entity diagram page
 
 ## [0.0.59] - 2023-03-16
 Bugfix: tableschema in datapackage json
+
+
+## [0.0.60] - 2023-03-16
+Removing spaces in foreign key
